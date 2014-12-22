@@ -44,7 +44,7 @@
 <div class="navbar navbar-inverse" role="navigation">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-right"><span class="sr-only">Toggle navbar</span><i class="icon-grid3"></i></button>
-    <a class="navbar-brand" href="#"><img src="/assets/images/logo.png" alt="Londinium"></a></div>
+    <a class="navbar-brand" href="#"><img style="width:170px;" src="/assets/images/logo.png" alt="Londinium"></a></div>
 
 </div>
 <!-- /navbar -->

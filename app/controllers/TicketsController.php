@@ -9,22 +9,40 @@ class TicketsController extends BaseController {
 
         $this->beforeFilter('has_permission:tickets.create', array('only' => array('create','store')));
         $this->beforeFilter('has_permission:tickets.edit', array('only' => array('update')));
-        $this->beforeFilter('has_permission:tickets.view', array('only' => array('all')));
+        $this->beforeFilter('has_permission:tickets.all', array('only' => array('all')));
         $this->beforeFilter('has_permission:tickets.delete', array('only' => array('delete')));
 
     }
 
     public function create(){
-        $companies = Company::all();
 
-        if(sizeof($companies)>0){
-            $departments = Department::where('company_id',$companies[0]->id)->get();
-        }else{
-            $departments = [];
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+        }else {
+
+            $companies = Company::all();
+
+            if(sizeof($companies)>0){
+                $departments = Department::where('company_id',$companies[0]->id)->get();
+            }else{
+                $departments = [];
+            }
+
+            $this->data['companies'] = $companies;
+            $this->data['departments'] = $departments;
+
         }
 
-        $this->data['companies'] = $companies;
-        $this->data['departments'] = $departments;
 
         return View::make('tickets.create',$this->data);
     }

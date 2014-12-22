@@ -12,14 +12,32 @@ class CustomersController extends BaseController {
 
         $this->beforeFilter('has_permission:customers.create', array('only' => array('create','store')));
         $this->beforeFilter('has_permission:customers.edit', array('only' => array('edit','update')));
-        $this->beforeFilter('has_permission:customers.view', array('only' => array('all')));
+        $this->beforeFilter('has_permission:customers.all', array('only' => array('all')));
         $this->beforeFilter('has_permission:customers.delete', array('only' => array('delete')));
     }
 
     public function create(){
 
+
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+        }else {
+
+            $this->data['companies'] = Company::all();
+
+        }
+
         $this->data['timezones'] = Config::get("timezones");
-        $this->data['companies'] = Company::all();
         $this->data['countries'] = DB::table('countries')->get();
 
         return View::make('customers.create',$this->data);

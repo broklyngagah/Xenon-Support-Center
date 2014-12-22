@@ -62,6 +62,29 @@
 					</select>
 				</div>
 				<div class="col-md-6">
+					<label>Upload files:</label>
+					<input type="file" name="attachment" class="styled form-control" id="report-screenshot">
+					<span class="help-block">Accepted formats: rar, zip . Max file size 10Mb</span>
+				</div>
+			</div>
+		</div>
+
+
+		@if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$company->id}}"/>
+			<input type="hidden" name="department" value="{{$department->id}}"/>
+
+		@elseif(\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$company->id}}"/>
+			<input type="hidden" name="department" value="{{$department->id}}"/>
+
+		@else
+
+		<div class="form-group">
+			<div class="row">
+				<div class="col-md-6">
 					<label>Company:</label>
 					<select id="company" name="company" data-placeholder="Choose your company..." class="form-control" tabindex="2">
 						@foreach($companies as $company)
@@ -69,10 +92,6 @@
 						@endforeach
 					</select>
 				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="row">
 				<div class="col-md-6">
 					<label>Department:</label>
 					<select data-placeholder="Choose issue type..." class="form-control" name="department" id="department" tabindex="2">
@@ -81,13 +100,11 @@
 						@endforeach
 					</select>
 				</div>
-				<div class="col-md-6">
-					<label>Upload files:</label>
-					<input type="file" name="attachment" class="styled form-control" id="report-screenshot">
-					<span class="help-block">Accepted formats: rar, zip . Max file size 10Mb</span>
-				</div>
 			</div>
 		</div>
+
+		@endif
+
 		<div class="form-group">
 			<label>Subject:</label>
 			<input name="subject" placeholder="Subject." type="text" class="elastic form-control"/>

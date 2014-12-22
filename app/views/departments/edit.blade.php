@@ -44,16 +44,29 @@
             </div>
          </div>
 
-         <div class="form-group">
-             <label class="col-sm-2 control-label">Company</label>
-             <div class="col-sm-10">
-                 <select class="form-control" name="company" id="companies">
-                    @foreach($companies as $company)
-                        <option {{$department->company->id==$company->id?"selected":""}} value="{{$company->id}}">{{$company->name}}</option>
-                    @endforeach
-                 </select>
-             </div>
-         </div>
+		@if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$department->company->id}}"/>
+
+		@elseif(\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$department->company->id}}"/>
+
+		@else
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Company</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="company" id="companies">
+						@foreach($companies as $company)
+							<option {{$department->company->id==$company->id?"selected":""}} value="{{$company->id}}">{{$company->name}}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
+
+		@endif
+
 
          <div class="form-group">
             <label class="col-sm-2 control-label">Select Permissions</label>

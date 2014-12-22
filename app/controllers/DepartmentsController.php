@@ -21,14 +21,41 @@ class DepartmentsController extends BaseController
 
     public function create()
     {
-        $this->data["admins"] = [];
-        $this->data['companies'] = Company::all();
 
-        if(sizeof($this->data['companies'])>0){
-            $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($this->data['companies'][0]->id);
+        $this->data["admins"] = [];
+
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $department = Department::where('id',$department_admin->department_id)->first();
+            $company = Company::where('id',$department->company_id)->first();
+
+            $this->data['company'] = $company;
+
+            $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($company->id);
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_admin = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $department = Department::where('id',$department_admin->department_id)->first();
+            $company = Company::where('id',$department->company_id)->first();
+
+            $this->data['company'] = $company;
+
+            $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($company->id);
+
+        }else {
+
+            $this->data['companies'] = Company::all();
+
+            if(sizeof($this->data['companies'])>0){
+                $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($this->data['companies'][0]->id);
+            }
+
         }
 
         $this->data['permissions'] = Permissions::all();
+
         return View::make('departments.create', $this->data);
     }
 

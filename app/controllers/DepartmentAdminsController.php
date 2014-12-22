@@ -23,24 +23,41 @@ class DepartmentAdminsController extends BaseController
 
     public function create()
     {
-        $companies = Company::all();
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
 
-        $this->data['departments'] = [];
-        $this->data['companies'] = $companies;
-        $this->data["countries"] = DB::table("countries")->remember(60)->get();
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
 
-        if (sizeof($companies) > 0) {
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
 
-            $department_ids = Department::where('company_id',$companies[0]->id)->lists('id');
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
 
-            if(sizeof($department_ids)>0){
-                foreach($department_ids as $department_id){
-                    if(sizeof(DepartmentAdmins::where('department_id',$department_id)->get())<=0)
-                        array_push($this->data['departments'],Department::whereIn("id", $department_ids)->first());
+        }else {
+
+            $companies = Company::all();
+
+            $this->data['departments'] = [];
+            $this->data['companies'] = $companies;
+
+            if (sizeof($companies) > 0) {
+
+                $department_ids = Department::where('company_id',$companies[0]->id)->lists('id');
+
+                if(sizeof($department_ids)>0){
+                    foreach($department_ids as $department_id){
+                        if(sizeof(DepartmentAdmins::where('department_id',$department_id)->get())<=0)
+                            array_push($this->data['departments'],Department::whereIn("id", $department_ids)->first());
+                    }
                 }
             }
+
         }
 
+
+        $this->data["countries"] = DB::table("countries")->remember(60)->get();
         $this->data['timezones'] = Config::get("timezones");
 
         return View::make('department_admins.create', $this->data);

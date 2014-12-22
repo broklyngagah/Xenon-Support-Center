@@ -109,6 +109,16 @@
             </div>
         </div>
 
+
+		@if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$user->company->id}}"/>
+
+		@elseif(\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$user->company->id}}"/>
+
+		@else
         <div class="form-group">
             <label class="col-sm-2 control-label">Company</label>
             <div class="col-sm-10">
@@ -119,6 +129,7 @@
                 </select>
             </div>
         </div>
+		@endif
 
 
 		<div class="form-actions text-right">

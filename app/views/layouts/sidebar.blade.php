@@ -121,7 +121,6 @@
 
             @endif
 
-            @if($settings->mailchimp->use_mailchimp&&Permissions::hasPermission('mailchimp.pair_email'))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='templates')?"class='active'":""}}>
                 <a href="" class="expand"><span>Mailchimp Templates</span> <i class="icon-profile"></i></a>
                 <ul>
@@ -133,8 +132,7 @@
                     </li>
                 </ul>
             </li>
-            @endif
-
+            
             @if(\KodeInfo\Utilities\Utils::isAdmin(Auth::user()->id))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='permissions')?"class='active'":""}}>
                 <a href="/permissions/all"> <i class="icon-key"></i> <span>Permissions</span> </a>

@@ -115,26 +115,42 @@
         		</select>
         	</div>
         </div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">Select Company</label>
-			<div class="col-sm-10">
-				<select id="companies" class="form-control" name="company">
-					@foreach($companies as $company)
-					    <option {{Input::old('company_id')==$company->id?"selected":""}} value="{{$company->id}}">{{$company->name}}</option>
-					@endforeach
-				</select>
+
+		@if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$company->id}}"/>
+			<input type="hidden" name="department" value="{{$department->id}}"/>
+
+		@elseif(\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$company->id}}"/>
+			<input type="hidden" name="department" value="{{$department->id}}"/>
+
+		@else
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Select Company</label>
+				<div class="col-sm-10">
+					<select id="companies" class="form-control" name="company">
+						@foreach($companies as $company)
+							<option {{Input::old('company_id')==$company->id?"selected":""}} value="{{$company->id}}">{{$company->name}}</option>
+						@endforeach
+					</select>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">Select Department</label>
-			<div class="col-sm-10">
-				<select id="departments" class="form-control" name="department">
-					@foreach($departments as $department)
-					<option {{Input::old('department_id')==$department->id?"selected":""}} value="{{$department->id}}">{{$department->name}}</option>
-					@endforeach
-				</select>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Select Department</label>
+				<div class="col-sm-10">
+					<select id="departments" class="form-control" name="department">
+						@foreach($departments as $department)
+							<option {{Input::old('department_id')==$department->id?"selected":""}} value="{{$department->id}}">{{$department->name}}</option>
+						@endforeach
+					</select>
+				</div>
 			</div>
-		</div>
+
+
+		@endif
 
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Select Permissions</label>

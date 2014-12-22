@@ -21,8 +21,19 @@ class OperatorsController extends BaseController {
     public function create(){
 
         if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
             $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
             $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+            $permissions_keys = explode(",",$this->data['department']);
+            $permissions = Permissions::whereIn('key',$permissions_keys)->get();
+            $this->data['permissions'] = $permissions;
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
             $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
 
             $permissions_keys = explode(",",$this->data['department']);

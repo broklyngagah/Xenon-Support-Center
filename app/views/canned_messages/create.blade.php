@@ -48,33 +48,43 @@
                 </div>
             </div>
 
-            @if(!\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id))
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Company</label>
+            @if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id))
 
-                <div class="col-sm-10">
-                    <select class="form-control" name="company" id="company">
-                        @foreach($companies as $company)
-                            <option value="{{$company->id}}">{{$company->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+                <input type="hidden" name="company" value="{{$company->id}}"/>
+                <input type="hidden" name="department" value="{{$department->id}}"/>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Department</label>
+            @elseif(\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id))
 
-                <div class="col-sm-10">
-                    <select class="form-control" name="department" id="department">
-                        @foreach($departments as $department)
-                            <option value="{{$department->id}}">{{$department->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+                <input type="hidden" name="company" value="{{$company->id}}"/>
+                <input type="hidden" name="department" value="{{$department->id}}"/>
+                <input type="hidden" name="operator" value="{{$operator->id}}"/>
+
             @else
-            <input type="hidden" name="company" value="{{$company->id}}"/>
-            <input type="hidden" name="department" value="{{$department->id}}"/>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Company</label>
+
+                    <div class="col-sm-10">
+                        <select class="form-control" name="company" id="company">
+                            @foreach($companies as $company)
+                                <option value="{{$company->id}}">{{$company->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Department</label>
+
+                    <div class="col-sm-10">
+                        <select class="form-control" name="department" id="department">
+                            @foreach($departments as $department)
+                                <option value="{{$department->id}}">{{$department->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
             @endif
 
             <div class="form-group">

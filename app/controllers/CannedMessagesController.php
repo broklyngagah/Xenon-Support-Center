@@ -18,14 +18,16 @@ class CannedMessagesController extends BaseController
         if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
 
             $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
-
-            $this->data['department'] = Department::where('id', $department_admin->department_id)->first();
-
             $this->data['department'] = Department::where('id', $department_admin->department_id)->first();
             $this->data["company"] = Company::where('id', $this->data['department']->company_id)->first();
             $this->data['operators'] = API::getDepartmentOperators($department_admin->department_id);
 
         } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_admin = OperatorsDepartment::where('user_id', Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id', $department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id', $this->data['department']->company_id)->first();
+            $this->data['operator'] = User::where('id',$department_admin->user_id)->first();
 
         } else {
 

@@ -3,7 +3,7 @@
     $.fn.K15_Initialize = function (options) {
 
         var K15 = {
-            domain: "http://support.dev",
+            domain: "http://162.243.17.238/",
             user_id: 0,
             thread_id: 0,
             last_message_id: 0,

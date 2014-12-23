@@ -111,7 +111,7 @@
 		</div>
 		<div class="form-group">
 			<label>Additional information:</label>
-			<textarea rows="5" cols="5" name="description" placeholder="Add info about your ticket." class="elastic form-control"></textarea>
+			<textarea rows="5" cols="5" name="description" placeholder="Add info about your ticket." class="elastic form-control editor"></textarea>
 		</div>
 		<div class="form-actions text-right">
 			<input type="reset" value="Reset" class="btn btn-danger">

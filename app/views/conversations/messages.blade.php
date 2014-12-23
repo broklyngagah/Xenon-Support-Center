@@ -101,7 +101,7 @@
                         {{$message_str}}
                     </div>
                     <div id="msg"></div>
-                    <textarea {{isset($closed_conversation)?"disabled='disabled'":""}} id="message_body" class="form-control" rows="3" cols="1"
+                    <textarea {{isset($closed_conversation)?"disabled='disabled'":""}} id="message_body" class="form-control editor" rows="3" cols="1"
                                                                                placeholder="Enter your message..."></textarea>
 
                     <div class="message-controls">

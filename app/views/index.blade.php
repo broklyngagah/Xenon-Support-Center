@@ -4,7 +4,7 @@
 <!-- Page header -->
 <div class="page-header">
 	<div class="page-title">
-		<h3>Dashboard <small>Welcome Admin.</small></h3>
+		<h3>XENON Support <small>Welcome {{Auth::user()->name}}.</small></h3>
 	</div>
 </div>
 <!-- /page header -->

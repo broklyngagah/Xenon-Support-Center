@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Londinium - premium responsive admin template by Eugene Kopyov</title>
+		<title>Xenon Support System</title>
 
 		{{HTML::style("/assets/css/bootstrap.min.css")}}
 		{{HTML::style("/assets/css/londinium-theme.min.css")}}

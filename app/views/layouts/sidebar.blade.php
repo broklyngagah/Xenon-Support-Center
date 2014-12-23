@@ -132,7 +132,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             @if(\KodeInfo\Utilities\Utils::isAdmin(Auth::user()->id))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='permissions')?"class='active'":""}}>
                 <a href="/permissions/all"> <i class="icon-key"></i> <span>Permissions</span> </a>

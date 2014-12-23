@@ -54,7 +54,7 @@ class AuthController extends BaseController
     }
 
     public function getChangePassword(){
-        return View::make('change_password',$this->data);
+        return View::make('change-password',$this->data);
     }
 
     public function postChangePassword(){

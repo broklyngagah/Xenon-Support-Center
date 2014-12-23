@@ -24,6 +24,8 @@ Route::get('/reset/{email}/{code}', 'AuthController@getReset');
 Route::get('/activate/{user_id}/{activation_code}', 'AuthController@activateUser');
 Route::get('/facebook', 'AuthController@signInWithFacebook');
 Route::get('/logout', 'AuthController@logout');
+Route::get('/change_password', 'AuthController@getChangePassword');
+Route::post('/change_password', 'AuthController@postChangePassword');
 
 Route::group(['filter' => 'csrf'], function() {
     Route::post('/login', 'AuthController@postLogin');

@@ -44,6 +44,9 @@
 				<li>
 					<a href="/profile"><i class="icon-user"></i> Profile</a>
 				</li>
+				<li>
+					<a href="/change_password"><i class="icon-lock"></i> Change Password</a>
+				</li>
 				@if(Auth::user()->is_online==0)
 					<li>
 						<a href="/api/change_status"><i class="icon-bubble4"></i> Go Online</a>

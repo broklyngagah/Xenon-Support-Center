@@ -132,6 +132,11 @@ class ConversationsController extends BaseController
 
         $online_users = OnlineUsers::where('thread_id', $thread_id)->first();
 
+        if(empty($online_users)){
+            Session::flash('error_msg','Another operator is in chat or conversation has been closed');
+            return Redirect::to('/conversations/all');
+        }
+
         if($online_users->operator_id>0&&$online_users->operator_id!=Auth::user()->id){
             Session::flash('error_msg','Another operator is already in chat . Ask the admin/operator to transfer the chat');
             return Redirect::to('/conversations/all');

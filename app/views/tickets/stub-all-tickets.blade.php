@@ -8,6 +8,7 @@
     <th>Subject</th>
     <th>Priority</th>
     <th>Status</th>
+    <th>Transfer</th>
     <th>Edit</th>
     <th>Delete</th>
 </tr>
@@ -57,6 +58,7 @@
             <td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> Accept </a></td>
         @endif
 
+        <td><a href="/tickets/transfer/{{$ticket->id}}" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> Transfer </a></td>
         <td><a href="/tickets/delete/{{$ticket->thread_id}}" class="btn btn-danger btn-sm"> <i class="icon-remove3"></i> Delete </a></td>
     </tr>
 @endforeach

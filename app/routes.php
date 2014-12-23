@@ -170,12 +170,14 @@ Route::group(['prefix' => 'tickets'], function () {
     Route::get('delete/{ticket_id}', 'TicketsController@delete');
     Route::get('read/{ticket_id}', 'TicketsController@read');
     Route::get('get_ticket_messages', 'TicketsController@getTicketMessages');
+    Route::get('transfer/{ticket_id}', 'TicketsController@transfer');
 
     Route::get('customers/{customer_id}/{status}', 'TicketsController@getStatusTickets');
 
     Route::group(['filter' => 'csrf'], function() {
         Route::post('create', 'TicketsController@store');
         Route::post('update', 'TicketsController@update');
+        Route::post('transfer/{ticket_id}', 'TicketsController@storeTransfer');
     });
 });
 

@@ -115,6 +115,12 @@
                                data-loading-text="<i class='icon-spinner7 spin'></i> Processing">
                                 End Chat
                             </a>
+
+                            <a href="/conversations/transfer/{{$thread->id}}" {{isset($closed_conversation)?"disabled='disabled'":""}} id="transfer_chat" type="button" class="btn btn-primary btn-loading"
+                               data-loading-text="<i class='icon-spinner7 spin'></i> Processing">
+                                Transfer Chat
+                            </a>
+
                         </div>
                     </div>
                 </div>

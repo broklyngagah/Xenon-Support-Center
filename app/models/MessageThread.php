@@ -77,6 +77,8 @@ class MessageThread extends Eloquent {
 
     public static function getTicketMessages($thread_id,$last_message_id){
 
+        ThreadMessages::where('thread_id',$thread_id)->where('sender_id',0)->update(['sender_id'=>Auth::user()->id]);
+
         $thread = MessageThread::find($thread_id);
 
         if($last_message_id > 0)

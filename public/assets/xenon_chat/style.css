@@ -1,4 +1,4 @@
-#k15-wrapper {
+#xenon-wrapper {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 20px;
@@ -10,18 +10,18 @@
     z-index: 9999;
 }
 
-#k15-wrapper .panel{
+#xenon-wrapper .panel{
     margin-bottom: 0px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
-#k15-wrapper .panel .panel-heading{
+#xenon-wrapper .panel .panel-heading{
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
 
-#k15-wrapper .panel .panel-heading:hover{
+#xenon-wrapper .panel .panel-heading:hover{
    cursor: pointer;
 }
 
@@ -73,7 +73,7 @@
     margin-right: 5px;
 }
 
-#k15-chat
+#xenon-chat
 {
     overflow-y: scroll;
     height: 250px;

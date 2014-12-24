@@ -8,6 +8,7 @@
     <th>Started On</th>
     <th>Locked</th>
     <th>Accept</th>
+    <th>Transfer</th>
     <th>Close</th>
 </tr>
 </thead>
@@ -33,6 +34,9 @@
         @if(isset($online->operator)&&$online->operator->id!=Auth::user()->id)
             <td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> Accept </a></td>
         @endif
+
+        <td><a href="/conversations/transfer/{{$online->id}}" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> Transfer </a></td>
+
 
         <td><a href="/conversations/close/{{$online->thread_id}}" class="btn btn-danger btn-sm"> <i class="icon-lock3"></i> Close </a></td>
     </tr>

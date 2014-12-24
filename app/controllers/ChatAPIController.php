@@ -190,6 +190,8 @@ class ChatAPIController extends BaseController {
                         $online_user->user_id = $user->id;
                         $online_user->thread_id = $thread['thread_id'];
                         $online_user->operator_id = 0;
+                        $online_user->company_id = Input::get('company_id');
+                        $online_user->department_id = Input::get('department');
                         $online_user->locked_by_operator = 0;
                         $online_user->requested_on = \Carbon\Carbon::now();
                         $online_user->token = $token;
@@ -270,6 +272,8 @@ class ChatAPIController extends BaseController {
                     $online_user->user_id = $user->id;
                     $online_user->thread_id = $thread['thread_id'];
                     $online_user->operator_id = 0;
+                    $online_user->company_id = Input::get('company_id');
+                    $online_user->department_id = Input::get('department');
                     $online_user->locked_by_operator = 0;
                     $online_user->requested_on = \Carbon\Carbon::now();
                     $online_user->token = $token;
@@ -448,6 +452,8 @@ class ChatAPIController extends BaseController {
         $closed_conversation->user_id = $online_user->user_id;
         $closed_conversation->thread_id = $online_user->thread_id;
         $closed_conversation->operator_id = $online_user->operator_id>0?$online_user->operator_id:0;
+        $closed_conversation->company_id = $online_user->company_id;
+        $closed_conversation->department_id = $online_user->department_id;
         $closed_conversation->requested_on = $online_user->requested_on;
         $closed_conversation->started_on = $online_user->started_on>0?$online_user->started_on:\Carbon\Carbon::now();
         $closed_conversation->token = $online_user->token;

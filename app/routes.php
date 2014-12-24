@@ -111,6 +111,9 @@ Route::group(['prefix' => 'conversations'], function () {
     Route::get('get_server_messages', 'ConversationsController@getServerMessages');
     Route::get('closed', 'ConversationsController@closedConversations');
     Route::post('send_message', 'ConversationsController@sendMessage');
+
+    Route::get('transfer/{transfer_id}', 'ConversationsController@transfer');
+    Route::post('transfer/{transfer_id}', 'ConversationsController@storeTransfer');
 });
 
 //Blocking

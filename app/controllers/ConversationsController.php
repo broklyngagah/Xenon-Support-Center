@@ -82,6 +82,66 @@ class ConversationsController extends BaseController
         return View::make('conversations.closed', $this->data);
     }
 
+    public function transfer($onlineusers_id)
+    {
+        $online_users = OnlineUsers::find($onlineusers_id);
+        $companies = Company::all();
+
+        $this->data['operators'] = [];
+
+        if (sizeof($companies) > 0) {
+            $departments = Department::where('company_id', $online_users->company_id)->get();
+            $department_ids = Department::where('company_id', $online_users->company_id)->lists('id');
+
+            if(sizeof($department_ids)>0){
+                $operator_ids = OperatorsDepartment::whereIn('department_id', $department_ids)->lists('user_id');
+
+                if(sizeof($operator_ids)>0){
+                    $this->data['operators'] = User::whereIn('id', $operator_ids)->get();
+                }
+
+            }
+
+        } else {
+            $departments = [];
+        }
+
+        $this->data['companies'] = $companies;
+        $this->data['departments'] = $departments;
+        $this->data['online_users'] = $online_users;
+        $this->data['company_id'] = $online_users->company_id;
+        $this->data['department_id'] = $online_users->department_id;
+        $this->data['customer'] = User::find($online_users->user_id);
+
+        return View::make('conversations.transfer', $this->data);
+    }
+
+    public function storeTransfer(){
+
+        if(Input::has('conversation_id')){
+
+            $online_users = OnlineUsers::find(Input::get('conversation_id'));
+
+            ThreadMessages::where('thread_id',$online_users->thread_id)->where('sender_id',$online_users->operator_id)->update(['sender_id'=>Input::get('operator')]);
+
+            $online_users->company_id = Input::get('company');
+            $online_users->department_id = Input::get('department');
+            $online_users->operator_id = Input::get('operator');
+
+            $online_users->save();
+
+            Session::flash('success_msg','Conversation transferred successfully');
+            return Redirect::to('/conversations/all');
+
+
+        }else{
+            Session::flash('error_msg','Cannot transfer ticket');
+            return Redirect::back();
+        }
+
+    }
+
+
     public function all()
     {
 
@@ -93,6 +153,21 @@ class ConversationsController extends BaseController
             if ($user->operator_id > 0)
                 $user->operator = User::find($user->operator_id);
         }
+
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+        }
+
 
         $this->data['online_users'] = $online_users;
 
@@ -107,6 +182,8 @@ class ConversationsController extends BaseController
         $closed_conversation->user_id = $online_user->user_id;
         $closed_conversation->thread_id = $online_user->thread_id;
         $closed_conversation->operator_id = $online_user->operator_id>0?$online_user->operator_id:Auth::user()->id;
+        $closed_conversation->company_id = $online_user->company_id;
+        $closed_conversation->department_id = $online_user->department_id;
         $closed_conversation->requested_on = $online_user->requested_on;
         $closed_conversation->started_on = $online_user->started_on>0?$online_user->started_on:\Carbon\Carbon::now();
         $closed_conversation->token = $online_user->token;

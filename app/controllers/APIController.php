@@ -33,7 +33,11 @@ class APIController extends BaseController {
 
     public function startupData(){
 
-        $online_users = OnlineUsers::all();
+        if(Input::get('company_id',0)>0&&Input::get('department_id',0)>0){
+            $online_users = OnlineUsers::where('company_id',Input::get('company_id'))->where('department_id',Input::get('department_id'))->get();
+        }else{
+            $online_users = OnlineUsers::all();
+        }
 
         foreach($online_users as $user){
             $user->user = User::find($user->user_id);

@@ -29,6 +29,7 @@
                     <th>Started On</th>
                     <th>Locked</th>
                     <th>Accept</th>
+                    <th>Transfer</th>
                     <th>Close</th>
                 </tr>
                 </thead>
@@ -57,6 +58,8 @@
                             <td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> Accept </a></td>
                         @endif
 
+                        <td><a href="/conversations/transfer/{{$online->id}}" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> Transfer </a></td>
+
                         <td><a href="/conversations/close/{{$online->thread_id}}" class="btn btn-danger btn-sm"> <i
                                         class="icon-lock3"></i> Close </a></td>
                     </tr>
@@ -74,13 +77,16 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            var department_id = {{isset($department)?$department->id:0}} ;
+            var company_id = {{isset($company)?$company->id:0}} ;
+
             var interval = 5000;  // 1000 = 1 second, 3000 = 3 seconds
 
             function doStartup() {
 
                 $.ajax({
                     type: 'GET',
-                    url: '/api/startup_data',
+                    url: '/api/startup_data?department_id='+department_id+'&company_id='+company_id,
                     success: function (data) {
 
                         var obj = JSON.parse(data);

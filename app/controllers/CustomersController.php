@@ -145,7 +145,29 @@ class CustomersController extends BaseController {
     public function all()
     {
 
-        $customer_ids = CompanyCustomers::lists('customer_id');
+        $customer_ids = [];
+
+        if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
+
+            $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+
+            $customer_ids = CompanyCustomers::where("company_id",$department->company_id)->lists('customer_id');
+
+        } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_admin = OperatorsDepartment::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+
+            $customer_ids = CompanyCustomers::where("company_id",$department->company_id)->lists('customer_id');
+
+        } else {
+
+            $customer_ids = CompanyCustomers::lists('customer_id');
+
+        }
+
+
 
         if(sizeof($customer_ids)>0){
             $this->data["customers"] = User::whereIn("id",$customer_ids)->get();

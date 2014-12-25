@@ -92,9 +92,9 @@
                         var obj = JSON.parse(data);
                         var table = $('#online_users');
 
-                        table.dataTable().fnDestroy();
+                        //table.dataTable().fnDestroy();
                         table.html(obj.online_users);
-                        table.dataTable();
+                        //table.dataTable();
 
                     },
                     complete: function (data) {

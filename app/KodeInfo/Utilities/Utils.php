@@ -8,6 +8,11 @@ use DB;
 class Utils
 {
 
+    static function canViewBackend($user_id)
+    {
+        return self::inGroup('admin', $user_id) || self::inGroup('operator', $user_id) || self::inGroup('department-admin', $user_id) || self::inGroup('customer', $user_id);
+    }
+
     static function isBackendUser($user_id)
     {
         return self::inGroup('admin', $user_id) || self::inGroup('operator', $user_id) || self::inGroup('department-admin', $user_id);
@@ -26,6 +31,11 @@ class Utils
     static function isOperator($user_id)
     {
         return self::inGroup('operator', $user_id);
+    }
+
+    static function isCustomer($user_id)
+    {
+        return self::inGroup('customer', $user_id);
     }
 
     static function inGroup($group_name_or_id, $user_id)

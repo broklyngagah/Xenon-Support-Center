@@ -53,6 +53,9 @@ class CannedMessagesController extends BaseController
 
     public function store()
     {
+
+        //TODO validate if inputs changed in html directly .
+
         $v = Validator::make(["message" => Input::get("message"), "company" => Input::get("company"),
             "department" => Input::get("department"), "operator" => Input::get("operator")],
             ["message" => "required", "company" => "required|exists:companies,id",
@@ -89,7 +92,28 @@ class CannedMessagesController extends BaseController
 
     public function all()
     {
-        $messages = CannedMessages::all();
+
+        if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
+
+            $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+            $company = Company::where('id', $department->company_id)->first();
+
+            $messages = CannedMessages::where('company_id',$company->id)->where('department_id',$department->id)->get();
+
+        } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_admin = OperatorsDepartment::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+            $company = Company::where('id', $department->company_id)->first();
+
+            $messages = CannedMessages::where('company_id',$company->id)->where('department_id',$department->id)->where('operator_id',Auth::user()->id)->get();
+
+        } else {
+
+            $messages = CannedMessages::all();
+
+        }
 
         foreach ($messages as $message) {
 

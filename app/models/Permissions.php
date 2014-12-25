@@ -45,13 +45,27 @@ class Permissions extends Eloquent
             $company_department_admin = DepartmentAdmins::where("user_id", Auth::user()->id)->first();
 
             if(empty($company_department_admin)){
-                //Not connected to any department so permissions available
+                Session::flash("error_msg","You are not connected to any department . Please contact your company admin");
+                //Not connected to any department so no permissions available
                 return false;
             }
 
             $department = Department::find($company_department_admin->department_id);
 
             $permissions = explode(",", $department->permissions);
+
+            if (in_array($permission, $permissions)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        if ($group->name == "operator") {
+
+            $operator = User::find(Auth::user()->id);
+
+            $permissions = explode(",", $operator->permissions);
 
             if (in_array($permission, $permissions)) {
                 return true;

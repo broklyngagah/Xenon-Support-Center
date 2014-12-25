@@ -209,9 +209,31 @@ class DepartmentAdminsController extends BaseController
     public function all()
     {
 
-        $group = Groups::where("name", "department-admin")->first();
+        $user_ids = [];
 
-        $user_ids = UsersGroups::where("group_id", $group->id)->lists("user_id");
+        if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
+
+            $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+
+            $department_ids = Department::where('company_id',$department->company_id)->lists('id');
+
+            $user_ids = DepartmentAdmins::whereIn('department_id',$department_ids)->lists('user_id');
+
+        } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+
+            $department_ids = Department::where('company_id',$department->company_id)->lists('id');
+
+            $user_ids = DepartmentAdmins::whereIn('department_id',$department_ids)->lists('user_id');
+
+        } else {
+            $group = Groups::where("name", "department-admin")->first();
+            $user_ids = UsersGroups::where("group_id", $group->id)->lists("user_id");
+        }
+
 
         if (sizeof($user_ids) > 0) {
             $this->data["admins"] = User::whereIn("id", $user_ids)->get();

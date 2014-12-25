@@ -11,8 +11,8 @@ class TicketsController extends BaseController
 
         $this->beforeFilter('has_permission:tickets.create', array('only' => array('create', 'store')));
         $this->beforeFilter('has_permission:tickets.edit', array('only' => array('update')));
-        $this->beforeFilter('has_permission:tickets.all', array('only' => array('all')));
         $this->beforeFilter('has_permission:tickets.delete', array('only' => array('delete')));
+        $this->beforeFilter('has_permission:tickets.all', array('only' => array('all')));
 
     }
 
@@ -256,6 +256,20 @@ class TicketsController extends BaseController
             if ($ticket->operator_id > 0) {
                 $ticket->operator = User::where('id', $ticket->operator_id)->first();
             }
+        }
+
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
         }
 
         $this->data['tickets_all_str'] = View::make("tickets.stub-all-tickets", ['tickets' => $tickets])->render();

@@ -206,9 +206,17 @@ class OperatorsController extends BaseController {
 
     public function all(){
 
-        $group = Groups::where("name","operator")->first();
+        if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
 
-        $user_ids = UsersGroups::where("group_id",$group->id)->lists("user_id");
+            $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+
+            $user_ids = OperatorsDepartment::where('department_id',$department->id)->lists('user_id');
+
+        } else {
+            $group = Groups::where("name","operator")->first();
+            $user_ids = UsersGroups::where("group_id",$group->id)->lists("user_id");
+        }
 
         if(sizeof($user_ids)>0){
             $this->data["operators"] = User::whereIn("id",$user_ids)->get();

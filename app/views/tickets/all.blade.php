@@ -44,21 +44,24 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
+		var department_id = {{isset($department)?$department->id:0}} ;
+		var company_id = {{isset($company)?$company->id:0}} ;
+
 		var interval = 5000;  // 1000 = 1 second, 3000 = 3 seconds
 
 		function doStartup() {
 
 			$.ajax({
 				type: 'GET',
-				url: '/api/tickets_all_refresh',
+				url: '/api/tickets_all_refresh?department_id='+department_id+'&company_id='+company_id,
 				success: function (data) {
 
 					var obj = JSON.parse(data);
 					var table = $('#tickets_all');
 
-					table.dataTable().fnDestroy();
+					//table.dataTable().fnDestroy();
 					table.html(obj.tickets_all);
-					table.dataTable();
+					//table.dataTable();
 
 				},
 				complete: function (data) {

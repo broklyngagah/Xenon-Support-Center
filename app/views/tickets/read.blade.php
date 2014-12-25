@@ -169,7 +169,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label>Upload files:</label>
-                                <input type="file" name="attachment" class="styled form-control">
+                                <input id="attachment" type="file" name="attachment" class="styled form-control">
                                 <span class="help-block">Accepted formats: rar, zip . Max file size 10Mb</span>
                             </div>
                         </div>
@@ -218,7 +218,7 @@
 
                 var options = {
                     success: showResponse,  // post-submit callback
-                    resetForm: true
+                    resetForm: false
                 };
 
                 // inside event callbacks 'this' is the DOM element so we first
@@ -234,6 +234,9 @@
 
                 var json = JSON.parse(responseText);
 
+                $('#reply_submit').not('select').trigger('reset');
+                $('#uniform-attachment .filename').html("No file selected");
+
                 if(json.result==0){
                     $('#reply_errors').html(json.errors);
                     $('#reply_errors').show();
@@ -248,8 +251,6 @@
             var interval = 3000;  // 1000 = 1 second, 3000 = 3 seconds
 
             function getMessages() {
-
-                console.log("getting messages...");
 
                 $.ajax({
                     'type': 'GET',

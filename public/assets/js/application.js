@@ -11,7 +11,13 @@
 *
 * ======================================================== */
 
-
+var global_table_options = {
+	"bJQueryUI": false,
+	"bAutoWidth": false,
+	"sPaginationType": "full_numbers",
+	"bSort": false,
+	"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>'
+};
 
 $(function() {
 
@@ -26,12 +32,8 @@ $(function() {
 		"bJQueryUI": false,
 		"bAutoWidth": false,
 		"sPaginationType": "full_numbers",
-		"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-		"oLanguage": {
-			"sSearch": "<span>Filter:</span> _INPUT_",
-			"sLengthMenu": "<span>Show entries:</span> _MENU_",
-			"oPaginate": { "sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<" }
-		}
+		"bSort": false,
+		"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>'
     });
 
 	//===== Table with selectable rows =====//
@@ -136,6 +138,7 @@ $(function() {
 	oTable = $('.datatable-custom-sort table').dataTable({
 		"bJQueryUI": false,
 		"bAutoWidth": false,
+		"bSort": false,
 		"sPaginationType": "full_numbers",
 		"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		"oLanguage": {

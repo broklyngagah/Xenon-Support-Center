@@ -54,7 +54,11 @@ class APIController extends BaseController {
 
     public function ticketsRefresh(){
 
-        $tickets = Tickets::orderBy('priority','desc')->get();
+        if(Input::get('company_id',0)>0&&Input::get('department_id',0)>0){
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',Input::get('company_id'))->where('department_id',Input::get('department_id'))->get();
+        }else{
+            $tickets = Tickets::orderBy('priority','desc')->get();
+        }
 
         foreach($tickets as $ticket){
             $ticket->customer = User::where('id',$ticket->customer_id)->first();

@@ -33,7 +33,7 @@ Route::filter('has_permission', function ($route, $request, $permission) {
 
     if (Auth::check()) {
 
-        if (!\KodeInfo\Utilities\Utils::isBackendUser(Auth::user()->id)) {
+        if (!\KodeInfo\Utilities\Utils::canViewBackend(Auth::user()->id)) {
             //Not a backend user then fuckoff
             Auth::logout();
             Session::flush();
@@ -42,7 +42,10 @@ Route::filter('has_permission', function ($route, $request, $permission) {
         }
 
         if (!Permissions::hasPermission($permission)) {
-            Session::flash('error_msg', 'Access has been denied. Please contact an administrator to escalate your rights.');
+
+            $permission_obj = Permissions::where('key',$permission)->pluck('text');
+
+            Session::flash('error_msg', 'Access has been denied . You dont have following permission " '.$permission_obj.' " . Please contact an administrator to escalate your rights.');
             return Redirect::to('/dashboard');
         }
 
@@ -56,7 +59,7 @@ Route::filter('has_permission', function ($route, $request, $permission) {
 Route::filter('backend', function () {
 
     if (Auth::check()) {
-        if (!\KodeInfo\Utilities\Utils::isBackendUser(Auth::user()->id)) {
+        if (!\KodeInfo\Utilities\Utils::canViewBackend(Auth::user()->id)) {
             Auth::logout();
             Session::flush();
             Session::flash('error_msg', 'Access has been denied. Please contact an administrator to escalate your rights.');

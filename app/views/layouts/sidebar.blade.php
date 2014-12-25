@@ -3,11 +3,9 @@
     <div class="sidebar-content">
         <!-- User dropdown -->
         <div class="user-menu dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="width:50%;margin-left:10%;"
-                                                                            src="{{Auth::user()->avatar}}"
-                                                                            alt="{{Auth::user()->name}}">
-
-                <div class="user-info">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img style="width:50%;margin-left:10%;" src="{{Auth::user()->avatar}}" alt="{{Auth::user()->name}}">
+                <div class="user-info" style="width:100%;">
                     {{Auth::user()->name}} <span>{{Str::limit(Auth::user()->bio,80,'...')}}</span>
                 </div>
             </a>
@@ -43,6 +41,21 @@
             <li>
                 <a href="/"> <i class="icon-screen2"></i> <span>Dashboard </span> </a>
             </li>
+
+            @if(\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id))
+                <li>
+                   <a href="/customer/tickets/create"> <i class="icon-screen2"></i> <span>Create New Ticket </span> </a>
+                </li>
+                <li>
+                    <a href="/customer/tickets/all"> <i class="icon-screen2"></i> <span>All Tickets </span> </a>
+                </li>
+                <li>
+                    <a href="/customer/tickets/pending"> <i class="icon-screen2"></i> <span>Pending Tickets </span> </a>
+                </li>
+                <li>
+                    <a href="/customer/tickets/resolved"> <i class="icon-screen2"></i> <span>Resolved Tickets </span> </a>
+                </li>
+            @endif
 
             @if(Permissions::hasPermission('conversations.accept')||Permissions::hasPermission('conversations.closed'))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='conversations')?"class='active'":""}}>
@@ -121,6 +134,7 @@
 
             @endif
 
+            @if(\KodeInfo\Utilities\Utils::isAdmin(Auth::user()->id))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='templates')?"class='active'":""}}>
                 <a href="" class="expand"><span>Mailchimp Templates</span> <i class="icon-profile"></i></a>
                 <ul>
@@ -132,6 +146,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
             @if(\KodeInfo\Utilities\Utils::isAdmin(Auth::user()->id))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='permissions')?"class='active'":""}}>

@@ -6,6 +6,10 @@ class APIController extends BaseController {
         return Response::json(API::getDepartmentOperators($department_id));
     }
 
+    public function getDepartmentOperatorsWithAdmin($department_id){
+        return Response::json(API::getDepartmentOperatorsWithAdmin($department_id));
+    }
+
     public function changeStatus($status){
         $user = User::find(Auth::user()->id);
         $user->is_online = $status;

@@ -6,6 +6,7 @@
     <th>Name</th>
     <th>Email</th>
     <th>Subject</th>
+    <th>Operator</th>
     <th>Priority</th>
     <th>Status</th>
     <th>Transfer</th>
@@ -22,6 +23,7 @@
         <td>{{isset($ticket->customer)?$ticket->customer->name:"NONE"}}</td>
         <td>{{isset($ticket->customer)?$ticket->customer->email:"NONE"}}</td>
         <td>{{$ticket->subject}}</td>
+        <td>{{isset($ticket->operator)?$ticket->operator->name:"NONE"}}</td>
 
         @if($ticket->priority==Tickets::PRIORITY_LOW)
             <td><label class="label label-primary">Low</label></td>

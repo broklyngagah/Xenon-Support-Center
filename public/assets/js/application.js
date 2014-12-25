@@ -770,7 +770,7 @@ $(function() {
 	//===== WYSIWYG editor =====//
 
 	$('.editor').wysihtml5({
-	    stylesheets: "css/wysihtml5/wysiwyg-color.css"
+	    stylesheets: "/assets/js/plugins/forms/wysihtml5/wysiwyg-color.css"
 	});
 
 

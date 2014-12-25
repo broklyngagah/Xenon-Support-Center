@@ -146,7 +146,7 @@
 
 				//Get request to get department with department_id and set that to edit fields
 				$.ajax({
-					url : "/api/get_department_operators/" + department_id,
+					url : "/api/get_department_operators_with_admin/" + department_id,
 					success : function(operators) {
 
 						var $select = $('#operator');

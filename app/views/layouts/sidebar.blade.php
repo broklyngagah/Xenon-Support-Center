@@ -44,16 +44,16 @@
 
             @if(\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id))
                 <li>
-                   <a href="/customer/tickets/create"> <i class="icon-screen2"></i> <span>Create New Ticket </span> </a>
+                   <a href="/tickets/customer/create"> <i class="icon-ticket"></i> <span>Create New Ticket </span> </a>
                 </li>
                 <li>
-                    <a href="/customer/tickets/all"> <i class="icon-screen2"></i> <span>All Tickets </span> </a>
+                    <a href="/tickets/customer/all"> <i class="icon-ticket"></i> <span>All Tickets </span> </a>
                 </li>
                 <li>
-                    <a href="/customer/tickets/pending"> <i class="icon-screen2"></i> <span>Pending Tickets </span> </a>
+                    <a href="/tickets/customer/pending"> <i class="icon-ticket"></i> <span>Pending Tickets </span> </a>
                 </li>
                 <li>
-                    <a href="/customer/tickets/resolved"> <i class="icon-screen2"></i> <span>Resolved Tickets </span> </a>
+                    <a href="/tickets/customer/resolved"> <i class="icon-ticket"></i> <span>Resolved Tickets </span> </a>
                 </li>
             @endif
 

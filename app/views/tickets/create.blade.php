@@ -33,18 +33,24 @@
 		</div>
 	</div>
 	<div class="panel-body" style="margin:10px;">
-		<div class="form-group">
-			<div class="row">
-				<div class="col-md-6">
-					<label>Name:</label>
-					<input type="text" class="form-control" name="name" value="{{Input::old('name')}}" placeholder="Enter name">
-				</div>
-				<div class="col-md-6">
-					<label>Email:</label>
-					<input type="text" class="form-control" placeholder="your@email.com" name="email" value="{{Input::get('email')}}">
+
+		@if(\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id))
+			<input type="hidden" class="form-control" name="name" value="{{$operator->name}}" placeholder="Enter name">
+			<input type="hidden" class="form-control" name="email" value="{{$operator->email}}">
+		@else
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-6">
+						<label>Name:</label>
+						<input type="text" class="form-control" name="name" value="{{Input::old('name')}}" placeholder="Enter name">
+					</div>
+					<div class="col-md-6">
+						<label>Email:</label>
+						<input type="text" class="form-control" placeholder="your@email.com" name="email" value="{{Input::get('email')}}">
+					</div>
 				</div>
 			</div>
-		</div>
+		@endif
 
 		<input type="hidden" name="ip" id="ip" value=""/>
 		<input type="hidden" name="country" id="country" value=""/>
@@ -79,6 +85,24 @@
 
 			<input type="hidden" name="company" value="{{$company->id}}"/>
 			<input type="hidden" name="department" value="{{$department->id}}"/>
+
+		@elseif(\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id))
+
+			<input type="hidden" name="company" value="{{$company->id}}"/>
+			<input type="hidden" name="operator" value="{{$operator->id}}"/>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-12">
+						<label>Department:</label>
+						<select data-placeholder="Choose issue type..." class="form-control" name="department" id="department" tabindex="2">
+							@foreach($departments as $department)
+								<option value="{{$department->id}}">{{$department->name}}</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+			</div>
 
 		@else
 
@@ -124,6 +148,7 @@
 @stop
 
 @section('scripts')
+
 <script type="text/javascript">
 
 	$.get("http://ipinfo.io", function(response) {

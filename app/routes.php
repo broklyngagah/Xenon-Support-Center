@@ -89,6 +89,7 @@ Route::group(['prefix' => 'api'], function () {
 
     Route::get('get_company_operators/company/{company_id}', 'APIController@getCompanyOperators');
     Route::get('get_department_operators/{department_id}', 'APIController@getDepartmentOperators');
+    Route::get('get_department_operators_with_admin/{department_id}', 'APIController@getDepartmentOperatorsWithAdmin');
     Route::get('get_company_departments/{company_id}', 'APIController@getCompanyDepartments');
     Route::get('get_company_free_admins/{company_id}', 'APIController@getCompanyFreeDepartmentAdmins');
     Route::get('get_department_permissions/{department_id}', 'APIController@getDepartmentPermissions');
@@ -176,6 +177,22 @@ Route::group(['prefix' => 'tickets'], function () {
     Route::get('transfer/{ticket_id}', 'TicketsController@transfer');
 
     Route::get('customers/{customer_id}/{status}', 'TicketsController@getStatusTickets');
+
+    //Operators Routes
+    Route::group(['prefix' => 'customer'], function () {
+        Route::get('create', 'CustomersTicketsController@create');
+        Route::get('all', 'CustomersTicketsController@all');
+        Route::get('read/{ticket_id}', 'CustomersTicketsController@read');
+        Route::get('pending', 'CustomersTicketsController@pending');
+        Route::get('resolved', 'CustomersTicketsController@resolved');
+        Route::get('delete/{operator_id}', 'CustomersTicketsController@delete');
+        Route::get('update/{operator_id}', 'CustomersTicketsController@edit');
+
+        Route::group(['filter' => 'csrf'], function() {
+            Route::post('create', 'CustomersTicketsController@store');
+            Route::post('update', 'CustomersTicketsController@update');
+        });
+    });
 
     Route::group(['filter' => 'csrf'], function() {
         Route::post('create', 'TicketsController@store');

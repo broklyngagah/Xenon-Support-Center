@@ -12,6 +12,27 @@ class API {
         }
     }
 
+    public static function getDepartmentOperatorsWithAdmin($department_id){
+        $operator_ids = OperatorsDepartment::where('department_id',$department_id)->lists('user_id');
+
+        if(sizeof($operator_ids)>0){
+
+            $admin_id = DepartmentAdmins::where('department_id',$department_id)->pluck('user_id');
+
+            $users = User::whereIn('id',$operator_ids)->get();
+
+            if(!empty($admin_id)){
+                $user = User::where('id',$admin_id)->first();
+                $user->name = $user->name . " - Department Admin";
+                $users[] = $user;
+            }
+
+            return $users;
+        }else{
+            return [];
+        }
+    }
+
     public static function getCompanyDepartments($company_id){
         $departments = Department::where("company_id",$company_id)->get();
         return $departments;

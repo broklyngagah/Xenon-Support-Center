@@ -53,19 +53,27 @@
                 if ($('#xenon-message').val() == "") {
                     return false; // do nothing
                 } else {
+
+                    var contentType ="application/x-www-form-urlencoded; charset=utf-8";
+
+                    if(window.XDomainRequest)
+                        contentType = "text/plain";
+
                     $.ajax({
-                        'type': 'GET',
-                        'dataType': 'jsonp',
                         'url': XENON.domain + '/api/chat/send_message',
                         'data': {
                             'user_id': XENON.user_id,
                             'thread_id': XENON.thread_id,
                             'message': $('#xenon-message').val()
                         },
+                        type:"POST",
+                        dataType:"json",
+                        contentType:contentType,
                         'success': function (data) {
                             $('#xenon-message').val("");
                         }
                     });
+
 
                 }
 
@@ -101,10 +109,6 @@
                     contentType:contentType,
                     success:function(data)
                     {
-                        console.log(data);
-                        data = JSON.parse(data);
-                        console.log(data);
-
                         if (data.blocked) {
                             //errors = your ip have been blocked by admin contact support
                             $('#xenon-errors').html(data.errors);

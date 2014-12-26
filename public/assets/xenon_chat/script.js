@@ -88,36 +88,50 @@
                     provider: XENON.location_info.org
                 };
 
-                $.get(XENON.domain + "/api/chat/start", data, function (data, status) {
+                var contentType ="application/x-www-form-urlencoded; charset=utf-8";
 
-                    data = JSON.parse(data);
+                if(window.XDomainRequest)
+                    contentType = "text/plain";
 
-                    if (data.blocked) {
-                        //errors = your ip have been blocked by admin contact support
-                        $('#xenon-errors').html(data.errors);
-                        $('#xenon-errors').show();
-                        return false;
+                $.ajax({
+                    url:XENON.domain + "/api/chat/start",
+                    data:data,
+                    type:"POST",
+                    dataType:"json",
+                    contentType:contentType,
+                    success:function(data)
+                    {
+                        console.log(data);
+                        data = JSON.parse(data);
+                        console.log(data);
 
-                    }
+                        if (data.blocked) {
+                            //errors = your ip have been blocked by admin contact support
+                            $('#xenon-errors').html(data.errors);
+                            $('#xenon-errors').show();
+                            return false;
 
-                    if (data.result == 0) {
-                        $('#xenon-errors').html(data.errors);
-                        $('#xenon-errors').show();
-                    } else {
-                        if (data.is_online == 1) {
-                            XENON.thread_id = data.thread_id;
-                            XENON.user_id = data.user_id;
-                            $('#xenon-chat-view .chat').html("");
-                            XENON.check_new_messages();
-                        } else {
-                            $('#xenon-errors').html("");
-                            $('#xenon-errors').hide();
-                            $('#xenon-success').html(data.success_msg);
-                            $('#xenon-success').show();
                         }
-                    }
 
-                }, "jsonp");
+                        if (data.result == 0) {
+                            $('#xenon-errors').html(data.errors);
+                            $('#xenon-errors').show();
+                        } else {
+                            if (data.is_online == 1) {
+                                XENON.thread_id = data.thread_id;
+                                XENON.user_id = data.user_id;
+                                $('#xenon-chat-view .chat').html("");
+                                XENON.check_new_messages();
+                            } else {
+                                $('#xenon-errors').html("");
+                                $('#xenon-errors').hide();
+                                $('#xenon-success').html(data.success_msg);
+                                $('#xenon-success').show();
+                            }
+                        }
+
+                    }
+                });
 
                 return false;
 

@@ -116,10 +116,12 @@
                                 End Chat
                             </a>
 
+                            @if(!isset($closed_conversation))
                             <a href="/conversations/transfer/{{$online->id}}" {{isset($closed_conversation)?"disabled='disabled'":""}} id="transfer_chat" type="button" class="btn btn-primary btn-loading"
                                data-loading-text="<i class='icon-spinner7 spin'></i> Processing">
                                 Transfer Chat
                             </a>
+                            @endif
 
                         </div>
                     </div>

@@ -136,9 +136,40 @@ class CustomersController extends BaseController {
     }
 
     public function delete($user_id){
-        User::where("id",$user_id)->delete();
+        $tickets = Tickets::where('customer_id',$user_id)->get();
+
+        //Delete tickets
+        foreach($tickets as $ticket){
+            TicketAttachments::where('thread_id',$ticket->id)->delete();
+            MessageThread::where('id',$ticket->thread_id)->delete();
+            ThreadMessages::where('thread_id',$ticket->thread_id)->delete();
+        }
+
+        Tickets::where('customer_id',$user_id)->delete();
+
+        //Delete Chat and Conversations
+        $online_users = OnlineUsers::where('user_id',$user_id)->get();
+
+        foreach($online_users as $online_user){
+            MessageThread::where('id',$online_user->thread_id)->delete();
+            ThreadMessages::where('thread_id',$online_user->thread_id)->delete();
+        }
+
+        $closed_conversations = ClosedConversations::where('user_id',$user_id)->get();
+
+        foreach($closed_conversations as $closed_conversation){
+            MessageThread::where('id',$closed_conversation->thread_id)->delete();
+            ThreadMessages::where('thread_id',$closed_conversation->thread_id)->delete();
+        }
+
+        UsersGroups::where('user_id',$user_id)->delete();
+
         CompanyCustomers::where("customer_id",$user_id)->delete();
+
+        User::where("id",$user_id)->delete();
+        
         Session::flash('success_msg',"Customer deleted successfully");
+
         return Redirect::to('/customers/all');
     }
 

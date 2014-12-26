@@ -283,7 +283,6 @@ class TicketsController extends BaseController
 
             $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->where('status',Tickets::TICKET_RESOLVED)->get();
 
-
         }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
 
             $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
@@ -305,7 +304,7 @@ class TicketsController extends BaseController
 
         $this->data['tickets_all_str'] = View::make("tickets.stub-all-tickets", ['tickets' => $tickets])->render();
 
-        return View::make('tickets.all', $this->data);
+        return View::make('tickets.other_status', $this->data);
     }
 
     public function pending()
@@ -343,7 +342,7 @@ class TicketsController extends BaseController
 
         $this->data['tickets_all_str'] = View::make("tickets.stub-all-tickets", ['tickets' => $tickets])->render();
 
-        return View::make('tickets.all', $this->data);
+        return View::make('tickets.other_status', $this->data);
     }
 
     public function all()

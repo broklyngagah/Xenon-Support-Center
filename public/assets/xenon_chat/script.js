@@ -55,6 +55,7 @@
                 } else {
                     $.ajax({
                         'type': 'POST',
+                        'dataType': 'jsonp',
                         'url': XENON.domain + '/api/chat/send_message',
                         'data': {
                             'user_id': XENON.user_id,
@@ -116,7 +117,7 @@
                         }
                     }
 
-                });
+                }, "jsonp");
 
                 return false;
 
@@ -125,6 +126,7 @@
             end: function () {
                 $.ajax({
                     'type': 'GET',
+                    'dataType': 'jsonp',
                     'url': XENON.domain + '/api/chat/end',
                     'data': {
                         'thread_id': XENON.thread_id
@@ -138,6 +140,7 @@
 
                 $.ajax({
                     'type': 'GET',
+                    'dataType': 'jsonp',
                     'url': XENON.domain + '/api/chat/check_new_messages',
                     'data': {
                         'user_id': XENON.user_id,

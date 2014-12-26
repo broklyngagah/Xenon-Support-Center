@@ -12,8 +12,8 @@ class DepartmentsController extends BaseController
     {
         $this->customerAddValidator = $customerAddValidator;
 
-        $this->beforeFilter('has_permission:departments.create', array('only' => array('create','store')));
-        $this->beforeFilter('has_permission:departments.edit', array('only' => array('edit','update')));
+        $this->beforeFilter('has_permission:departments.create', array('only' => array('create', 'store')));
+        $this->beforeFilter('has_permission:departments.edit', array('only' => array('edit', 'update')));
         $this->beforeFilter('has_permission:departments.view', array('only' => array('all')));
         $this->beforeFilter('has_permission:departments.delete', array('only' => array('delete')));
 
@@ -24,31 +24,31 @@ class DepartmentsController extends BaseController
 
         $this->data["admins"] = [];
 
-        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+        if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
 
-            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
-            $department = Department::where('id',$department_admin->department_id)->first();
-            $company = Company::where('id',$department->company_id)->first();
-
-            $this->data['company'] = $company;
-
-            $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($company->id);
-
-        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
-
-            $department_admin = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
-            $department = Department::where('id',$department_admin->department_id)->first();
-            $company = Company::where('id',$department->company_id)->first();
+            $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+            $company = Company::where('id', $department->company_id)->first();
 
             $this->data['company'] = $company;
 
             $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($company->id);
 
-        }else {
+        } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_admin = OperatorsDepartment::where('user_id', Auth::user()->id)->first();
+            $department = Department::where('id', $department_admin->department_id)->first();
+            $company = Company::where('id', $department->company_id)->first();
+
+            $this->data['company'] = $company;
+
+            $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($company->id);
+
+        } else {
 
             $this->data['companies'] = Company::all();
 
-            if(sizeof($this->data['companies'])>0){
+            if (sizeof($this->data['companies']) > 0) {
                 $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($this->data['companies'][0]->id);
             }
 
@@ -71,7 +71,7 @@ class DepartmentsController extends BaseController
                 $this->data['department_admin'] = DepartmentAdmins::where('department_id', $this->data['department']->id)->first();
 
             if (!empty($this->data['department_admin']))
-                $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($this->data['department']->company_id,[$this->data['department_admin']->user_id]);
+                $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($this->data['department']->company_id, [$this->data['department_admin']->user_id]);
             else
                 $this->data["admins"] = DepartmentAdmins::getFreeDepartmentAdmins($this->data['department']->company_id);
 
@@ -162,14 +162,53 @@ class DepartmentsController extends BaseController
     public function delete($department_id)
     {
 
-        try {
-            Department::findOrFail($department_id)->delete();
-            Session::flash('success_msg', "Department deleted successfully");
-            return Redirect::to('/departments/all');
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash("error_msg", "Department not found");
-            return Redirect::to("/departments/all");
+        $department = Department::where('id',$department_id)->first();
+
+        if(!empty($department)) {
+
+            $tickets = Tickets::where('department_id', $department_id)->get();
+
+            //Delete tickets
+            foreach ($tickets as $ticket) {
+                TicketAttachments::where('thread_id', $ticket->id)->delete();
+                MessageThread::where('id', $ticket->thread_id)->delete();
+                ThreadMessages::where('thread_id', $ticket->thread_id)->delete();
+            }
+
+            Tickets::where('department_id', $department_id)->delete();
+
+            //Delete Chat and Conversations
+            $online_users = OnlineUsers::where('department_id', $department_id)->get();
+
+            foreach ($online_users as $online_user) {
+                MessageThread::where('id', $online_user->thread_id)->delete();
+                ThreadMessages::where('thread_id', $online_user->thread_id)->delete();
+            }
+
+            OnlineUsers::where('department_id', $department_id)->delete();
+
+            $closed_conversations = ClosedConversations::where('department_id', $department_id)->get();
+
+            foreach ($closed_conversations as $closed_conversation) {
+                MessageThread::where('id', $closed_conversation->thread_id)->delete();
+                ThreadMessages::where('thread_id', $closed_conversation->thread_id)->delete();
+            }
+
+            ClosedConversations::where('department_id', $department_id)->delete();
         }
+
+        $department_admin = DepartmentAdmins::where('department_id',$department_id)->delete();
+
+        if(!empty($department_admin)){
+            UsersGroups::where('user_id',$department_admin->user_id)->delete();
+            User::where("id",$department_admin->user_id)->delete();
+        }
+
+        Department::where('id',$department_id)->delete();
+
+        Session::flash('success_msg', "Department deleted successfully");
+
+        return Redirect::to('/departments/all');
 
     }
 
@@ -183,14 +222,14 @@ class DepartmentsController extends BaseController
             $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
             $department = Department::where('id', $department_admin->department_id)->first();
 
-            $this->data['departments'] = Department::where('company_id',$department->company_id)->get();
+            $this->data['departments'] = Department::where('company_id', $department->company_id)->get();
 
         } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
 
             $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
             $department = Department::where('id', $department_admin->department_id)->first();
 
-            $this->data['departments'] = Department::where('company_id',$department->company_id)->get();
+            $this->data['departments'] = Department::where('company_id', $department->company_id)->get();
 
         } else {
             $this->data['departments'] = Department::all();

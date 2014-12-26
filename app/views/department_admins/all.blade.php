@@ -24,6 +24,11 @@
 
 @include('layouts.notify')
 <div class="panel panel-default">
+
+	<div style="margin:5px;" class="alert alert-info">
+		If you delete department admin all department tickets , conversations will be assigned to company owner .
+	</div>
+
 	<div class="panel-heading">
 		<h6 class="panel-title"><i class="icon-user4"></i> All Department Admins</h6>
 		<div class="table-controls pull-right">

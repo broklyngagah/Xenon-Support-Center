@@ -24,6 +24,11 @@
 
 @include('layouts.notify')
 <div class="panel panel-default">
+
+	<div style="margin:5px;" class="alert alert-info">
+		If you delete department all department tickets , conversations , operators will also be deleted .
+	</div>
+
 	<div class="panel-heading">
 		<h6 class="panel-title"><i class="icon-users"></i> All Departments</h6>
 		<div class="table-controls pull-right">

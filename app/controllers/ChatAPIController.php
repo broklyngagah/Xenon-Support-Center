@@ -178,8 +178,10 @@ class ChatAPIController extends BaseController {
                     //user already online
                     $token = OnlineUsers::getToken();
 
-                    if($operator_online>0)
-                        Session::put('conversation-token',$token);
+                    if($operator_online>0) {
+                        Session::put('conversation-token', $token);
+                        Session::save();
+                    }
 
                     $response['result'] = 1;
                     $response['user_id'] = $user->id;
@@ -223,8 +225,10 @@ class ChatAPIController extends BaseController {
                         $this->convertToTicket($thread['thread_id'],$thread['msg_id'],$user,"",Input::get('message'),Input::get('department'),Input::get('company_id'));
                     }
 
-                    if($operator_online>0)
-                        Session::put('conversation-token',$token);
+                    if($operator_online>0) {
+                        Session::put('conversation-token', $token);
+                        Session::save();
+                    }
 
                     $response['result'] = 1;
                     $response['user_id'] = $user->id;
@@ -305,8 +309,10 @@ class ChatAPIController extends BaseController {
                     $this->convertToTicket($thread['thread_id'],$thread['msg_id'],$user,"",Input::get('message'),Input::get('department'),Input::get('company_id'));
                 }
 
-                if($operator_online>0)
-                    Session::put('conversation-token',$token);
+                if($operator_online>0) {
+                    Session::put('conversation-token', $token);
+                    Session::save();
+                }
 
                 $response['result'] = 1;
                 $response['user_id'] = $user->id;
@@ -413,8 +419,10 @@ class ChatAPIController extends BaseController {
                 //Is conversation already closed
                 if(sizeof(ClosedConversations::where('thread_id',Input::get('thread_id'))->get())>0){
 
-                    if(Session::has('conversation-token'))
+                    if(Session::has('conversation-token')) {
                         Session::forget('conversation-token');
+                        Session::save();
+                    }
 
                     $response['success_msg'] = "Thanks for contacting support";
 

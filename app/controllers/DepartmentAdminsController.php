@@ -8,12 +8,13 @@ class DepartmentAdminsController extends BaseController
 
     protected $customerAddValidator;
 
-    function __construct(CustomerAddValidator $customerAddValidator){
+    function __construct(CustomerAddValidator $customerAddValidator)
+    {
 
         $this->customerAddValidator = $customerAddValidator;
 
-        $this->beforeFilter('has_permission:departments_admins.create', array('only' => array('create','store')));
-        $this->beforeFilter('has_permission:departments_admins.edit', array('only' => array('edit','update')));
+        $this->beforeFilter('has_permission:departments_admins.create', array('only' => array('create', 'store')));
+        $this->beforeFilter('has_permission:departments_admins.edit', array('only' => array('edit', 'update')));
         $this->beforeFilter('has_permission:departments_admins.view', array('only' => array('all')));
         $this->beforeFilter('has_permission:departments_admins.delete', array('only' => array('delete')));
         $this->beforeFilter('has_permission:departments_admins.remove', array('only' => array('remove')));
@@ -23,19 +24,19 @@ class DepartmentAdminsController extends BaseController
 
     public function create()
     {
-        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+        if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
 
-            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
-            $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
-            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+            $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id', $department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id', $this->data['department']->company_id)->first();
 
-        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+        } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
 
-            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
-            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
-            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+            $department_operator = OperatorsDepartment::where('user_id', Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id', $department_operator->department_id)->first();
+            $this->data["company"] = Company::where('id', $this->data['department']->company_id)->first();
 
-        }else {
+        } else {
 
             $companies = Company::all();
 
@@ -44,12 +45,12 @@ class DepartmentAdminsController extends BaseController
 
             if (sizeof($companies) > 0) {
 
-                $department_ids = Department::where('company_id',$companies[0]->id)->lists('id');
+                $department_ids = Department::where('company_id', $companies[0]->id)->lists('id');
 
-                if(sizeof($department_ids)>0){
-                    foreach($department_ids as $department_id){
-                        if(sizeof(DepartmentAdmins::where('department_id',$department_id)->get())<=0)
-                            array_push($this->data['departments'],Department::whereIn("id", $department_ids)->first());
+                if (sizeof($department_ids) > 0) {
+                    foreach ($department_ids as $department_id) {
+                        if (sizeof(DepartmentAdmins::where('department_id', $department_id)->get()) <= 0)
+                            array_push($this->data['departments'], Department::whereIn("id", $department_ids)->first());
                     }
                 }
             }
@@ -171,7 +172,6 @@ class DepartmentAdminsController extends BaseController
             Session::flash('success_msg', "Department Admin updated successfully");
             return Redirect::to('/departments/admins/all');
         } catch (\Exception $e) {
-            dd($e);
             Session::flash('error_msg', "Unable to update department admin");
             return Redirect::to('/departments/admins/update/' . Input::get("user_id"))->withInput(Input::except("avatar"));
         }
@@ -180,16 +180,34 @@ class DepartmentAdminsController extends BaseController
 
     public function delete($admin_id)
     {
+        $department_admin = DepartmentAdmins::where("user_id", $admin_id)->first();
 
-        try {
-            User::findOrFail($admin_id)->delete();
-            Session::flash('success_msg', "Department admin deleted successfully");
-            return Redirect::to('/departments/admins/all');
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash("error_msg", "Department admin not found");
-            return Redirect::to("/departments/admins/all");
+        if (!empty($department_admin)) {
+
+            $department = Department::where('id',$department_admin->department_id)->first();
+
+            if(!empty($department)) {
+
+                $company = Company::where('id',$department->company_id)->first();
+
+                //Change all conversations , tickets , threads , thread_messages operator_id
+                OnlineUsers::where('operator_id', $admin_id)->update(['operator_id' => $company->user_id]);
+                ClosedConversations::where('operator_id', $admin_id)->update(['operator_id' => $company->user_id]);
+                MessageThread::where('operator_id', $admin_id)->update(['operator_id' => $company->user_id]);
+                Tickets::where('operator_id', $admin_id)->update(['operator_id' => $company->user_id]);
+                ThreadMessages::where('sender_id', $admin_id)->update(['sender_id' => $company->user_id]);
+            }
         }
 
+        DepartmentAdmins::where('user_id', $admin_id)->delete();
+
+        UsersGroups::where('user_id', $admin_id)->delete();
+
+        User::where('id', $admin_id)->delete();
+
+        Session::flash('success_msg', "Department admin deleted successfully , all tickets and conversations are assigned to admin");
+
+        return Redirect::to('/departments/admins/all');
     }
 
     public function remove($admin_id)
@@ -216,18 +234,18 @@ class DepartmentAdminsController extends BaseController
             $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
             $department = Department::where('id', $department_admin->department_id)->first();
 
-            $department_ids = Department::where('company_id',$department->company_id)->lists('id');
+            $department_ids = Department::where('company_id', $department->company_id)->lists('id');
 
-            $user_ids = DepartmentAdmins::whereIn('department_id',$department_ids)->lists('user_id');
+            $user_ids = DepartmentAdmins::whereIn('department_id', $department_ids)->lists('user_id');
 
         } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
 
             $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
             $department = Department::where('id', $department_admin->department_id)->first();
 
-            $department_ids = Department::where('company_id',$department->company_id)->lists('id');
+            $department_ids = Department::where('company_id', $department->company_id)->lists('id');
 
-            $user_ids = DepartmentAdmins::whereIn('department_id',$department_ids)->lists('user_id');
+            $user_ids = DepartmentAdmins::whereIn('department_id', $department_ids)->lists('user_id');
 
         } else {
             $group = Groups::where("name", "department-admin")->first();
@@ -270,7 +288,6 @@ class DepartmentAdminsController extends BaseController
             return Redirect::to("/departments/admins/all");
         }
     }
-
 
 
 }

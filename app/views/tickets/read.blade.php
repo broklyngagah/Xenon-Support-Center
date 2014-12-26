@@ -180,12 +180,6 @@
                             <button type="submit" class="btn btn-success btn-loading">
                                 Reply
                             </button>
-
-                            <a href="/tickets/status/{{$thread->id}}/{{Tickets::TICKET_RESOLVED}}" type="button"
-                               class="btn btn-danger btn-loading"
-                               data-loading-text="<i class='icon-spinner7 spin'></i> Processing">
-                                Resolve Ticket
-                            </a>
                         </div>
                     </div>
                     {{Form::close()}}

@@ -70,7 +70,25 @@ class ConversationsController extends BaseController
     public function closedConversations()
     {
 
-        $closed_conversations = ClosedConversations::all();
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $department = Department::where('id',$department_admin->department_id)->first();
+
+            $closed_conversations = ClosedConversations::where('company_id',$department->company_id)->where('company_id',$department->id)->get();
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $department = Department::where('id',$department_operator->department_id)->first();
+
+            $closed_conversations = ClosedConversations::where('company_id',$department->company_id)->where('company_id',$department->id)->where('operator_id',Auth::user()->id)->get();
+
+        }else{
+            $closed_conversations = ClosedConversations::all();
+        }
+
+
 
         foreach ($closed_conversations as $closed_conversation) {
             $closed_conversation->user = User::find($closed_conversation->user_id);

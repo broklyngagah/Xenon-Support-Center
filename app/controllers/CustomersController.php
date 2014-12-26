@@ -155,6 +155,8 @@ class CustomersController extends BaseController {
             ThreadMessages::where('thread_id',$online_user->thread_id)->delete();
         }
 
+        OnlineUsers::where('user_id',$user_id)->delete();
+
         $closed_conversations = ClosedConversations::where('user_id',$user_id)->get();
 
         foreach($closed_conversations as $closed_conversation){
@@ -162,12 +164,14 @@ class CustomersController extends BaseController {
             ThreadMessages::where('thread_id',$closed_conversation->thread_id)->delete();
         }
 
+        ClosedConversations::where('user_id',$user_id)->delete();
+
         UsersGroups::where('user_id',$user_id)->delete();
 
         CompanyCustomers::where("customer_id",$user_id)->delete();
 
         User::where("id",$user_id)->delete();
-        
+
         Session::flash('success_msg',"Customer deleted successfully");
 
         return Redirect::to('/customers/all');

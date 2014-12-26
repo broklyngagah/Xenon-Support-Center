@@ -195,6 +195,15 @@ class DepartmentsController extends BaseController
             }
 
             ClosedConversations::where('department_id', $department_id)->delete();
+
+            $operators = OperatorsDepartment::where('department_id',$department_id)->lists('user_id');
+
+            if(sizeof($operators)>0) {
+                User::whereIn('id', $operators)->delete();
+                UsersGroups::whereIn('user_id', $operators)->delete();
+            }
+
+            OperatorsDepartment::where('department_id',$department_id)->delete();
         }
 
         $department_admin = DepartmentAdmins::where('department_id',$department_id)->first();

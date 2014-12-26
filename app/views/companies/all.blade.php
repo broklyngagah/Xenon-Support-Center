@@ -24,6 +24,11 @@
 
 @include('layouts.notify')
 <div class="panel panel-default">
+
+	<div style="margin:5px;" class="alert alert-info">
+		If you delete company then all company departments , operators , customers , conversations and tickets will be deleted
+	</div>
+
 	<div class="panel-heading">
 		<h6 class="panel-title"><i class="icon-user4"></i> All Companies</h6>
 		<div class="table-controls pull-right">

@@ -28,10 +28,9 @@
 		<h6 class="panel-title"><i class="icon-users"></i> All Departments</h6>
 		<div class="table-controls pull-right">
 			<a href="/departments/create" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Add Department"><i class="icon-plus"></i></a>
-			<a href="/departments/export" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Export"><i class="icon-cogs"></i></a>
 		</div>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="department_list" class="table">
 			<thead>
 				<tr>
@@ -63,62 +62,6 @@
 			</tbody>
 
 		</table>
-	</div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="create_department_modal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
-					<span
-					aria-hidden="true">&times;</span><span
-					class="sr-only">Close</span>
-				</button>
-				<h4 class="modal-title">Create Department</h4>
-			</div>
-
-			{{Form::open(['url'=>'/departments/create','method'=>'post'])}}
-			<div class="modal-body with-padding">
-
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-8">
-							<label>Enter Name</label>
-							<input type="text" class="form-control" name="name"
-							placeholder="Enter name">
-						</div>
-
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-8">
-							<label>Select Permissions</label>
-							<select id="permissions_create"  multiple="multiple" name="permissions[]">
-								@foreach($permissions as $permission)
-								<option value="{{$permission->key}}">{{$permission->text}}</option>
-								@endforeach
-							</select>
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">
-					Close
-				</button>
-				<button type="submit" type="button" class="btn btn-primary">
-					Create
-				</button>
-			</div>
-			{{Form::close()}}
-		</div>
 	</div>
 </div>
 @stop

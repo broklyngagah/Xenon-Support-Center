@@ -97,7 +97,26 @@
 
             @if(Permissions::hasPermission('operators.create')||Permissions::hasPermission('operators.edit')||Permissions::hasPermission('operators.delete')||Permissions::hasPermission('operators.view'))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='operators')?"class='active'":""}}>
-                <a href="/operators/all"> <i class="icon-user4"></i> <span>Operators</span> </a>
+                <a href="" class="expand"><span>Operators</span> <i class="icon-user4"></i></a>
+                <ul>
+                    @if(Permissions::hasPermission('operators.view'))
+                        <li>
+                            <a href="/operators/online">Online Operators</a>
+                        </li>
+                    @endif
+
+                    @if(Permissions::hasPermission('operators.view'))
+                        <li>
+                            <a href="/operators/all">All Operators</a>
+                        </li>
+                    @endif
+
+                    @if(Permissions::hasPermission('operators.create'))
+                        <li>
+                            <a href="/operators/create">Create New Operator</a>
+                        </li>
+                    @endif
+                </ul>
             </li>
             @endif
 
@@ -157,7 +176,21 @@
             @if(Permissions::hasPermission('tickets.create')||Permissions::hasPermission('tickets.edit')
                 ||Permissions::hasPermission('tickets.view')||Permissions::hasPermission('tickets.delete'))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='tickets')?"class='active'":""}}>
-                <a href="/tickets/all"> <i class="icon-ticket"></i> <span>Tickets</span> </a>
+                <a href="" class="expand"><span>Tickets</span> <i class="icon-ticket"></i></a>
+                <ul>
+                    <li>
+                        <a href="/tickets/create">Create Ticket</a>
+                    </li>
+                    <li>
+                        <a href="/tickets/all">All Tickets</a>
+                    </li>
+                    <li>
+                        <a href="/tickets/pending">Pending Tickets</a>
+                    </li>
+                    <li>
+                        <a href="/tickets/resolved">Resolved Tickets</a>
+                    </li>
+                </ul>
             </li>
             @endif
 

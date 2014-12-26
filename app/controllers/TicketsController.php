@@ -270,6 +270,102 @@ class TicketsController extends BaseController
 
     }
 
+    public function resolved()
+    {
+
+        $tickets = Tickets::orderBy('priority', 'desc')->where('status',Tickets::TICKET_RESOLVED)->get();
+
+        foreach ($tickets as $ticket) {
+            $ticket->customer = User::where('id', $ticket->customer_id)->first();
+            $ticket->company = Company::where('id', $ticket->company_id)->first();
+            $ticket->department = Department::where('id', $ticket->department_id)->first();
+
+            if ($ticket->operator_id > 0) {
+                $ticket->operator = User::where('id', $ticket->operator_id)->first();
+            }
+        }
+
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->get();
+
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->get();
+        }
+
+        foreach ($tickets as $ticket) {
+            $ticket->customer = User::where('id', $ticket->customer_id)->first();
+            $ticket->company = Company::where('id', $ticket->company_id)->first();
+            $ticket->department = Department::where('id', $ticket->department_id)->first();
+
+            if ($ticket->operator_id > 0) {
+                $ticket->operator = User::where('id', $ticket->operator_id)->first();
+            }
+        }
+
+        $this->data['tickets_all_str'] = View::make("tickets.stub-all-tickets", ['tickets' => $tickets])->render();
+
+        return View::make('tickets.all', $this->data);
+    }
+
+    public function pending()
+    {
+
+        $tickets = Tickets::orderBy('priority', 'desc')->where('status',Tickets::TICKET_PENDING)->get();
+
+        foreach ($tickets as $ticket) {
+            $ticket->customer = User::where('id', $ticket->customer_id)->first();
+            $ticket->company = Company::where('id', $ticket->company_id)->first();
+            $ticket->department = Department::where('id', $ticket->department_id)->first();
+
+            if ($ticket->operator_id > 0) {
+                $ticket->operator = User::where('id', $ticket->operator_id)->first();
+            }
+        }
+
+        if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->get();
+
+
+        }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+            $department_operator = OperatorsDepartment::where('user_id',Auth::user()->id)->first();
+            $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
+            $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
+
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->get();
+        }
+
+        foreach ($tickets as $ticket) {
+            $ticket->customer = User::where('id', $ticket->customer_id)->first();
+            $ticket->company = Company::where('id', $ticket->company_id)->first();
+            $ticket->department = Department::where('id', $ticket->department_id)->first();
+
+            if ($ticket->operator_id > 0) {
+                $ticket->operator = User::where('id', $ticket->operator_id)->first();
+            }
+        }
+
+        $this->data['tickets_all_str'] = View::make("tickets.stub-all-tickets", ['tickets' => $tickets])->render();
+
+        return View::make('tickets.all', $this->data);
+    }
+
     public function all()
     {
 
@@ -313,7 +409,7 @@ class TicketsController extends BaseController
             }
         }
 
-        $this->data['tickets_all_str'] = View::make("tickets.stub-all-tickets", ['tickets' => $tickets])->render();
+        $this->data['do_refresh'] = true;
 
         return View::make('tickets.all', $this->data);
     }

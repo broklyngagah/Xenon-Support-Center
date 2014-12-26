@@ -30,7 +30,7 @@
 			<a href="/templates/pair/create" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Pair View to Template"><i class="icon-plus"></i></a>
 		</div>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="operator_list" class="table">
 			<thead>
 				<tr>

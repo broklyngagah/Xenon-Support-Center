@@ -33,7 +33,18 @@ $(function() {
 		"bAutoWidth": false,
 		"sPaginationType": "full_numbers",
 		"bSort": false,
-		"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>'
+		"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+		"oTableTools": {
+			"aButtons": [
+				"copy",
+				"print",
+				{
+					"sExtends":    "collection",
+					"sButtonText": "Save",
+					"aButtons":    [ "csv", "xls", "pdf" ]
+				}
+			]
+		}
     });
 
 	//===== Table with selectable rows =====//
@@ -110,7 +121,7 @@ $(function() {
 		},
 		"oTableTools": {
 			"sRowSelect": "single",
-			"sSwfPath": "media/swf/copy_csv_xls_pdf.swf",
+			"sSwfPath": "/assets/copy_csv_xls_pdf.swf",
 			"aButtons": [
 				{
 					"sExtends":    "copy",
@@ -131,7 +142,6 @@ $(function() {
 			]
 		}
     });
-
 
 	//===== Table with custom sorting columns =====//
 

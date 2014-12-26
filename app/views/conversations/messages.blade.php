@@ -149,8 +149,6 @@
 
             function getMessages() {
 
-                console.log("getting messages...");
-
                 $.ajax({
                     'type': 'GET',
                     'url': '/conversations/get_server_messages',

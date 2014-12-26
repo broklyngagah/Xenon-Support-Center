@@ -1,68 +1,285 @@
 @extends('layouts.master')
 
 @section('content')
-<!-- Page header -->
-<div class="page-header">
-	<div class="page-title">
-		<h3>XENON Support <small>Welcome {{Auth::user()->name}}.</small></h3>
-	</div>
-</div>
-<!-- /page header -->
-<!-- Breadcrumbs line -->
-<div class="breadcrumb-line">
-	<ul class="breadcrumb">
-		<li>
-			<a href="/">Home</a>
-		</li>
-		<li class="active">
-			Dashboard
-		</li>
-	</ul>
-</div>
-<!-- /breadcrumbs line -->
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>XENON Support
+                <small>Welcome {{Auth::user()->name}}.</small>
+            </h3>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- Breadcrumbs line -->
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="active">
+                Dashboard
+            </li>
+        </ul>
+    </div>
+    <!-- /breadcrumbs line -->
 
-@include('layouts.notify')
+    @include('layouts.notify')
 
-<!-- Default info blocks -->
-<ul class="info-blocks">
-	<li class="bg-primary">
-		<div class="top-info">
-			<a href="#">Add new post</a><small>post management</small>
-		</div>
-		<a href="#"><i class="icon-pencil"></i></a><span class="bottom-info bg-danger">12 drafts in progress</span>
-	</li>
-	<li class="bg-success">
-		<div class="top-info">
-			<a href="#">Site parameters</a><small>layout settings</small>
-		</div>
-		<a href="#"><i class="icon-cogs"></i></a><span class="bottom-info bg-primary">No updates</span>
-	</li>
-	<li class="bg-danger">
-		<div class="top-info">
-			<a href="#">Site statistics</a><small>visits, users, orders stats</small>
-		</div>
-		<a href="#"><i class="icon-stats2"></i></a><span class="bottom-info bg-primary">3 new updates</span>
-	</li>
-	<li class="bg-info">
-		<div class="top-info">
-			<a href="#">My messages</a><small>messages history</small>
-		</div>
-		<a href="#"><i class="icon-bubbles3"></i></a><span class="bottom-info bg-primary">24 new messages</span>
-	</li>
-	<li class="bg-warning">
-		<div class="top-info">
-			<a href="#">Orders history</a><small>purchases statistics</small>
-		</div>
-		<a href="#"><i class="icon-cart2"></i></a><span class="bottom-info bg-primary">17 new orders</span>
-	</li>
-	<li class="bg-primary">
-		<div class="top-info">
-			<a href="#">Invoices stats</a><small>invoices archive</small>
-		</div>
-		<a href="#"><i class="icon-coin"></i></a><span class="bottom-info bg-danger">9 new invoices</span>
-	</li>
-</ul>
-<!-- /default info blocks -->
+    @if(\KodeInfo\Utilities\Utils::isAdmin(Auth::user()->id))
+        <!-- Default info blocks -->
+        <div class="block">
+            <h5>Tickets</h5>
+            <ul class="statistics list-justified">
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-success"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_past_hr}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Past hour</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-warning"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_today}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Today</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-info"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_this_week}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Week</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-danger"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_this_month}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Month</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-primary"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_total}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Total tickets</span>
+                </li>
+            </ul>
+        </div>
+        <!-- /default info blocks -->
 
+        @foreach($department_stats as $stats)
+            <h4 style="text-decoration: underline;">{{$stats->name}}</h4>
+            @foreach($stats->departments as $department)
+                <div class="block">
+                    <h5>{{$department->name}}</h5>
+                    <ul class="statistics list-justified">
+                        <li>
+                            <div class="statistics-info">
+                                <a href="#" title="" class="bg-success"><i
+                                            class="icon-user-plus"></i></a><strong>{{$department->all_tickets}}</strong>
+                            </div>
+                            <div class="progress progress-micro">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                            </div>
+                            <span>All Tickets</span>
+                        </li>
+                        <li>
+                            <div class="statistics-info">
+                                <a href="#" title="" class="bg-warning"><i
+                                            class="icon-user-plus"></i></a><strong>{{$department->pending_tickets}}</strong>
+                            </div>
+                            <div class="progress progress-micro">
+                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                            </div>
+                            <span>Pending Tickets</span>
+                        </li>
+                        <li>
+                            <div class="statistics-info">
+                                <a href="#" title="" class="bg-info"><i
+                                            class="icon-user-plus"></i></a><strong>{{$department->resolved_tickets}}</strong>
+                            </div>
+                            <div class="progress progress-micro">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                            </div>
+                            <span>Resolved Tickets</span>
+                        </li>
+                        <li>
+                            <div class="statistics-info">
+                                <a href="#" title="" class="bg-danger"><i
+                                            class="icon-user-plus"></i></a><strong>{{$department->operators_online}}</strong>
+                            </div>
+                            <div class="progress progress-micro">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                            </div>
+                            <span>Operators online</span>
+                        </li>
+                        <li>
+                            <div class="statistics-info">
+                                <a href="#" title="" class="bg-primary"><i
+                                            class="icon-user-plus"></i></a><strong>{{$department->operators_offline}}</strong>
+                            </div>
+                            <div class="progress progress-micro">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                            </div>
+                            <span>Operators offline</span>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+            @endforeach
+        @endforeach
+    @endif
+
+    @if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)||\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id))
+
+        <div class="block">
+            <h5>Tickets</h5>
+            <ul class="statistics list-justified">
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-success"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_past_hr}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Past hour</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-warning"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_today}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Today</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-info"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_this_week}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Week</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-danger"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_this_month}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Month</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-primary"><i
+                                    class="icon-user-plus"></i></a><strong>{{$tickets_total}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Total tickets</span>
+                </li>
+            </ul>
+        </div>
+        <div class="block">
+            <h5>{{$department_stats->name}}</h5>
+            <ul class="statistics list-justified">
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-success"><i
+                                    class="icon-user-plus"></i></a><strong>{{$department_stats->all_tickets}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>All Tickets</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-warning"><i
+                                    class="icon-user-plus"></i></a><strong>{{$department_stats->pending_tickets}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Pending Tickets</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-info"><i
+                                    class="icon-user-plus"></i></a><strong>{{$department_stats->resolved_tickets}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Resolved Tickets</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-danger"><i
+                                    class="icon-user-plus"></i></a><strong>{{$department_stats->operators_online}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Operators online</span>
+                </li>
+                <li>
+                    <div class="statistics-info">
+                        <a href="#" title="" class="bg-primary"><i
+                                    class="icon-user-plus"></i></a><strong>{{$department_stats->operators_offline}}</strong>
+                    </div>
+                    <div class="progress progress-micro">
+                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                    <span>Operators offline</span>
+                </li>
+            </ul>
+        </div>
+        <hr>
+    @endif
 
 @stop

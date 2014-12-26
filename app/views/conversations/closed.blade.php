@@ -13,7 +13,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h6 class="panel-title"><i class="icon-envelop"></i> Closed Conversations</h6>
-		<div class="datatable">
+		<div class="datatable-tools">
 			<table id="online_users" class="table">
 				<thead>
 				<tr>

@@ -27,7 +27,7 @@
 	<div class="panel-heading">
 		<h6 class="panel-title"><i class="icon-user4"></i> Email Templates</h6>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="operator_list" class="table">
 			<thead>
 				<tr>

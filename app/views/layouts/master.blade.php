@@ -35,6 +35,8 @@
 		{{HTML::script("/assets/js/plugins/interface/moment.js")}}
 		{{HTML::script("/assets/js/plugins/interface/jgrowl.min.js")}}
 		{{HTML::script("/assets/js/plugins/interface/datatables.min.js")}}
+		{{HTML::script("/assets/js/plugins/interface/tabletools.min.js")}}
+		{{HTML::script("/assets/js/fnReloadAjax.js")}}
 
 		{{HTML::script("/assets/js/plugins/interface/colorpicker.js")}}
 		{{HTML::script("/assets/js/plugins/interface/fullcalendar.min.js")}}

@@ -32,10 +32,9 @@
 		<h6 class="panel-title"><i class="icon-key"></i> All Permissions</h6>
 		<div class="table-controls pull-right">
 			<a href="/permissions/create" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Add Permission"><i class="icon-plus"></i></a>
-			<a href="/permissions/export" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Export"><i class="icon-cogs"></i></a>
 		</div>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="permissions_list" class="table">
 			<thead>
 				<tr>

@@ -31,7 +31,7 @@
 			<a href="/operators/export" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Export"><i class="icon-cogs"></i></a>
 		</div>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="operator_list" class="table">
 			<thead>
 				<tr>

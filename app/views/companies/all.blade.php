@@ -28,10 +28,9 @@
 		<h6 class="panel-title"><i class="icon-user4"></i> All Companies</h6>
 		<div class="table-controls pull-right">
 			<a href="/companies/create" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Add Company"><i class="icon-plus"></i></a>
-			<a href="/companies/export" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Export"><i class="icon-cogs"></i></a>
 		</div>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="company_list" class="table">
 			<thead>
 				<tr>

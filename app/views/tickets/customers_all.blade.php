@@ -28,10 +28,9 @@
 		<h6 class="panel-title"><i class="icon-user4"></i> All Tickets</h6>
 		<div class="table-controls pull-right">
 			<a href="/tickets/customer/create" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Create Ticket"><i class="icon-plus"></i></a>
-			<a href="/tickets/customer/export" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Export"><i class="icon-cogs"></i></a>
 		</div>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="tickets_all" class="table">
 			<thead>
 			<tr>

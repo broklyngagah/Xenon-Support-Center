@@ -17,58 +17,24 @@
             <h6 class="panel-title"><i class="icon-envelop"></i> Conversations</h6>
         </div>
 
-        <div class="datatable">
-            <table id="online_users" class="table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Operator Name</th>
-                    <th>Requested On</th>
-                    <th>Started On</th>
-                    <th>Locked</th>
-                    <th>Accept</th>
-                    <th>Transfer</th>
-                    <th>Close</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($online_users as $online)
-                    <tr>
-                        <td>{{$online->id}}</td>
-                        <td>{{$online->user->name}}</td>
-                        <td>{{$online->user->email}}</td>
-                        <td>{{isset($online->operator)?$online->operator->name:"<label class='label label-warning'>NONE</label>"}}</td>
-                        <td>{{\KodeInfo\Utilities\Utils::prettyDate($online->requested_on,true)}}</td>
-                        <td>{{\KodeInfo\Utilities\Utils::prettyDate($online->started_on,true)}}</td>
-                        <td>{{$online->locked_by_operator==1?"<label class='label label-warning'>Yes</label>":"<label class='label label-primary'>No</label>"}}</td>
-
-                        @if(!isset($online->operator))
-                            <td><a href="/conversations/accept/{{$online->thread_id}}" class="btn btn-success btn-sm">
-                                    <i class="icon-checkmark4"></i> Accept </a></td>
-                        @endif
-
-                        @if(isset($online->operator)&&$online->operator->id==Auth::user()->id)
-                            <td><a href="/conversations/accept/{{$online->thread_id}}" class="btn btn-success btn-sm">
-                                    <i class="icon-checkmark4"></i> Reply </a></td>
-                        @endif
-
-                        @if(isset($online->operator)&&$online->operator->id!=Auth::user()->id)
-                            <td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> Accept </a></td>
-                        @endif
-
-                        <td><a href="/conversations/transfer/{{$online->id}}" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> Transfer </a></td>
-
-                        <td><a href="/conversations/close/{{$online->thread_id}}" class="btn btn-danger btn-sm"> <i
-                                        class="icon-lock3"></i> Close </a></td>
-                    </tr>
-                @endforeach
-                </tbody>
-
-            </table>
-        </div>
-
+        <table id="online_users" class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Operator Name</th>
+                <th>Requested On</th>
+                <th>Started On</th>
+                <th>Locked</th>
+                <th>Accept</th>
+                <th>Transfer</th>
+                <th>Close</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 
 @stop
@@ -77,35 +43,50 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var department_id = {{isset($department)?$department->id:0}} ;
-            var company_id = {{isset($company)?$company->id:0}} ;
-
             var interval = 5000;  // 1000 = 1 second, 3000 = 3 seconds
+            var department_id = {{isset($department)?$department->id:0}};
+            var company_id = {{isset($company)?$company->id:0}};
 
-            function doStartup() {
+            var oTable = $('#online_users').dataTable({
+                "bJQueryUI": false,
+                "bAutoWidth": false,
+                "sPaginationType": "full_numbers",
+                "sDom": '<"datatable-header"Tfl><"datatable-scroll"t><"datatable-footer"ip>',
+                "oLanguage": {
+                    "sSearch": "<span>Filter:</span> _INPUT_",
+                    "sLengthMenu": "<span>Show:</span> _MENU_",
+                    "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+                },
+                "oTableTools": {
+                    "sRowSelect": "single",
+                    "sSwfPath": "/assets/copy_csv_xls_pdf.swf",
+                    "aButtons": [
+                        {
+                            "sExtends": "copy",
+                            "sButtonText": "Copy",
+                            "sButtonClass": "btn"
+                        },
+                        {
+                            "sExtends": "print",
+                            "sButtonText": "Print",
+                            "sButtonClass": "btn"
+                        },
+                        {
+                            "sExtends": "collection",
+                            "sButtonText": "Save <span class='caret'></span>",
+                            "sButtonClass": "btn btn-primary",
+                            "aButtons": ["csv", "xls", "pdf"]
+                        }
+                    ]
+                }
+            });
 
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/startup_data?department_id='+department_id+'&company_id='+company_id,
-                    success: function (data) {
+            oTable.fnReloadAjax('/api/online_conversations_refresh?department_id=' + department_id + '&company_id=' + company_id);
 
-                        var obj = JSON.parse(data);
-                        var table = $('#online_users');
+            setInterval(function () {
+                oTable.fnReloadAjax('/api/online_conversations_refresh?department_id=' + department_id + '&company_id=' + company_id);
+            }, interval);
 
-                        //table.dataTable().fnDestroy();
-                        table.html(obj.online_users);
-                        //table.dataTable();
-
-                    },
-                    complete: function (data) {
-                        // Schedule the next
-                        setTimeout(doStartup, interval);
-                    }
-                });
-
-            }
-
-            doStartup();
         });
     </script>
 @stop

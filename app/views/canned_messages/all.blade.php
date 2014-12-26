@@ -28,10 +28,9 @@
 		<h6 class="panel-title"><i class="icon-user4"></i> All Canned Messages</h6>
 		<div class="table-controls pull-right">
 			<a href="/canned_messages/create" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Add Canned Message"><i class="icon-plus"></i></a>
-			<a href="/canned_messages/export" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Export"><i class="icon-cogs"></i></a>
 		</div>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="messages_list" class="table">
 			<thead>
 				<tr>

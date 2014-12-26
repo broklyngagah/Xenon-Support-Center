@@ -10,8 +10,6 @@ View::composer('layouts.master', function($view)
         $settings->{$raw_setting->key} = json_decode($raw_setting->value);
     }
 
-
-
     $view->with('settings',$settings);
 });
 
@@ -96,7 +94,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('log_ip', 'APIController@logIP');
 
     Route::get('change_status/{status}', 'APIController@changeStatus');
-    Route::get('startup_data', 'APIController@startupData');
+    Route::get('online_conversations_refresh', 'APIController@conversationsRefresh');
     Route::get('tickets_all_refresh', 'APIController@ticketsRefresh');
 });
 
@@ -157,6 +155,7 @@ Route::group(['prefix' => 'accounts'], function () {
 Route::group(['prefix' => 'operators'], function () {
     Route::get('create', 'OperatorsController@create');
     Route::get('all', 'OperatorsController@all');
+    Route::get('online', 'OperatorsController@online');
     Route::get('delete/{operator_id}', 'OperatorsController@delete');
     Route::get('update/{operator_id}', 'OperatorsController@edit');
     Route::get('activate/{account_id}', 'AccountsController@activate');
@@ -171,6 +170,8 @@ Route::group(['prefix' => 'operators'], function () {
 Route::group(['prefix' => 'tickets'], function () {
     Route::get('create', 'TicketsController@create');
     Route::get('all', 'TicketsController@all');
+    Route::get('pending', 'TicketsController@pending');
+    Route::get('resolved', 'TicketsController@resolved');
     Route::get('delete/{ticket_id}', 'TicketsController@delete');
     Route::get('read/{ticket_id}', 'TicketsController@read');
     Route::get('get_ticket_messages', 'TicketsController@getTicketMessages');

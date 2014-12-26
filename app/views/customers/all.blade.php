@@ -28,10 +28,9 @@
 		<h6 class="panel-title"><i class="icon-user4"></i> All Customers</h6>
 		<div class="table-controls pull-right">
 			<a href="/customers/create" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Add Customer"><i class="icon-plus"></i></a>
-			<a href="/customers/export" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Export"><i class="icon-cogs"></i></a>
 		</div>
 	</div>
-	<div class="datatable">
+	<div class="datatable-tools">
 		<table id="customer_list" class="table">
 			<thead>
 				<tr>

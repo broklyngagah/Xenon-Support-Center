@@ -125,6 +125,7 @@
                     <input type="hidden" id="thread_id" value="{{$thread->id}}"/>
                     <input type="hidden" id="sender_id" value="{{$thread->sender_id}}"/>
                     <input type="hidden" id="operator_id" value="{{$thread->operator_id}}"/>
+                    <h4>Subject : {{$ticket->subject}}</h4>
 
                     <div class="chat" style="height:400px;overflow: auto;" id="chat_messages">
                         {{$message_str}}

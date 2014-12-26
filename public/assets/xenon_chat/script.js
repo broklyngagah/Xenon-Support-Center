@@ -90,7 +90,7 @@
 
                 $.get(XENON.domain + "/api/chat/start", data, function (data, status) {
 
-                    //data = JSON.parse(data);
+                    data = JSON.parse(data);
 
                     if (data.blocked) {
                         //errors = your ip have been blocked by admin contact support

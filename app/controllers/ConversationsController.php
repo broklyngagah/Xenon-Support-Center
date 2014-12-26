@@ -237,6 +237,7 @@ class ConversationsController extends BaseController
         $messages = MessageThread::getServerMessages($thread_id,0);
 
         $geo_info = ThreadGeoInfo::where('thread_id',$thread_id)->first();
+        $this->data['online'] = $online_users;
         $this->data['geo'] = $geo_info;
         $this->data['geo_pages'] = json_decode($geo_info->all_pages);
         $this->data['message_str'] = $messages["messages_str"];

@@ -184,8 +184,28 @@ class OperatorsController extends BaseController {
     }
 
     public function delete($user_id){
+
+        $operators_department = OperatorsDepartment::where("user_id",$user_id)->first();
+
+        if(!empty($operators_department)){
+            $department_admin = DepartmentAdmins::where('department_id',$operators_department->department_id)->first();
+
+            if(!empty($department_admin)){
+                //Change all conversations , tickets , threads , thread_messages operator_id
+                OnlineUsers::where('operator_id',$user_id)->update(['operator_id'=>$department_admin->user_id]);
+                ClosedConversations::where('operator_id',$user_id)->update(['operator_id'=>$department_admin->user_id]);
+                MessageThread::where('operator_id',$user_id)->update(['operator_id'=>$department_admin->user_id]);
+                Tickets::where('operator_id',$user_id)->update(['operator_id'=>$department_admin->user_id]);
+                ThreadMessages::where('sender_id',$user_id)->update(['sender_id'=>$department_admin->user_id]);
+            }
+
+        }
+
         User::find($user_id)->delete();
         OperatorsDepartment::where("user_id",$user_id)->delete();
+        CannedMessages::where('operator_id',$user_id)->delete();
+        UsersGroups::where('user_id',$user_id)->delete();
+
         Session::flash('success_msg',"Operator deleted successfully");
         return Redirect::to('/operators/all');
     }

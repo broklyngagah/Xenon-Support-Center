@@ -54,7 +54,7 @@
                     return false; // do nothing
                 } else {
                     $.ajax({
-                        'type': 'POST',
+                        'type': 'GET',
                         'dataType': 'jsonp',
                         'url': XENON.domain + '/api/chat/send_message',
                         'data': {
@@ -88,7 +88,7 @@
                     provider: XENON.location_info.org
                 };
 
-                $.post(XENON.domain + "/api/chat/start", data, function (data, status) {
+                $.get(XENON.domain + "/api/chat/start", data, function (data, status) {
 
                     //data = JSON.parse(data);
 
@@ -126,6 +126,7 @@
             end: function () {
                 $.ajax({
                     'type': 'GET',
+                    'dataType': 'jsonp',
                     'url': XENON.domain + '/api/chat/end',
                     'data': {
                         'thread_id': XENON.thread_id

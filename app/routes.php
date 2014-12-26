@@ -79,8 +79,8 @@ Route::group(['prefix' => 'api'], function () {
 
     Route::group(['prefix' => 'chat'], function () {
         Route::get('init', 'ChatAPIController@init');
-        Route::post('start', 'ChatAPIController@start');
-        Route::post('send_message', 'ChatAPIController@sendMessage');
+        Route::get('start', 'ChatAPIController@start');
+        Route::get('send_message', 'ChatAPIController@sendMessage');
         Route::get('end', 'ChatAPIController@end');
         Route::get('check_new_messages', 'ChatAPIController@checkNewMessages');
     });

@@ -451,7 +451,6 @@ class ChatAPIController extends BaseController {
 
 
     public function end(){
-
         if(!Input::has('thread_id')){
             return "";
         }

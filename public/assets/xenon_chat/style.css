@@ -10,6 +10,14 @@
     z-index: 9999;
 }
 
+#xenon-form-name {
+    width:100%;
+}
+
+#xenon-form-email {
+    width:100%;
+}
+
 #xenon-wrapper .panel{
     margin-bottom: 0px;
     border-top-left-radius: 10px;

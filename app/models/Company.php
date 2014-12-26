@@ -47,23 +47,25 @@ class Company extends Eloquent {
         $user = User::find($company->user_id);
 
         if($user->is_online==1){
-            $response = 1;
+            return 1;
         }else{
             foreach ($department_admin_ids as $admin_id) {
                 if ($response == 0) {
                     $user = User::find($admin_id);
 
                     if ($user->is_online == 1) {
-                        $response = 1;
-                        break;
+                        return 1;
                     } else {
-                        $operators_ids = OperatorsDepartment::where('department_id', $admin_id)->lists('user_id');
+                        $department_admin = DepartmentAdmins::where('user_id',$admin_id)->first();
 
-                        foreach ($operators_ids as $operators_id) {
-                            $user = User::find($operators_id);
-                            if ($user->is_online == 1) {
-                                $response = 1;
-                                break;
+                        if(!empty($department_admin)) {
+                            $operators_ids = OperatorsDepartment::where('department_id', $department_admin->department_id)->lists('user_id');
+
+                            foreach ($operators_ids as $operators_id) {
+                                $user = User::find($operators_id);
+                                if ($user->is_online == 1) {
+                                    return 1;
+                                }
                             }
                         }
 

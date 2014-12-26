@@ -201,6 +201,7 @@ class DepartmentsController extends BaseController
             if(sizeof($operators)>0) {
                 User::whereIn('id', $operators)->delete();
                 UsersGroups::whereIn('user_id', $operators)->delete();
+                CannedMessages::where('operator_id',$operators)->delete();
             }
 
             OperatorsDepartment::where('department_id',$department_id)->delete();

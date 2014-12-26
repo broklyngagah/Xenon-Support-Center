@@ -22,6 +22,7 @@
                         'type': 'GET',
                         'url': XENON.domain + '/api/chat/init',
                         'crossDomain': true,
+                        'headers': {'X-Requested-With': 'XMLHttpRequest'},
                         'data': {
                             'company': XENON.company_id,
                             'ip_address': XENON.location_info.ip
@@ -58,6 +59,7 @@
                         'type': 'POST',
                         'url': '/api/chat/send_message',
                         'crossDomain': true,
+                        'headers': {'X-Requested-With': 'XMLHttpRequest'},
                         'data': {
                             'user_id': XENON.user_id,
                             'thread_id': XENON.thread_id,
@@ -128,6 +130,7 @@
                 $.ajax({
                     'type': 'GET',
                     'url': '/api/chat/end',
+                    'headers': {'X-Requested-With': 'XMLHttpRequest'},
                     'data': {
                         'thread_id': XENON.thread_id
                     },
@@ -141,6 +144,7 @@
                 $.ajax({
                     'type': 'GET',
                     'url': '/api/chat/check_new_messages',
+                    'headers': {'X-Requested-With': 'XMLHttpRequest'},
                     'data': {
                         'user_id': XENON.user_id,
                         'thread_id': XENON.thread_id,

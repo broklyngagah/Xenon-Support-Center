@@ -3,7 +3,7 @@
     $.fn.XENON_Initialize = function (options) {
 
         var XENON = {
-            domain: "http://162.243.17.238/",
+            domain: "http://162.243.17.238",
             user_id: 0,
             thread_id: 0,
             last_message_id: 0,
@@ -25,10 +25,10 @@
                             'company': XENON.company_id,
                             'ip_address': XENON.location_info.ip
                         },
-                        'success': function (data) {
+                        'success': function (response) {
                             //get all data and append to xenon_chat_widget
 
-                            var response = JSON.parse(data);
+                            //var response = JSON.parse(data);
 
                             if (response.blocked) {
                                 //errors = your ip have been blocked by admin contact support
@@ -89,7 +89,7 @@
 
                 $.post("/api/chat/start", data, function (data, status) {
 
-                    data = JSON.parse(data);
+                    //data = JSON.parse(data);
 
                     if (data.blocked) {
                         //errors = your ip have been blocked by admin contact support
@@ -146,9 +146,9 @@
                         'last_message_id': XENON.last_message_id,
                         'page': document.URL
                     },
-                    'success': function (data) {
+                    'success': function (response) {
 
-                        var response = JSON.parse(data);
+                        //var response = JSON.parse(data);
 
                         if (response.is_online==1) {
                             XENON.change_status(1);

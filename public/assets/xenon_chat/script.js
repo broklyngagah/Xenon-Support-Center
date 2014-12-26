@@ -150,10 +150,10 @@
 
                         var response = JSON.parse(data);
 
-                        if (response.is_online) {
-                            XENON.change_status(response.is_online);
+                        if (response.is_online==1) {
+                            XENON.change_status(1);
                         }else{
-                            XENON.change_status(response.is_online);
+                            XENON.change_status(0);
                         }
 
                         if (response.in_conversation && !response.conversation_closed) {
@@ -221,7 +221,7 @@
             },
 
             change_status: function (is_online) {
-                if (is_online) {
+                if (is_online==1) {
                     $("#xenon-widget-title").html("Contact us - Online");
                 } else {
                     $("#xenon-widget-title").html("Contact us - Offline");

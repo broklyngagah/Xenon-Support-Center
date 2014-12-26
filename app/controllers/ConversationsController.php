@@ -226,6 +226,9 @@ class ConversationsController extends BaseController
             $online_users->locked_by_operator = 1;
             $online_users->save();
 
+            //If transfered and sitting alone
+            ThreadMessages::where('thread_id',$thread_id)->where('sender_id',0)->update(['sender_id'=>Auth::user()->id]);
+
             $thread = MessageThread::find($thread_id);
             $thread->operator_id = Auth::user()->id;
             $thread->save();

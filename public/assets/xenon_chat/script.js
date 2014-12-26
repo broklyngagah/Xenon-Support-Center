@@ -21,6 +21,7 @@
                     $.ajax({
                         'type': 'GET',
                         'url': XENON.domain + '/api/chat/init',
+                        'crossDomain': true,
                         'data': {
                             'company': XENON.company_id,
                             'ip_address': XENON.location_info.ip
@@ -56,6 +57,7 @@
                     $.ajax({
                         'type': 'POST',
                         'url': '/api/chat/send_message',
+                        'crossDomain': true,
                         'data': {
                             'user_id': XENON.user_id,
                             'thread_id': XENON.thread_id,

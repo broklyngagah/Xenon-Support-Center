@@ -61,7 +61,7 @@ class APIController extends BaseController {
             $single_conversation[] = $online->locked_by_operator==1?"<label class='label label-warning'>Yes</label>":"<label class='label label-primary'>No</label>";
 
             if(!isset($online->operator))
-                $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> Accept </a></td>;';
+                $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> Accept </a></td>';
 
             if(isset($online->operator)&&$online->operator->id==Auth::user()->id)
                 $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> Reply </a></td>';

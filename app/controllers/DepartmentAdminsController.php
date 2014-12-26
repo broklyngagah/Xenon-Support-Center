@@ -199,6 +199,8 @@ class DepartmentAdminsController extends BaseController
             }
         }
 
+        CompanyDepartmentAdmins::where("user_id",$admin_id)->delete();
+
         DepartmentAdmins::where('user_id', $admin_id)->delete();
 
         UsersGroups::where('user_id', $admin_id)->delete();

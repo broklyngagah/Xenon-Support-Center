@@ -152,6 +152,8 @@
 
                         if (response.is_online) {
                             XENON.change_status(response.is_online);
+                        }else{
+                            XENON.change_status(response.is_online);
                         }
 
                         if (response.in_conversation && !response.conversation_closed) {

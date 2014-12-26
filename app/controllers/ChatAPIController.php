@@ -12,6 +12,15 @@ class ChatAPIController extends BaseController {
         $this->mailer = $mailer;
     }
 
+    public function send($arr){
+        $response = Response::json($arr);
+        $response->header('Access-Control-Allow-Origin', '*');
+        $response->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Requested-With');
+        $response->header('Access-Control-Allow-Credentials', 'true');
+        return $response;
+    }
+
     public function init(){
 
         if(Input::has('ip_address')){
@@ -21,16 +30,16 @@ class ChatAPIController extends BaseController {
 
             if(!empty($blocking)){
                 if($blocking->should_block_chat || $blocking->should_block_web_access){
-                    return json_encode(['blocked'=>1,'errors'=>'You IP is blocked by admin . Please contact support']);
+                   return $this->send(['blocked'=>1,'errors'=>'You IP is blocked by admin . Please contact support']);
                 }else{
-                    return json_encode(['blocked'=>0,'data'=>$this->init_data()]);
+                    return $this->send(['blocked'=>0,'data'=>$this->init_data()]);
                 }
             }else{
-                return json_encode(['blocked'=>0,'data'=>$this->init_data()]);
+                return $this->send(['blocked'=>0,'data'=>$this->init_data()]);
             }
 
         }else{
-            return json_encode(['blocked'=>1,'errors'=>'Unable to initialize chat']);
+            return $this->send(['blocked'=>1,'errors'=>'Unable to initialize chat']);
         }
 
     }
@@ -57,9 +66,9 @@ class ChatAPIController extends BaseController {
             $thread_message->sender_id = Input::get('user_id');
             $thread_message->message = Input::get('message');
             $thread_message->save();
-            return json_encode(["result"=>1]);
+            return $this->send(["result"=>1]);
         }else{
-            return json_encode(["result"=>0]);
+            return $this->send(["result"=>0]);
         }
     }
 
@@ -146,7 +155,7 @@ class ChatAPIController extends BaseController {
             $request_check = Company::where('id',Input::get('company_id'))->where('domain',Input::get('domain'))->get();
 
             if(sizeof($request_check)<=0)
-                return json_encode(['result'=>0,'errors'=>"Invalid request check your company id and domain name"]);
+                return $this->send(['result'=>0,'errors'=>"Invalid request check your company id and domain name"]);
 
             $company_customers = CompanyCustomers::where('company_id',Input::get('company_id'))->lists('customer_id');
 
@@ -177,7 +186,7 @@ class ChatAPIController extends BaseController {
                     $response['thread_id'] = $count->thread_id;
                     $response['success_msg'] = $success_msg;
 
-                    return json_encode($response);
+                    return $this->send($response);
                 }else{
 
                     $token = OnlineUsers::getToken();
@@ -222,7 +231,7 @@ class ChatAPIController extends BaseController {
                     $response['thread_id'] = $thread['thread_id'];
                     $response['success_msg'] = $success_msg;
 
-                    return json_encode($response);
+                    return $this->send($response);
                 }
             }else{
 
@@ -304,12 +313,12 @@ class ChatAPIController extends BaseController {
                 $response['thread_id'] = $thread['thread_id'];
                 $response['success_msg'] = $success_msg;
 
-                return json_encode($response);
+                return $this->send($response);
 
             }
 
         }else{
-            return json_encode(['result'=>0,'errors'=>Utils::buildMessages($v->messages()->all())]);
+            return $this->send(['result'=>0,'errors'=>Utils::buildMessages($v->messages()->all())]);
         }
 
 
@@ -422,7 +431,7 @@ class ChatAPIController extends BaseController {
 
         }
 
-        return json_encode($response);
+        return $this->send($response);
 
     }
 
@@ -442,6 +451,7 @@ class ChatAPIController extends BaseController {
 
 
     public function end(){
+
         if(!Input::has('thread_id')){
             return "";
         }
@@ -474,6 +484,7 @@ class ChatAPIController extends BaseController {
         }
 
         $data['wrapper'] = View::make('conversations.stub-chat-wrapper')->render();
+
         return $data;
     }
 

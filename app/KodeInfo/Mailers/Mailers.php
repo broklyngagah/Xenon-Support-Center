@@ -25,7 +25,7 @@ class Mailers
                 $message->to($recipient_email, $recipient_email)->subject($subject);
             });
         }
-        
+
 
     }
 

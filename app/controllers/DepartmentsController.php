@@ -197,12 +197,14 @@ class DepartmentsController extends BaseController
             ClosedConversations::where('department_id', $department_id)->delete();
         }
 
-        $department_admin = DepartmentAdmins::where('department_id',$department_id)->delete();
+        $department_admin = DepartmentAdmins::where('department_id',$department_id)->first();
 
         if(!empty($department_admin)){
             UsersGroups::where('user_id',$department_admin->user_id)->delete();
             User::where("id",$department_admin->user_id)->delete();
         }
+
+        DepartmentAdmins::where('department_id',$department_id)->delete();
 
         Department::where('id',$department_id)->delete();
 

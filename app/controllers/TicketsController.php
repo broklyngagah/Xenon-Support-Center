@@ -275,23 +275,13 @@ class TicketsController extends BaseController
 
         $tickets = Tickets::orderBy('priority', 'desc')->where('status',Tickets::TICKET_RESOLVED)->get();
 
-        foreach ($tickets as $ticket) {
-            $ticket->customer = User::where('id', $ticket->customer_id)->first();
-            $ticket->company = Company::where('id', $ticket->company_id)->first();
-            $ticket->department = Department::where('id', $ticket->department_id)->first();
-
-            if ($ticket->operator_id > 0) {
-                $ticket->operator = User::where('id', $ticket->operator_id)->first();
-            }
-        }
-
         if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
 
             $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
             $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
             $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
 
-            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->get();
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->where('status',Tickets::TICKET_RESOLVED)->get();
 
 
         }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
@@ -300,7 +290,7 @@ class TicketsController extends BaseController
             $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
             $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
 
-            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->get();
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->where('status',Tickets::TICKET_RESOLVED)->get();
         }
 
         foreach ($tickets as $ticket) {
@@ -323,23 +313,13 @@ class TicketsController extends BaseController
 
         $tickets = Tickets::orderBy('priority', 'desc')->where('status',Tickets::TICKET_PENDING)->get();
 
-        foreach ($tickets as $ticket) {
-            $ticket->customer = User::where('id', $ticket->customer_id)->first();
-            $ticket->company = Company::where('id', $ticket->company_id)->first();
-            $ticket->department = Department::where('id', $ticket->department_id)->first();
-
-            if ($ticket->operator_id > 0) {
-                $ticket->operator = User::where('id', $ticket->operator_id)->first();
-            }
-        }
-
         if(\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)){
 
             $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
             $this->data['department'] = Department::where('id',$department_admin->department_id)->first();
             $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
 
-            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->get();
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->where('status',Tickets::TICKET_PENDING)->get();
 
 
         }elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
@@ -348,7 +328,7 @@ class TicketsController extends BaseController
             $this->data['department'] = Department::where('id',$department_operator->department_id)->first();
             $this->data["company"] = Company::where('id',$this->data['department']->company_id)->first();
 
-            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->get();
+            $tickets = Tickets::orderBy('priority','desc')->where('company_id',$this->data['company']->id)->where('department_id',$this->data['department']->id)->where('status',Tickets::TICKET_PENDING)->get();
         }
 
         foreach ($tickets as $ticket) {

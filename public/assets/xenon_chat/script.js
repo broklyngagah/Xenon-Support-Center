@@ -55,7 +55,7 @@
                 } else {
                     $.ajax({
                         'type': 'POST',
-                        'url': '/api/chat/send_message',
+                        'url': XENON.domain + '/api/chat/send_message',
                         'data': {
                             'user_id': XENON.user_id,
                             'thread_id': XENON.thread_id,
@@ -87,7 +87,7 @@
                     provider: XENON.location_info.org
                 };
 
-                $.post("/api/chat/start", data, function (data, status) {
+                $.post(XENON.domain + "/api/chat/start", data, function (data, status) {
 
                     //data = JSON.parse(data);
 
@@ -125,7 +125,7 @@
             end: function () {
                 $.ajax({
                     'type': 'GET',
-                    'url': '/api/chat/end',
+                    'url': XENON.domain + '/api/chat/end',
                     'data': {
                         'thread_id': XENON.thread_id
                     },
@@ -138,7 +138,7 @@
 
                 $.ajax({
                     'type': 'GET',
-                    'url': '/api/chat/check_new_messages',
+                    'url': XENON.domain + '/api/chat/check_new_messages',
                     'data': {
                         'user_id': XENON.user_id,
                         'thread_id': XENON.thread_id,
@@ -150,9 +150,9 @@
 
                         //var response = JSON.parse(data);
 
-                        if (response.is_online==1) {
+                        if (response.is_online == 1) {
                             XENON.change_status(1);
-                        }else{
+                        } else {
                             XENON.change_status(0);
                         }
 
@@ -221,7 +221,7 @@
             },
 
             change_status: function (is_online) {
-                if (is_online==1) {
+                if (is_online == 1) {
                     $("#xenon-widget-title").html("Contact us - Online");
                 } else {
                     $("#xenon-widget-title").html("Contact us - Offline");
@@ -251,15 +251,15 @@
 
         });
 
-        $(document).on('click','#xenon-message-send', function () {
+        $(document).on('click', '#xenon-message-send', function () {
             XENON.send_message();
         });
 
-        $(document).on('click','#xenon-end', function () {
+        $(document).on('click', '#xenon-end', function () {
             XENON.end();
         });
 
-        $(document).on('click','#xenon-start', function () {
+        $(document).on('click', '#xenon-start', function () {
             XENON.start();
         });
 

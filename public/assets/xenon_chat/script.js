@@ -166,7 +166,7 @@
 
                                 console.log('creating cookieee');
                                 console.log(data.token);
-                                createCookie('xenon_chat_box',data.token,1);
+                                createCookie('xenon_chat_box','111',1);
                                 console.log(getCookie('xenon_chat_box'));
 
                                 $('#xenon-chat-view .chat').html("");

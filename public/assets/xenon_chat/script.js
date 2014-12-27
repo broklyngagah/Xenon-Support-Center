@@ -159,6 +159,7 @@
                 $.ajax({
                     'type': 'GET',
                     'url': XENON.domain + '/api/chat/check_new_messages',
+                    'async': false,
                     'data': {
                         'user_id': XENON.user_id,
                         'thread_id': XENON.thread_id,

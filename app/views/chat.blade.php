@@ -15,7 +15,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $("#xenon-chat-widget").XENON_Initialize({company: 3, interval: 5000});
+            $("#xenon-chat-widget").XENON_Initialize({company: 1, interval: 5000});
         });
 
     </script>

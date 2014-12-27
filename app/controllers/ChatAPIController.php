@@ -261,13 +261,21 @@ class ChatAPIController extends BaseController {
                     $user->avatar = "/assets/images/default-avatar.jpg";
                     $user->save();
 
-                    $data = [
+                    $welcome_data = [
                         'name' => $user->name,
-                        'user_id' => $user->id,
-                        'activation_code' => $user->activation_code,
+                        'email' => $user->email,
+                        'password' => $password
                     ];
 
-                    $this->mailer->welcome($user->email,$user->name,$data);
+                    $activate_data = [
+                        'name' => $user->name,
+                        'user_id' => $user->id,
+                        'activation_code' => $user->getActivationCode()
+                    ];
+
+                    $this->mailer->welcome($user->email,$user->name,$welcome_data);
+
+                    $this->mailer->activate($user->email,$user->name,$activate_data);
 
                     $company_customer = new CompanyCustomers();
                     $company_customer->company_id = Input::get('company_id');
@@ -376,8 +384,8 @@ class ChatAPIController extends BaseController {
                 }
 
                 if(!empty($department_admin)){
-                    $user = User::find($department_admin->user_id);
-                    if($user->is_online==1){
+                    $user = User::where('id',$department_admin->user_id)->first();
+                    if(!empty($user)&&$user->is_online==1){
                         $status = "(Online)";
                     }
                 }

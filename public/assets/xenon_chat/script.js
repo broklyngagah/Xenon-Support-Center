@@ -25,6 +25,9 @@
                 var name = cookie_array[i].split('=')[0];
                 var value = cookie_array[i].split('=')[1];
 
+                console.log("Name : "+name);
+                console.log("value : "+value);
+
                 if (cookie_name == name) {
                     return value;
                 }

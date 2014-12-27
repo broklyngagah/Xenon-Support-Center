@@ -111,6 +111,8 @@ class ChatAPIController extends BaseController {
 
         $response = [];
 
+        $response['token'] = 0;
+
         if(Input::has('ip')){
 
             //check ip_address in blocking table
@@ -179,8 +181,7 @@ class ChatAPIController extends BaseController {
                     $token = OnlineUsers::getToken();
 
                     if($operator_online>0) {
-                        Session::put('conversation-token', $token);
-                        Session::save();
+                        $response['token'] = $token;
                     }
 
                     $response['result'] = 1;
@@ -226,8 +227,7 @@ class ChatAPIController extends BaseController {
                     }
 
                     if($operator_online>0) {
-                        Session::put('conversation-token', $token);
-                        Session::save();
+                        $response['token'] = $token;
                     }
 
                     $response['result'] = 1;
@@ -310,8 +310,7 @@ class ChatAPIController extends BaseController {
                 }
 
                 if($operator_online>0) {
-                    Session::put('conversation-token', $token);
-                    Session::save();
+                    $response['token'] = $token;
                 }
 
                 $response['result'] = 1;
@@ -397,8 +396,8 @@ class ChatAPIController extends BaseController {
             }
 
 
-            if(Session::has('conversation-token')&&sizeof(OnlineUsers::where('token',Session::get('conversation-token'))->get())>0){
-                $token = Session::get('conversation-token');
+            if(Input::has('token')&&sizeof(OnlineUsers::where('token',Input::get('token'))->get())>0){
+                $token = Input::get('token');
                 $response['token'] = $token;
                 $online_user = OnlineUsers::where('token',$token)->first();
                 $response['in_conversation'] = 1;
@@ -418,11 +417,6 @@ class ChatAPIController extends BaseController {
 
                 //Is conversation already closed
                 if(sizeof(ClosedConversations::where('thread_id',Input::get('thread_id'))->get())>0){
-
-                    if(Session::has('conversation-token')) {
-                        Session::forget('conversation-token');
-                        Session::save();
-                    }
 
                     $response['success_msg'] = "Thanks for contacting support";
 
@@ -486,7 +480,7 @@ class ChatAPIController extends BaseController {
 
         $data['in_conversation'] = 0;
 
-        if(Session::has('conversation-token')&&sizeof(OnlineUsers::where('token',Session::get('conversation-token'))->get())>0){
+        if(Input::has('token')&&sizeof(OnlineUsers::where('token',Input::get('token'))->get())>0){
             $data['in_conversation'] = 1;
         }
 

@@ -2,51 +2,6 @@
 
     $.fn.XENON_Initialize = function (options) {
 
-
-        function hasCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return true;
-            }
-            return false;
-        }
-
-        function getCookie(cookie_name) {
-            var all_cookies = document.cookie;
-
-            // Get all the cookies pairs in an array
-            var cookie_array = all_cookies.split(';');
-
-            // Now take key value pair out of this array
-            for (var i = 0; i < cookie_array.length; i++) {
-                var name = cookie_array[i].split('=')[0];
-                var value = cookie_array[i].split('=')[1];
-
-                console.log("Name : "+name);
-                console.log("value : "+value);
-
-                if (cookie_name === name) {
-                    console.log('matched : '+name+"  Value:"+value);
-                    return value;
-                }
-            }
-
-            return null;
-        }
-
-        function createCookie(name, value, days) {
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                var expires = "; expires=" + date.toGMTString();
-            }
-            else var expires = "";
-            document.cookie = name + "=" + value + expires + "; path=/";
-        }
-
         var XENON = {
             domain: "http://162.243.17.238",
             user_id: 0,
@@ -70,7 +25,7 @@
                         'data': {
                             'company': XENON.company_id,
                             'ip_address': XENON.location_info.ip,
-                            'token' : hasCookie('xenon_chat_box')?getCookie('xenon_chat_box'):0
+                            'token' : $.cookie('xenon_chat_box')
                         },
                         'success': function (response) {
                             //get all data and append to xenon_chat_widget
@@ -105,7 +60,7 @@
                             'user_id': XENON.user_id,
                             'thread_id': XENON.thread_id,
                             'message': $('#xenon-message').val(),
-                            'token' : hasCookie('xenon_chat_box')?getCookie('xenon_chat_box'):0
+                            'token' : $.cookie('xenon_chat_box')
                         },
                         type:"POST",
                         dataType:"json",
@@ -135,7 +90,7 @@
                     ip: XENON.location_info.ip,
                     country: XENON.location_info.country,
                     provider: XENON.location_info.org,
-                    token : hasCookie('xenon_chat_box')?getCookie('xenon_chat_box'):0
+                    token : $.cookie('xenon_chat_box')
                 };
 
                 var contentType ="application/x-www-form-urlencoded; charset=utf-8";
@@ -170,7 +125,7 @@
 
                                 console.log('creating cookieee');
                                 console.log(data.token);
-                                createCookie('xenon_chat_box','111',1);
+                                $.cookie('xenon_chat_box',data.token);
                                 console.log(getCookie('xenon_chat_box'));
 
                                 $('#xenon-chat-view .chat').html("");
@@ -197,7 +152,7 @@
                     'url': XENON.domain + '/api/chat/end',
                     'data': {
                         'thread_id': XENON.thread_id,
-                        'token' : hasCookie('xenon_chat_box')?getCookie('xenon_chat_box'):0
+                        'token' : $.cookie('xenon_chat_box')
                     },
                     'success': function (data) {
                     }
@@ -216,7 +171,7 @@
                         'company_id': XENON.company_id,
                         'last_message_id': XENON.last_message_id,
                         'page': document.URL,
-                        'token' : hasCookie('xenon_chat_box')?getCookie('xenon_chat_box'):0
+                        'token' : $.cookie('xenon_chat_box')
                     },
                     'success': function (response) {
 
@@ -301,7 +256,9 @@
             }
         };
 
-        XENON.init();
+        $.getScript(XENON.domain + '/assets/xenon_chat/jquery.cookie.js', function () {
+            XENON.init();
+        });
 
         $('#xenon-message').keypress(function (e) {
 

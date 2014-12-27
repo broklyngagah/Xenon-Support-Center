@@ -126,7 +126,9 @@
                                 console.log('creating cookieee');
                                 console.log(data.token);
                                 $.cookie('xenon_chat_box',data.token);
-                                
+
+                                console.log($.cookie('xenon_chat_box'));
+
                                 $('#xenon-chat-view .chat').html("");
                                 XENON.check_new_messages();
                             } else {

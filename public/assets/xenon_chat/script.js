@@ -164,7 +164,10 @@
                                 XENON.user_id = data.user_id;
                                 XENON.token = data.token;
 
+                                console.log('creating cookieee');
+                                console.log(data.token);
                                 createCookie('xenon_chat_box',data.token,1);
+                                console.log(getCookie('xenon_chat_box'));
 
                                 $('#xenon-chat-view .chat').html("");
                                 XENON.check_new_messages();

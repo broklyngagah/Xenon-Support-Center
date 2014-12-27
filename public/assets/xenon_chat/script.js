@@ -28,7 +28,8 @@
                 console.log("Name : "+name);
                 console.log("value : "+value);
 
-                if (cookie_name == name) {
+                if (cookie_name === name) {
+                    console.log('matched : '+name+"  Value:"+value);
                     return value;
                 }
             }

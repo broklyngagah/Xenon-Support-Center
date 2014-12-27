@@ -152,6 +152,7 @@
                         'token' : XENON.token
                     },
                     'success': function (data) {
+                        $.removeCookie('xenon_chat_box');
                     }
                 });
             },

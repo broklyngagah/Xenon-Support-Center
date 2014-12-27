@@ -104,7 +104,7 @@
                 $.ajax({
                     url:XENON.domain + "/api/chat/start",
                     data:data,
-                    type:"POST",
+                    type:"GET",
                     dataType:"json",
                     contentType:contentType,
                     success:function(data)

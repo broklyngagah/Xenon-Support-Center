@@ -6,8 +6,8 @@
 	          'from' => ['address' => 'shellprog@gmail.com', 'name' => 'Support Center'],
 	          'reply-to' => ['address' => 'shellprog@gmail.com','name' => 'Support Center'],
 	          'encryption' => 'tls',
-	          'username' => 'shellprog@gmail.com',
-	          'password' => 'unity@#1100',
+	          'username' => 'phpdummies@gmail.com',
+	          'password' => '#include',
 	          'sendmail' => '/usr/sbin/sendmail -bs',
 	          'pretend' => false,
 	    ];

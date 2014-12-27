@@ -3,7 +3,7 @@
     $.fn.XENON_Initialize = function (options) {
 
         var XENON = {
-            domain: "http://support.dev",
+            domain: "http://162.243.17.238",
             user_id: 0,
             thread_id: 0,
             token: 0,

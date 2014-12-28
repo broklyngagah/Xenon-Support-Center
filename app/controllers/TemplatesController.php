@@ -67,22 +67,38 @@ class TemplatesController extends BaseController {
 
         if($paired->view=="emails.users.activate"){
             $user_mailer = new \KodeInfo\Mailers\UsersMailer();
-            $data = $user_mailer->activate(Auth::user()->email,Auth::user()->name,[],true,$send_mail);
+            $mailer_extra = User::getActivateFields(true);
+            $data = $user_mailer->activate(Auth::user()->email,Auth::user()->name,$mailer_extra,true,$send_mail);
         }
 
         if($paired->view=="emails.users.password_changed"){
             $user_mailer = new \KodeInfo\Mailers\UsersMailer();
-            $data = $user_mailer->password_changed(Auth::user()->email,Auth::user()->name,[],true,$send_mail);
+            $mailer_extra = User::getPasswordChangedFields(true);
+            $data = $user_mailer->password_changed(Auth::user()->email,Auth::user()->name,$mailer_extra,true,$send_mail);
         }
 
         if($paired->view=="emails.users.reset_password"){
             $user_mailer = new \KodeInfo\Mailers\UsersMailer();
-            $data = $user_mailer->reset_password(Auth::user()->email,Auth::user()->name,[],true,$send_mail);
+            $mailer_extra = User::getResetPasswordFields(true);
+            $data = $user_mailer->reset_password(Auth::user()->email,Auth::user()->name,$mailer_extra,true,$send_mail);
         }
 
         if($paired->view=="emails.users.welcome"){
             $user_mailer = new \KodeInfo\Mailers\UsersMailer();
-            $data = $user_mailer->welcome(Auth::user()->email,Auth::user()->name,[],true,$send_mail);
+            $mailer_extra = User::getWelcomeFields(true);
+            $data = $user_mailer->welcome(Auth::user()->email,Auth::user()->name,$mailer_extra,true,$send_mail);
+        }
+
+        if($paired->view=="emails.tickets.ticket_created"){
+            $user_mailer = new \KodeInfo\Mailers\TicketsMailer();
+            $mailer_extra = Tickets::getCreatedFields(true);
+            $data = $user_mailer->created(Auth::user()->email,Auth::user()->name,$mailer_extra,true,$send_mail);
+        }
+
+        if($paired->view=="emails.tickets.ticket_updated"){
+            $user_mailer = new \KodeInfo\Mailers\TicketsMailer();
+            $mailer_extra = Tickets::getUpdatedFields(true);
+            $data = $user_mailer->updated(Auth::user()->email,Auth::user()->name,$mailer_extra,true,$send_mail);
         }
 
         if($send_mail){

@@ -77,8 +77,11 @@ class Permissions extends Eloquent
     }
 
     static function hasAnyMailchimpPermissions(){
-        if(Permissions::hasPermission('mailchimp.pair_email')||Permissions::hasPermission('mailchimp.all')
-            ||Permissions::hasPermission('mailchimp.delete')){
+
+        $settings =  json_decode(\Settings::where('key','mailchimp')->pluck('value'));
+
+        if((Permissions::hasPermission('mailchimp.pair_email')||Permissions::hasPermission('mailchimp.all')
+            ||Permissions::hasPermission('mailchimp.delete'))&&$settings->use_mailchimp){
             return true;
         }else{
             return false;

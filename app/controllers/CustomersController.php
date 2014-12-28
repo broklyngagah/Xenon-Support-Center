@@ -2,13 +2,16 @@
 
 use KodeInfo\Forms\Rules\AccountAddValidator;
 use KodeInfo\UserManagement\UserManagement;
+use KodeInfo\Mailers\UsersMailer;
 
 class CustomersController extends BaseController {
 
     protected $accountAddValidator;
+    public $mailer;
 
-    function __construct(AccountAddValidator $accountAddValidator){
+    function __construct(AccountAddValidator $accountAddValidator,UsersMailer $mailer){
         $this->accountAddValidator = $accountAddValidator;
+        $this->mailer = $mailer;
 
         $this->beforeFilter('has_permission:customers.create', array('only' => array('create','store')));
         $this->beforeFilter('has_permission:customers.edit', array('only' => array('edit','update')));
@@ -93,6 +96,12 @@ class CustomersController extends BaseController {
                 $company_users->customer_id = $user->id;
                 $company_users->company_id = Input::get("company");
                 $company_users->save();
+
+                $this->mailer->welcome($user->email,$user->name,User::getWelcomeFields(false,$user->id,Input::get("password"),Input::get('company')));
+
+                if(!Input::has("activated"))
+                    $this->mailer->activate($user->email,$user->name,User::getActivateFields(false,$user->id,Input::get('company')));
+
 
                 Session::flash('success_msg',"Customer created successfully");
                 return Redirect::to('/customers/all');

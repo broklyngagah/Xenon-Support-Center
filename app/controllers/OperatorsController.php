@@ -2,13 +2,16 @@
 
 use KodeInfo\Forms\Rules\OperatorAddValidator;
 use KodeInfo\UserManagement\UserManagement;
+use KodeInfo\Mailers\UsersMailer;
 
 class OperatorsController extends BaseController {
 
     protected $operatorAddValidator;
+    public $mailer;
 
-    function __construct(OperatorAddValidator $operatorAddValidator){
+    function __construct(OperatorAddValidator $operatorAddValidator,UsersMailer $mailer){
         $this->operatorAddValidator = $operatorAddValidator;
+        $this->mailer = $mailer;
 
         $this->beforeFilter('has_permission:operators.create', array('only' => array('create','store')));
         $this->beforeFilter('has_permission:operators.edit', array('only' => array('edit','update')));
@@ -125,6 +128,11 @@ class OperatorsController extends BaseController {
                 $operator_department->user_id = $user->id;
                 $operator_department->department_id = Input::get('department');
                 $operator_department->save();
+
+                $this->mailer->welcome($user->email,$user->name,User::getWelcomeFields(false,$user->id,Input::get("password"),Input::get('company')));
+
+                if(!Input::has("activated"))
+                    $this->mailer->activate($user->email,$user->name,User::getActivateFields(false,$user->id,Input::get('company')));
 
                 Session::flash('success_msg',"Operator created successfully");
                 return Redirect::to('/operators/all');

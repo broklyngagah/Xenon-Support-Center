@@ -7,7 +7,7 @@
 		<title>Xenon Support System</title>
 
 		{{HTML::style("/assets/css/bootstrap.min.css")}}
-		{{HTML::style("/assets/css/londinium-theme.min.css")}}
+		{{HTML::style("/assets/css/xenon-theme.min.css")}}
 		{{HTML::style("/assets/css/styles.min.css")}}
 		{{HTML::style("/assets/css/icons.min.css")}}
 		{{HTML::style("http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=latin,cyrillic-ext")}}

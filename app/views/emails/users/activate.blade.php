@@ -5,10 +5,10 @@
 
         <p style="font-family: Arial, sans-serif; font-size: 15px;">Dear {{{ $name }}},</p>
 
-        <p>Please confirm your email address and activate your account by <a href="{{ URL::to('/') }}/activate/{{$user_id}}/{{$activation_code}}">clicking here</a></p>
+        <p>Please confirm your email address and activate your account by <a href="{{$activation_url}}">clicking here</a></p>
 
         <p style="font-family: Arial, sans-serif; font-size: 15px;">Thank you, <br />
-            ~ Customer Support</p>
+            ~ {{$company_name}}</p>
 
     </td>
 </tr>

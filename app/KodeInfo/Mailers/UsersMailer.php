@@ -10,22 +10,44 @@ use Company;
 
 class UsersMailer extends Mailers {
 
+    public $mailchimp;
+
+    function __construct(){
+        $this->mailchimp= new \KodeInfo\Templates\Mailchimp\TemplatesList();
+    }
+
     public function welcome($recipient_email,$recipient_name,$data,$use_mailchimp=false,$send_mail=true){
 
         $subject = "Thanks for register . Here are your credentials";
 
-        $data['name'] = $recipient_name;
-        $data['email'] = $recipient_email;
-
-        $recipient = User::where('email',$recipient_email)->first();
-        $company_id = CompanyCustomers::where('customer_id',$recipient->id)->first();
-        $data['current_company'] = Company::find($company_id);
-        $data['current_user'] = Auth::user();
-
         if($use_mailchimp){
             $view = 'emails.users.mailchimp_view';
         }else{
-            $view = 'emails.users.welcome';
+
+            $settings =  json_decode(\Settings::where('key','mailchimp')->pluck('value'));
+
+            if($settings->use_mailchimp){
+
+                $paired = \PairedTemplates::where('view','emails.users.welcome')->first();
+
+                if(!empty($paired)){
+
+                    $template = $this->mailchimp->getTemplate($paired->template_id);
+
+                    $file_path = app_path()."/views/emails/users/mailchimp_view.blade.php";
+
+                    \File::put($file_path,$template['preview']);
+
+                    $view = 'emails.users.mailchimp_view';
+
+                }else{
+                    $view = 'emails.users.welcome';
+                }
+
+            }else{
+                $view = 'emails.users.welcome';
+            }
+
         }
 
         if($send_mail)
@@ -38,14 +60,33 @@ class UsersMailer extends Mailers {
 
         $subject = "Thanks for register . Please activate your account";
 
-        //$data['name'] = $user->name;
-        //$data['user_id'] = $user->id;
-        //$data['activation_code'] = $user->activation_code;
-
         if($use_mailchimp){
             $view = 'emails.users.mailchimp_view';
         }else{
-            $view = 'emails.users.activate';
+
+            $settings =  json_decode(\Settings::where('key','mailchimp')->pluck('value'));
+
+            if($settings->use_mailchimp){
+
+                $paired = \PairedTemplates::where('view','emails.users.activate')->first();
+
+                if(!empty($paired)){
+
+                    $template = $this->mailchimp->getTemplate($paired->template_id);
+
+                    $file_path = app_path()."/views/emails/users/mailchimp_view.blade.php";
+
+                    \File::put($file_path,$template['preview']);
+
+                    $view = 'emails.users.mailchimp_view';
+
+                }else{
+                    $view = 'emails.users.activate';
+                }
+
+            }else{
+                $view = 'emails.users.activate';
+            }
         }
 
         if($send_mail)
@@ -56,16 +97,36 @@ class UsersMailer extends Mailers {
     }
 
     public function reset_password($recipient_email,$recipient_name,$data,$use_mailchimp=false,$send_mail=true){
-        $subject = "You can requested password reset . Click on the link to reset password";
 
-        //$data['name'] = $user->name;
-        //$data['email'] = $user->email;
-        //$data['reset'] = $user->reset_password_code;
+        $subject = "You can requested password reset . Click on the link to reset password";
 
         if($use_mailchimp){
             $view = 'emails.users.mailchimp_view';
         }else{
-            $view = 'emails.users.reset_password';
+
+            $settings =  json_decode(\Settings::where('key','mailchimp')->pluck('value'));
+
+            if($settings->use_mailchimp){
+
+                $paired = \PairedTemplates::where('view','emails.users.reset_password')->first();
+
+                if(!empty($paired)){
+
+                    $template = $this->mailchimp->getTemplate($paired->template_id);
+
+                    $file_path = app_path()."/views/emails/users/mailchimp_view.blade.php";
+
+                    \File::put($file_path,$template['preview']);
+
+                    $view = 'emails.users.mailchimp_view';
+
+                }else{
+                    $view = 'emails.users.reset_password';
+                }
+
+            }else{
+                $view = 'emails.users.reset_password';
+            }
         }
 
         if($send_mail)
@@ -82,7 +143,29 @@ class UsersMailer extends Mailers {
         if($use_mailchimp){
             $view = 'emails.users.mailchimp_view';
         }else{
-            $view = 'emails.users.password_changed';
+            $settings =  json_decode(\Settings::where('key','mailchimp')->pluck('value'));
+
+            if($settings->use_mailchimp){
+
+                $paired = \PairedTemplates::where('view','emails.users.password_changed')->first();
+
+                if(!empty($paired)){
+
+                    $template = $this->mailchimp->getTemplate($paired->template_id);
+
+                    $file_path = app_path()."/views/emails/users/mailchimp_view.blade.php";
+
+                    \File::put($file_path,$template['preview']);
+
+                    $view = 'emails.users.mailchimp_view';
+
+                }else{
+                    $view = 'emails.users.password_changed';
+                }
+
+            }else{
+                $view = 'emails.users.password_changed';
+            }
         }
 
         if($send_mail)

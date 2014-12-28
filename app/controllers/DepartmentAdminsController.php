@@ -2,16 +2,20 @@
 
 use KodeInfo\UserManagement\UserManagement;
 use \KodeInfo\Forms\Rules\CustomerAddValidator;
+use KodeInfo\Mailers\UsersMailer;
 
 class DepartmentAdminsController extends BaseController
 {
 
     protected $customerAddValidator;
+    public $mailer;
 
-    function __construct(CustomerAddValidator $customerAddValidator)
+    function __construct(CustomerAddValidator $customerAddValidator,UsersMailer $mailer)
     {
 
         $this->customerAddValidator = $customerAddValidator;
+
+        $this->mailer = $mailer;
 
         $this->beforeFilter('has_permission:departments_admins.create', array('only' => array('create', 'store')));
         $this->beforeFilter('has_permission:departments_admins.edit', array('only' => array('edit', 'update')));
@@ -123,6 +127,12 @@ class DepartmentAdminsController extends BaseController
                     $department_admin->department_id = Input::get('department');
                     $department_admin->save();
                 }
+
+                $this->mailer->welcome($user->email,$user->name,User::getWelcomeFields(false,$user->id,Input::get("password"),Input::get('company')));
+
+                if(!Input::has("activated"))
+                    $this->mailer->activate($user->email,$user->name,User::getActivateFields(false,$user->id,Input::get('company')));
+
 
                 Session::flash('success_msg', "Department Admin created successfully");
                 return Redirect::to('/departments/admins/all');

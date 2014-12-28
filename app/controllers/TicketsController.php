@@ -247,11 +247,7 @@ class TicketsController extends BaseController
 
             $customer = User::find($ticket->customer_id);
 
-            $mailer_extra = [
-                'ticket' => $ticket,
-                'has_attachment' => $ticket_attachment->has_attachment,
-                'attachment_path' => $ticket_attachment->attachment_path
-            ];
+            $mailer_extra = Tickets::getCreatedFields(false,$ticket->id,$thread['msg_id']);
 
             $this->ticketMailer->created($customer->email, $customer->name, $mailer_extra);
 
@@ -488,6 +484,8 @@ class TicketsController extends BaseController
             $thread_message->message = Input::get('message');
             $thread_message->save();
 
+            $thread_message->user = User::where('id',Input::get('user_id'));
+
             $ticket_attachment = new TicketAttachments();
             $ticket_attachment->thread_id = Input::get('thread_id');
             $ticket_attachment->message_id = $thread_message->id;
@@ -508,35 +506,28 @@ class TicketsController extends BaseController
             }
 
 
-            $customer = User::find($ticket->customer_id);
+            $customer = User::where('id',$ticket->customer_id)->first();
+            $operator = User::where('id',$ticket->operator_id)->first();
 
             $raw_settings = Settings::where('key', 'tickets')->pluck('value');
             $decode_settings = json_decode($raw_settings);
 
             if ($decode_settings->should_send_email_ticket_reply) {
 
-                if (!$customer->is_online) {
+                if (\KodeInfo\Utilities\Utils::isBackendUser(Input::get('user_id'))&&!$customer->is_online) {
 
-                    $mailer_extra = [
-                        'ticket' => $ticket,
-                        'has_attachment' => $ticket_attachment->has_attachment,
-                        'attachment_path' => $ticket_attachment->attachment_path,
-                        'operator_message' => $thread_message
-                    ];
+                    $mailer_extra = Tickets::getUpdatedFields(false,$ticket->id,$thread_message->id);
 
                     $this->ticketMailer->updated($customer->email, $customer->name, $mailer_extra);
                 }
 
-            } else {
+                if (!\KodeInfo\Utilities\Utils::isBackendUser(Input::get('user_id'))&&!$operator->is_online) {
 
-                $mailer_extra = [
-                    'ticket' => $ticket,
-                    'has_attachment' => $ticket_attachment->has_attachment,
-                    'attachment_path' => $ticket_attachment->attachment_path,
-                    'operator_message' => $thread_message
-                ];
+                    $mailer_extra = Tickets::getUpdatedFields(false,$ticket->id,$thread_message->id);
 
-                $this->ticketMailer->updated($customer->email, $customer->name, $mailer_extra);
+                    $this->ticketMailer->updated($customer->email, $customer->name, $mailer_extra);
+
+                }
 
             }
 

@@ -82,57 +82,15 @@ class AuthController extends BaseController
         }
     }
 
-    public function getRegister()
-    {
-        return View::make('register',$this->data);
-    }
-
     public function activateUser($user_id=null,$activation_code=null){
         if(is_null($user_id)||is_null($activation_code)){
             Session::flash('error_msg','Unable to activate the account. Please contact support.');
-            return Redirect::to('/register');
+            return Redirect::to('/login');
         }else{
             DB::table('users')->where('id',$user_id)->where('activation_code',$activation_code)->update(['activated'=>1,'activation_code'=>null,'activated_at'=>\Carbon\Carbon::now()]);
 
             Session::flash('success_msg','Your account has been activated. Please log in below.');
             return Redirect::to('/login');
-        }
-    }
-
-    public function postRegister()
-    {
-
-        $name = Input::get('name');
-        $email = Input::get('email');
-        $password = Input::get('password');
-        $password_confirmation = Input::get('password_confirmation');
-
-        try {
-
-            $user = $this->userManager->createUser(["name" => $name,
-                    "email" => $email,
-                    "password" => $password,
-                    "password_confirmation" => $password_confirmation],
-                'customer',
-                false);
-
-            $user->avatar = "/assets/images/default-avatar.jpg";
-            $user->save();
-
-            $data = [
-                'name' => $user->name,
-                'user_id' => $user->id,
-                'activation_code' => $user->activation_code,
-            ];
-
-            $this->mailer->activate($email,$name,$data);
-
-            Session::flash('success_msg', "Registration successful. Please activate your account by clicking the activation link we sent to " . $email);
-            return Redirect::back();
-
-        } catch (\KodeInfo\UserManagement\Exceptions\AuthException $e) {
-            Session::flash('error_msg', Utils::buildMessages($e->getErrors()));
-            return Redirect::back();
         }
     }
 
@@ -156,7 +114,7 @@ class AuthController extends BaseController
             $user->reset_requested_on = \Carbon\Carbon::now();
             $user->save();
 
-            $this->mailer->reset_password($user);
+            $this->mailer->reset_password($user->email,$user->name,User::getResetPasswordFields(false,$user->id));
 
             Session::flash('success_msg','Please click on the link we sent to your email to reset password');
             return Redirect::to('/forgot-password');
@@ -208,7 +166,7 @@ class AuthController extends BaseController
                 $user->password = Hash::make($password);
                 $user->save();
 
-                $this->mailer->password_changed($user);
+                $this->mailer->password_changed($user->email,$user->name,User::getPasswordChangedFields(false,$user->id));
 
                 Session::flash('success_msg', 'Your password was changed successfully.');
                 return Redirect::to('/login');

@@ -12,7 +12,7 @@
         <p><small>Password is temporary , please login and change your password</small></p>
 
         <p style="font-family: Arial, sans-serif; font-size: 15px;">Thank you, <br />
-            ~ Support Team</p>
+            ~ {{$company_name}}</p>
 
     </td>
 </tr>

@@ -95,14 +95,8 @@ class ChatAPIController extends BaseController {
 
         $customer = User::find($ticket->customer_id);
 
-        $mailer_extra = [
-            'ticket'=>$ticket,
-            'has_attachment'=>$ticket_attachment->has_attachment,
-            'attachment_path'=>$ticket_attachment->attachment_path
-        ];
-
         $ticketMailer = new \KodeInfo\Mailers\TicketsMailer();
-
+        $mailer_extra = Tickets::getCreatedFields(false,$ticket->id,$msg_id);
         $ticketMailer->created($customer->email,$customer->name,$mailer_extra);
 
     }
@@ -261,26 +255,16 @@ class ChatAPIController extends BaseController {
                     $user->avatar = "/assets/images/default-avatar.jpg";
                     $user->save();
 
-                    $welcome_data = [
-                        'name' => $user->name,
-                        'email' => $user->email,
-                        'password' => $password
-                    ];
-
-                    $activate_data = [
-                        'name' => $user->name,
-                        'user_id' => $user->id,
-                        'activation_code' => $user->getActivationCode()
-                    ];
-
-                    $this->mailer->welcome($user->email,$user->name,$welcome_data);
-
-                    $this->mailer->activate($user->email,$user->name,$activate_data);
+                    $user->getActivationCode();
 
                     $company_customer = new CompanyCustomers();
                     $company_customer->company_id = Input::get('company_id');
                     $company_customer->customer_id = $user->id;
                     $company_customer->save();
+
+                    $this->mailer->welcome($user->email,$user->name,User::getWelcomeFields(false,$user->id,$password,$company_customer->company_id));
+
+                    $this->mailer->activate($user->email,$user->name,User::getActivateFields(false,$user->id,$company_customer->company_id));
                 }
 
                 $token = OnlineUsers::getToken();

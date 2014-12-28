@@ -365,38 +365,95 @@
 
                     </ul>
                    
-                    <h1>Javascript</h1>
-                    <p>Below, you can see the Javascript files along with their description.</p>
+                    <h1>Email Templates</h1>
+                    <p>Below are variables which are available for each template and can be used in mailchimp templates.</p>
                     <ul class="icons">
                         <li>
-                            <i class="icon-angle-right"></i><code>/js/helpers/excanvas.min.js</code><br>
-                            Required for the Flot charts to work correctly in IE8 (loaded only in IE8)
+                            <i class="icon-angle-right"></i><code>emails.tickets.ticket_created</code><br>
+                            <ul class="icons">
+                                <li><code>{{$ticket_id}}</code> will display ticket ID</li>
+                                <li><code>{{$ticket_subject}}</code> will display ticket subject</li>
+                                <li><code>{{$ticket_description}}</code> will display ticket description</li>
+                                <li><code>{{$ticket_status}}</code> will display ticket status in numeric</li>
+                                <li><code>{{$ticket_status_txt}}</code> will display ticket status in text</li>
+                                <li><code>{{$ticket_priority}}</code> will display ticket priority in numeric</li>
+                                <li><code>{{$ticket_priority_txt}}</code> will display ticket priority in text</li>
+                                <li><code>{{$company_name}}</code> will display company name</li>
+                                <li><code>{{$company_description}}</code> will display company description</li>
+                                <li><code>{{$company_domain}}</code> will display company domain</li>
+                                <li><code>{{$company_logo}}</code> will display company logo</li>
+                                <li><code>{{$department_name}}</code> will display department name</li>
+                                <li><code>{{$has_attachment}}</code> will return true if updated message have attachment</li>
+                                <li><code>{{$attachment_path}}</code> will return path of attachment</li>
+                                <li><code>{{$receiver_name}}</code> will display receiver/customer name</li>
+                                <li><code>{{$receiver_email}}</code> will display receiver/customer email</li>
+                            </ul>
                         </li>
                         <li>
-                            <i class="icon-angle-right"></i><code>/js/helpers/jqvmap.maps.js</code><br>
-                            JQVmaps data! Include it in your page if you want to use a vector map with the JQVmap plugin!
+                            <i class="icon-angle-right"></i><code>emails.tickets.ticket_updated</code><br>
+                            <ul class="icons">
+                                <li><code>{{$ticket_id}}</code> will display ticket ID</li>
+                                <li><code>{{$ticket_subject}}</code> will display ticket subject</li>
+                                <li><code>{{$ticket_description}}</code> will display ticket description</li>
+                                <li><code>{{$ticket_status}}</code> will display ticket status in numeric</li>
+                                <li><code>{{$ticket_status_txt}}</code> will display ticket status in text</li>
+                                <li><code>{{$ticket_priority}}</code> will display ticket priority in numeric</li>
+                                <li><code>{{$ticket_priority_txt}}</code> will display ticket priority in text</li>
+                                <li><code>{{$company_name}}</code> will display company name</li>
+                                <li><code>{{$company_description}}</code> will display company description</li>
+                                <li><code>{{$company_domain}}</code> will display company domain</li>
+                                <li><code>{{$company_logo}}</code> will display company logo</li>
+                                <li><code>{{$department_name}}</code> will display department name</li>
+                                <li><code>{{$has_attachment}}</code> will return true if updated message have attachment</li>
+                                <li><code>{{$attachment_path}}</code> will return path of attachment</li>
+                                <li><code>{{$updated_message}}</code> will return new updated message for current ticket</li>
+                                <li><code>{{$receiver_name}}</code> will return name of receiver</li>
+                                <li><code>{{$receiver_email}}</code> will return email of receiver</li>
+                            </ul>
                         </li>
                         <li>
-                            <i class="icon-angle-right"></i><code>/js/vendor/bootstrap.min.js</code><br>
-                            Javasript components of Bootstrap framework
+                            <i class="icon-angle-right"></i><code>emails.users.welcome</code><br>
+                            <ul class="icons">
+                                <li><code>{{$name}}</code> will display name of new customer</li>
+                                <li><code>{{$email}}</code> will display email of new customer</li>
+                                <li><code>{{$password}}</code> will display password of new customer</li>
+                                <li><code>{{$company_name}}</code> will display company name</li>
+                                <li><code>{{$company_description}}</code> will display company description</li>
+                                <li><code>{{$company_domain}}</code> will display company domain</li>
+                                <li><code>{{$company_logo}}</code> will display company logo</li>
+                            </ul>
                         </li>
                         <li>
-                            <i class="icon-angle-right"></i><code>/js/vendor/jquery-1.9.1.min.js</code><br>
-                            The popular Javascript library that greatly reduces the amount of code you must write. This is the local file and is only included in case the version from google apis cannot be loaded for some reason (eg working local without a network connection available)
+                            <i class="icon-angle-right"></i><code>emails.users.activate</code><br>
+                            <ul class="icons">
+                                <li><code>{{$name}}</code> will display name of customer</li>
+                                <li><code>{{$email}}</code> will display email of customer</li>
+                                <li><code>{{$user_id}}</code> will display user id of customer</li>
+                                <li><code>{{$activation_url}}</code> will display url for customer to activate</li>
+                                <li><code>{{$activation_code}}</code> will display activation code for new customer</li>
+                                <li><code>{{$company_name}}</code> will display company name</li>
+                                <li><code>{{$company_description}}</code> will display company description</li>
+                                <li><code>{{$company_domain}}</code> will display company domain</li>
+                                <li><code>{{$company_logo}}</code> will display company logo</li>
+                            </ul>
                         </li>
                         <li>
-                            <i class="icon-angle-right"></i><code>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js</code><br>
-                            Modernizr, a browser feature detection library and<br>Respond.js, enabling responsive CSS code on browsers that do not natively support it
+                            <i class="icon-angle-right"></i><code>emails.users.reset_password</code><br>
+                            <ul class="icons">
+                                <li><code>{{$name}}</code> will display name of customer</li>
+                                <li><code>{{$email}}</code> will display email of customer</li>
+                                <li><code>{{$reset_code}}</code> will display reset code which is used to reset password</li>
+                                <li><code>{{$reset_url}}</code> will display complete url to reset password</li>
+                            </ul>
                         </li>
                         <li>
-                            <i class="icon-angle-right"></i><code>/js/plugins.js</code><br>
-                            All Javascript plugins minimized and included in a single file. If you are not planning on using most of the plugins throughout your app, it is recommended to remove the plugins that you don't need (if you do, make sure you also remove plugin related code from <code>js/main.js</code> or code in a page that is used). Furthermore, if for example you only going to use a plugin in one page, it's better to remove it, put it in a seperate file and include only in the page you need it. This way you won't load a plugin you won't use in most pages.
-                        </li>
-                        <li>
-                            <i class="icon-angle-right"></i><code>/js/main.js</code><br>
-                            Initialization of various plugins as well as Javascript code used in <strong>FlatApp</strong> features such as main navigation functionality
+                            <i class="icon-angle-right"></i><code>emails.users.password_changed</code><br>
+                            <ul class="icons">
+                                <li><code>{{$name}}</code> will display name of customer</li>
+                            </ul>
                         </li>
                     </ul>
+					
                     <p>The Javascript code required and used throughout <strong>FlatApp</strong>, exists in <code>/js/main.js</code>. In some pages, because some functionality is needed individually, there is some initialization code at the bottom of each file only (as it happens in the <code>index.php</code> for example).</p>
                     <p>There are a lot of examples in <strong>FlatApp</strong> but you can check out their websites where you could find more examples. I've included their links in the last section of this documentation.</p>
                     <p>At last, all Javascript files are included at the bottom of the page (<code>/inc/footer.php</code> for the PHP version), except from the <code>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js</code> which needs to be loaded in the <code>&lt;head&gt;</code> tag (<code>/inc/top.php</code> for the PHP version).</p>

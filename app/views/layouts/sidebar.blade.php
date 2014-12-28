@@ -139,7 +139,7 @@
                         <a href="/departments/admins/create">Create New Department Admin</a>
                     </li>
                     @endif
-                    @if(Permissions::hasAnyDepartmentAdminsPermissions()))
+                    @if(Permissions::hasAnyDepartmentAdminsPermissions())
                     <li>
                         <a href="/departments/admins/all">All Department Admin</a>
                     </li>

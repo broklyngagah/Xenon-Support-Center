@@ -6,7 +6,7 @@ class BlockingController extends BaseController {
     {
         $this->beforeFilter('has_permission:blocking.block', array('only' => array('create', 'store')));
         $this->beforeFilter('has_permission:blocking.delete', array('only' => array('delete')));
-        $this->beforeFilter('has_permission:blocking.view', array('only' => array('all')));
+        $this->beforeFilter('has_permission:blocking.all', array('only' => array('all')));
     }
 
     public function all(){

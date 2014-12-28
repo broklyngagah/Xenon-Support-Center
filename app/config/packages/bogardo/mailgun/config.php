@@ -11,5 +11,5 @@
 	        'force_from_address' => false,
 	        'catch_all' => '',
 	        'testmode' => false,
-	        'use_mailgun' => true
+	        'use_mailgun' => false
             ];

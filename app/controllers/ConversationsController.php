@@ -12,8 +12,8 @@ class ConversationsController extends BaseController
         $this->repo = new MessageRepo();
         $this->beforeFilter('has_permission:conversations.accept', array('only' => array('accept')));
         $this->beforeFilter('has_permission:conversations.closed', array('only' => array('closedConversations')));
-        $this->beforeFilter('has_permission:conversations.accept_close', array('only' => array('closeConversation')));
-        $this->beforeFilter('has_permission:conversations.closed_delete', array('only' => array('deleteConversation')));
+        $this->beforeFilter('has_permission:conversations.close', array('only' => array('closeConversation')));
+        $this->beforeFilter('has_permission:conversations.delete', array('only' => array('deleteConversation')));
     }
 
     public function getServerMessages()

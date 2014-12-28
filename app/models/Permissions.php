@@ -29,6 +29,99 @@ class Permissions extends Eloquent
 
     public $timestamps = true;
 
+    static function hasAnyConversionsPermissions(){
+        if(Permissions::hasPermission('conversations.accept')||Permissions::hasPermission('conversations.close')
+            ||Permissions::hasPermission('conversations.delete')||Permissions::hasPermission('conversations.closed')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyCannedPermissions(){
+        if(Permissions::hasPermission('canned_messages.create')||Permissions::hasPermission('canned_messages.edit')
+            ||Permissions::hasPermission('canned_messages.all')||Permissions::hasPermission('canned_messages.delete')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyOperatorsPermissions(){
+        if(Permissions::hasPermission('operators.create')||Permissions::hasPermission('operators.edit')
+            ||Permissions::hasPermission('operators.activate')||Permissions::hasPermission('operators.delete')
+            ||Permissions::hasPermission('operators.all')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyDepartmentsPermissions(){
+        if(Permissions::hasPermission('departments.create')||Permissions::hasPermission('departments.edit')
+            ||Permissions::hasPermission('departments.all')||Permissions::hasPermission('departments.delete')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyDepartmentAdminsPermissions(){
+        if(Permissions::hasPermission('departments_admins.create')||Permissions::hasPermission('departments_admins.edit')
+            ||Permissions::hasPermission('departments_admins.remove')||Permissions::hasPermission('departments_admins.activate')
+            ||Permissions::hasPermission('departments_admins.all')||Permissions::hasPermission('departments_admins.delete')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyMailchimpPermissions(){
+        if(Permissions::hasPermission('mailchimp.pair_email')||Permissions::hasPermission('mailchimp.all')
+            ||Permissions::hasPermission('mailchimp.delete')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyTicketsPermissions(){
+        if(Permissions::hasPermission('tickets.create')||Permissions::hasPermission('tickets.edit')
+            ||Permissions::hasPermission('tickets.all')||Permissions::hasPermission('tickets.delete')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyCustomersPermissions(){
+        if(Permissions::hasPermission('customers.create')||Permissions::hasPermission('customers.edit')
+            ||Permissions::hasPermission('customers.all')||Permissions::hasPermission('customers.delete')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyCompaniesPermissions(){
+        if(Permissions::hasPermission('companies.create')||Permissions::hasPermission('companies.edit')
+            ||Permissions::hasPermission('companies.all')||Permissions::hasPermission('companies.delete')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static function hasAnyBlockingPermissions(){
+        if(Permissions::hasPermission('blocking.block')||Permissions::hasPermission('blocking.all')
+            ||Permissions::hasPermission('blocking.delete')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
     static function hasPermission($permission)
     {
 

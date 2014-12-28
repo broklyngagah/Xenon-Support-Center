@@ -7,7 +7,7 @@ class CannedMessagesController extends BaseController
     {
         $this->beforeFilter('has_permission:canned_messages.create', array('only' => array('create', 'store')));
         $this->beforeFilter('has_permission:canned_messages.edit', array('only' => array('edit', 'update')));
-        $this->beforeFilter('has_permission:canned_messages.view', array('only' => array('all')));
+        $this->beforeFilter('has_permission:canned_messages.all', array('only' => array('all')));
         $this->beforeFilter('has_permission:canned_messages.delete', array('only' => array('delete')));
     }
 

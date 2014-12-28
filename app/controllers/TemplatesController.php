@@ -8,7 +8,7 @@ class TemplatesController extends BaseController {
         $this->mailchimp= new \KodeInfo\Templates\Mailchimp\TemplatesList();
 
         $this->beforeFilter('has_permission:mailchimp.pair_email', array('only' => array('all')));
-        $this->beforeFilter('has_permission:mailchimp.view', array('only' => array('createPair','storePair')));
+        $this->beforeFilter('has_permission:mailchimp.all', array('only' => array('createPair','storePair')));
         $this->beforeFilter('has_permission:mailchimp.delete', array('only' => array('deletePair')));
     }
 

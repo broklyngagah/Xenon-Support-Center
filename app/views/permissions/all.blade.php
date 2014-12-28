@@ -1,18 +1,14 @@
 @extends('layouts.master')
 
-@section('styles')
-{{HTML::style("/assets/plugins/datatables/css/dataTables.bootstrap.css")}}
-@stop
-
 @section('content')
-<!-- Page header -->
+
 <div class="page-header">
 	<div class="page-title">
 		<h3>Permissions <small>Control panel.</small></h3>
 	</div>
 </div>
-<!-- /page header -->
-<!-- Breadcrumbs line -->
+
+
 <div class="breadcrumb-line">
 	<ul class="breadcrumb">
 		<li>
@@ -23,35 +19,40 @@
 		</li>
 	</ul>
 </div>
-<!-- /breadcrumbs line -->
 
 @include('layouts.notify')
 
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h6 class="panel-title"><i class="icon-key"></i> All Permissions</h6>
+		<!--
 		<div class="table-controls pull-right">
 			<a href="/permissions/create" class="btn btn-default btn-icon btn-xs tip" title="" data-original-title="Add Permission"><i class="icon-plus"></i></a>
 		</div>
+		-->
 	</div>
 	<div class="datatable-tools">
 		<table id="permissions_list" class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Text</th>
 					<th>Key</th>
+					<th>Description</th>
+					<!--
 					<th>Edit</th>
 					<th>Delete</th>
+					-->
 				</tr>
 			</thead>
 			<tbody>
 				@foreach($permissions as $permission)
 				<tr>
 					<td>{{$permission->id}}</td>
+					<td><label class="label label-primary">{{$permission->key}}</label></td>
 					<td>{{$permission->text}}</td>
-					<td>{{$permission->key}}</td>
+					<!--
 					<td>
+
 					<button data-id="{{$permission->id}}" data-toggle="modal" data-target="#edit_permission_modal"
 					class="btn btn-success btn-sm edit_permission">
 						<i class="icon-pencil4"></i> Edit Description
@@ -59,6 +60,7 @@
 					<td>
                     	<a href="/permissions/delete/{{$permission->id}}" class="btn btn-warning btn-sm"><i class="icon-remove2"></i> Delete</a>
                     </td>
+                    -->
 				</tr>
 				@endforeach
 			</tbody>

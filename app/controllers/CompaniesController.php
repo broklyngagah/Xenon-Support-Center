@@ -14,7 +14,7 @@ class CompaniesController extends BaseController
         $this->beforeFilter('has_permission:companies.create', array('only' => array('create', 'store')));
         $this->beforeFilter('has_permission:companies.edit', array('only' => array('edit', 'update')));
         $this->beforeFilter('has_permission:companies.delete', array('only' => array('delete')));
-        $this->beforeFilter('has_permission:companies.view', array('only' => array('all')));
+        $this->beforeFilter('has_permission:companies.all', array('only' => array('all')));
     }
 
     public function getOperators($company_id)

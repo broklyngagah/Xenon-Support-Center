@@ -57,7 +57,7 @@
                 </li>
             @endif
 
-            @if(Permissions::hasPermission('conversations.accept')||Permissions::hasPermission('conversations.closed'))
+            @if(Permissions::hasAnyConversionsPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='conversations')?"class='active'":""}}>
                 <a href="" class="expand"><span>Conversations</span> <i class="icon-envelop"></i></a>
                 <ul>
@@ -76,11 +76,11 @@
             </li>
             @endif
 
-            @if(Permissions::hasPermission('canned_messages.view')||Permissions::hasPermission('canned_messages.edit')||Permissions::hasPermission('canned_messages.create'))
+            @if(Permissions::hasAnyCannedPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='canned_messages')?"class='active'":""}}>
                 <a href="" class="expand"><span>Canned Messages</span> <i class="icon-drawer2"></i></a>
                 <ul>
-                    @if(Permissions::hasPermission('canned_messages.view')||Permissions::hasPermission('canned_messages.edit'))
+                    @if(Permissions::hasPermission('canned_messages.all')||Permissions::hasPermission('canned_messages.edit'))
                     <li>
                         <a href="/canned_messages/all">All Canned Messages</a>
                     </li>
@@ -95,17 +95,17 @@
             </li>
             @endif
 
-            @if(Permissions::hasPermission('operators.create')||Permissions::hasPermission('operators.edit')||Permissions::hasPermission('operators.delete')||Permissions::hasPermission('operators.view'))
+            @if(Permissions::hasAnyOperatorsPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='operators')?"class='active'":""}}>
                 <a href="" class="expand"><span>Operators</span> <i class="icon-user4"></i></a>
                 <ul>
-                    @if(Permissions::hasPermission('operators.view'))
+                    @if(Permissions::hasPermission('operators.all'))
                         <li>
                             <a href="/operators/online">Online Operators</a>
                         </li>
                     @endif
 
-                    @if(Permissions::hasPermission('operators.view'))
+                    @if(Permissions::hasPermission('operators.all'))
                         <li>
                             <a href="/operators/all">All Operators</a>
                         </li>
@@ -120,15 +120,11 @@
             </li>
             @endif
 
-            @if(Permissions::hasPermission('departments.create')||Permissions::hasPermission('departments.edit')
-                    ||Permissions::hasPermission('departments.delete')||Permissions::hasPermission('departments.view')
-                    ||Permissions::hasPermission('departments_admins.create')||Permissions::hasPermission('departments_admins.edit')
-                    ||Permissions::hasPermission('departments_admins.view')||Permissions::hasPermission('departments_admins.delete'))
-
+            @if(Permissions::hasAnyDepartmentsPermissions()||Permissions::hasAnyDepartmentAdminsPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='departments')?"class='active'":""}}>
                 <a href="" class="expand"><span>Departments</span> <i class="icon-users"></i></a>
                 <ul>
-                    @if(Permissions::hasPermission('departments.view')||Permissions::hasPermission('departments.edit')||Permissions::hasPermission('departments.delete'))
+                    @if(Permissions::hasAnyDepartmentsPermissions())
                     <li>
                         <a href="/departments/all">All Departments</a>
                     </li>
@@ -143,7 +139,7 @@
                         <a href="/departments/admins/create">Create New Department Admin</a>
                     </li>
                     @endif
-                    @if(Permissions::hasPermission('departments_admins.view')||Permissions::hasPermission('departments_admins.edit')||Permissions::hasPermission('departments_admins.delete'))
+                    @if(Permissions::hasAnyDepartmentAdminsPermissions()))
                     <li>
                         <a href="/departments/admins/all">All Department Admin</a>
                     </li>
@@ -153,16 +149,20 @@
 
             @endif
 
-            @if(\KodeInfo\Utilities\Utils::isAdmin(Auth::user()->id))
+            @if(Permissions::hasAnyMailchimpPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='templates')?"class='active'":""}}>
                 <a href="" class="expand"><span>Mailchimp Templates</span> <i class="icon-profile"></i></a>
                 <ul>
+                    @if(Permissions::hasPermission('mailchimp.all'))
                     <li>
                         <a href="/templates/all">All Templates</a>
                     </li>
+                    @endif
+                    @if(Permissions::hasPermission('mailchimp.pair_email')||Permissions::hasPermission('mailchimp.delete'))
                     <li>
                         <a href="/templates/pair/all">Pair Email to Template</a>
                     </li>
+                    @endif
                 </ul>
             </li>
             @endif
@@ -173,14 +173,16 @@
             </li>
             @endif
 
-            @if(Permissions::hasPermission('tickets.create')||Permissions::hasPermission('tickets.edit')
-                ||Permissions::hasPermission('tickets.view')||Permissions::hasPermission('tickets.delete'))
+            @if(Permissions::hasAnyTicketsPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='tickets')?"class='active'":""}}>
                 <a href="" class="expand"><span>Tickets</span> <i class="icon-ticket"></i></a>
                 <ul>
+                    @if(Permissions::hasPermission('tickets.create')||Permissions::hasPermission('tickets.edit')||Permissions::hasPermission('tickets.delete'))
                     <li>
                         <a href="/tickets/create">Create Ticket</a>
                     </li>
+                    @endif
+                    @if(Permissions::hasPermission('tickets.all'))
                     <li>
                         <a href="/tickets/all">All Tickets</a>
                     </li>
@@ -190,19 +192,18 @@
                     <li>
                         <a href="/tickets/resolved">Resolved Tickets</a>
                     </li>
+                    @endif
                 </ul>
             </li>
             @endif
 
-            @if(Permissions::hasPermission('customers.create')||Permissions::hasPermission('customers.edit')
-                ||Permissions::hasPermission('customers.view')||Permissions::hasPermission('customers.delete'))
+            @if(Permissions::hasAnyCustomersPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='customers')?"class='active'":""}}>
                 <a href="/customers/all"> <i class="icon-users2"></i> <span>Customers</span> </a>
             </li>
             @endif
 
-            @if(Permissions::hasPermission('companies.create')||Permissions::hasPermission('companies.edit')
-                 ||Permissions::hasPermission('companies.view')||Permissions::hasPermission('companies.delete'))
+            @if(Permissions::hasAnyCompaniesPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='companies')?"class='active'":""}}>
                 <a href="/companies/all"> <i class="icon-office"></i> <span>Companies</span> </a>
             </li>
@@ -224,11 +225,12 @@
                 </ul>
             </li>
             -->
-            @if(Permissions::hasPermission('blocking.block')||Permissions::hasPermission('blocking.delete')||Permissions::hasPermission('blocking.view'))
+
+            @if(Permissions::hasAnyBlockingPermissions())
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='blocking')?"class='active'":""}}>
                 <a href="" class="expand"><span>IP Blocking</span> <i class="icon-lock"></i></a>
                 <ul>
-                    @if(Permissions::hasPermission('blocking.view')||Permissions::hasPermission('blocking.delete'))
+                    @if(Permissions::hasPermission('blocking.all')||Permissions::hasPermission('blocking.delete'))
                     <li>
                         <a href="/blocking/all">All Blocked IP's</a>
                     </li>

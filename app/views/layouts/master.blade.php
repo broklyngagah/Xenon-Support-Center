@@ -71,8 +71,8 @@
 	</head>
 	<body class="sidebar-wide">
 
-		@include('layouts.header');
-		@include('layouts.sidebar');
+		@include('layouts.header')
+		@include('layouts.sidebar')
 
 		<!-- Page container -->
 		<div class="page-container">

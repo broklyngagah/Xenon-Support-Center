@@ -15,7 +15,7 @@ class DepartmentAdminsController extends BaseController
 
         $this->beforeFilter('has_permission:departments_admins.create', array('only' => array('create', 'store')));
         $this->beforeFilter('has_permission:departments_admins.edit', array('only' => array('edit', 'update')));
-        $this->beforeFilter('has_permission:departments_admins.view', array('only' => array('all')));
+        $this->beforeFilter('has_permission:departments_admins.all', array('only' => array('all')));
         $this->beforeFilter('has_permission:departments_admins.delete', array('only' => array('delete')));
         $this->beforeFilter('has_permission:departments_admins.remove', array('only' => array('remove')));
         $this->beforeFilter('has_permission:departments_admins.activate', array('only' => array('activate')));

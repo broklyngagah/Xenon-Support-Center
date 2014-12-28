@@ -14,7 +14,7 @@ class DepartmentsController extends BaseController
 
         $this->beforeFilter('has_permission:departments.create', array('only' => array('create', 'store')));
         $this->beforeFilter('has_permission:departments.edit', array('only' => array('edit', 'update')));
-        $this->beforeFilter('has_permission:departments.view', array('only' => array('all')));
+        $this->beforeFilter('has_permission:departments.all', array('only' => array('all')));
         $this->beforeFilter('has_permission:departments.delete', array('only' => array('delete')));
 
     }

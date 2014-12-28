@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+
+        <title>Xenon Support Center - Documentation</title>
+
+        <meta name="description" content="Documentation of Xenon Support">
+        <meta name="keywords" content="xenon, codecanyon, documentation, kodeinfo">
+
+        <meta name="author" content="kodeinfo">
+        <meta name="robots" content="noindex, nofollow">
+
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <!-- Icons -->
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-57x57-precomposed.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png">
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/plugins.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <!-- Scripts -->
+        <script src="js/vendor/modernizr.min.js"></script>
+    </head>
+
+    <body>
+        <!-- Page Container -->
+        <div id="container">
+            <!-- Header -->
+            <header class="cf">
+                <a href="" id="header-logo">Xenon</a>
+                <div id="header-version"><span class="text-bold">1.0</span> | January 1, 2015</div>
+            </header>
+            <!-- END Header -->
+
+            <!-- Container for navigation and content -->
+            <div id="main-container" class="cf">
+                <!-- Navigation -->
+                <nav id="main-nav"></nav>
+
+                <!-- Main Content -->
+                <div id="main">
+                    <p class="author-comment">Thank you for purchasing my theme. If you have any questions that are beyond the scope of this documentation, please feel free to email via <a href="http://codecanyon.net/user/kodeinfo">my user page contact form</a>. <strong>Thanks so much!</strong></p>
+
+                    <h1>Changelog</h1>
+                    <ol>
+                        <li>
+                            <strong>Release v1.0 (January 1, 2015)</strong>
+                        </li>
+                    </ol>
+
+                    <p><strong>Xenon</strong> support center is integrated with ~50 permissions which can be assigned to departments , operators etc.</p>
+
+                    <h1>Installation</h1>
+                    <p>We have used Laravel Framework to craft best possible support center :</p>
+                    <ul class="icons">
+                        <li>
+                            <i class="icon-ok"></i><strong>Setting up laravel and other dependencies </strong><br>
+                            I have written a complete post on how to setup laravel on digitalocean if you are using digitalocean then <a href="http://kodeinfo.com/post/deploying-laravel-on-digitalocean-using-github-and-dployio"> click here and follow </a>
+                        </li>
+                        <li>
+                            <i class="icon-ok"></i><strong>Permissions</strong><br>
+                            As stated in laravel installation documentation you need to give write permission to <code>app/storage</code> directory . Other directories/files which require write access are <code>app/views/emails</code> , <code>public/uploads</code> , <code>app/config/mail.php</code> and <code>app/config/packages/bogardo/mailgun/config.php</code>
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Database</strong><br>
+                            You can change database settings in <code>app/config/database.php</code> . Change database , username and password in mysql section and save the file . Now run <code>php artisan migrate</code> which will create all tables schema and insert required data . By default admin email is admin@mail.com and password is admin  
+                        </li>
+                        <li>
+                            <i class="icon-ok"></i><strong>Creating your company</strong><br>
+                            Xenon support center is crafted to real-world situation . In real-world a company have departments which are managed by department managers/admins , department admins are take care of operators in respective department . So we first have to create a company before we create anything . Login with your default email and password and click on company in sidebar and on next page click on + sign to create a new company . If you are using livechat then company domain should match with the domain which is using livechat , like if you want to put livechat on <code>http://kodeinfo.com</code> then domain should be <code>http://kodeinfo.com</code>
+                        </li>
+                        <li>
+                            <i class="icon-ok"></i><strong>Create Department admins and Departments</strong><br>
+                            Click on departments and click on Create new department admin , fill the fields and click save . Now you have a department admin which is not handling any department . So lets create a new department and assign that department to him . Click on departments and then click on create new department , enter name , select permissions , select department admin and click save . I have listed all permissions in the end of documentation .
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Setup mail using smtp/mailgun</strong><br>
+                            You can choose between smtp/mailgun to send mails . Go to settings , if you want to use mailgun check use mailgun and fill all fields then click save . If you want to use smtp then uncheck use mailgun in mailgun settings and save then go to smtp tab and fill all fields and save . 
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Mail Templates using blade/mailchimp</strong><br>
+                            You can choose between blade/mailchimp templating . Go to settings and then click on mailchimp tab enter mailchimp api key and check "use mailchimp for email templates" and save . If you want to use default templates then just uncheck "use mailchimp" . If you are using mailchimp then go to mailchimp templates in sidebar and click pair emails to template and pair all emails to mailchimp templates . You can use custom variables in template to replace information , at the end of documentation i have shown  list of variable available to each email template .
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Mail Templates using blade/mailchimp</strong><br>
+                            You can choose between blade/mailchimp templating . Go to settings and then click on mailchimp tab enter mailchimp api key and check "use mailchimp for email templates" and save . If you want to use default templates then just uncheck "use mailchimp" . If you are using mailchimp then go to mailchimp templates in sidebar and click pair emails to template and pair all emails to mailchimp templates . You can use custom variables in template to replace information , at the end of documentation i have shown  list of variable available to each email template .
+                        </li>
+                    </ul>
+
+                    <h1>Features</h1>
+					<ul class="icons">
+                        <li>
+                            <i class="icon-ok"></i><strong>Built on Laravel Framework </strong><br>
+                            Laravel is one of the most popular framework at the moment and is full of features. It is easy to use and it offers a large variety of packages using composer . 
+                        </li>
+                        <li>
+                            <i class="icon-ok"></i><strong>Live Chat</strong><br>
+							It contains livechat which you can integrate on any website . It is fast and powerful , customer can start conversation simply by entering details and click start and operators will be notified . All conversations are saved in closed conversations . 
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Canned Messages</strong><br>
+                            You can create predefined messages which can be used by operators for quick reply  
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Operators</strong><br>
+                            You can create operators for company departments . Operators have separate dashboard and can access functionalities which is assigned by department admin .   
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Department Admins and Departments</strong><br>
+                            You can create department admins who are in-charge of particular departments . You can also create department and assign department admin to it .  
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Mailchimp Templating</strong><br>
+                            This is a unique feature only visible if use mailchimp is checked in settings . You can create your own templates using mailchimp's powerful editor use variables shown in documentation , then you can pair mailchimp templates to email templates so that next time emails use mailchimp templates instead of default .
+                        </li>
+                        <li>
+                            <i class="icon-ok"></i><strong>Permissions ~50 levels</strong><br>
+                            Now control your department admins/operators using permissions . Complete system is based on permissions like if you assign tickets.create to operator then only he can create tickets . You can control each and everything using permissions from what users edit and what users can see .
+                        </li>
+						 <li>
+                            <i class="icon-ok"></i><strong>Tickets</strong><br>
+                            By default if no operators are available livechat is converted to ticket . Users can login to there accounts and reply to existing tickets or create new tickets , tickets also supports attachments . Tickets panel also shows user details like ip address , country , priority , status etc .
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Customers</strong><br>
+                            You can create customers and assign them to companies directly from admin panel .
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Companies</strong><br>
+                            You can create companies directly from admin panel .
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Blocking</strong><br>
+                            You can block ip using ip blocking . Types of blocking are block from accessing chat , block from creating tickets , block from login , full website blocking . 
+                        </li>
+						<li>
+                            <i class="icon-ok"></i><strong>Mailgun</strong><br>
+                            You can use mailgun to send emails . Just go to settings , check use mailgun and enter details then save .
+                        </li>
+					</ul>	
+                   
+                    <h1>Permissions</h1>
+                    <p>Below, you can see all available permissions.</p>
+                    <ul class="icons">
+                        <li>
+                            <i class="icon-angle-right"></i><code>tickets.create</code><br>
+                            Operator/Department admin/Customer can create tickets
+                        </li>
+						<li>
+                            <i class="icon-angle-right"></i><code>tickets.edit</code><br>
+                            Operator/Department admin/Customer can reply to ticket
+                        </li>
+						<li>
+                            <i class="icon-angle-right"></i><code>tickets.all</code><br>
+                            Operator/Department admin/Customer can see all tickets , if you assigned anyone tickets.create , tickets.edit , tickets.delete then assigning this permission is mandatory so they can view ticket
+                        </li>
+						<li>
+                            <i class="icon-angle-right"></i><code>tickets.delete</code><br>
+                            Operator/Department admin/Customer can delete ticket 
+                        </li>
+						
+						<li>
+                            <i class="icon-angle-right"></i><code>customers.create</code><br>
+                            Operator/Department admin/Customer can create a new customer 
+                        </li>
+						
+						<li>
+                            <i class="icon-angle-right"></i><code>customers.edit</code><br>
+                            Operator/Department admin/Customer can edit customer 
+                        </li>
+						
+						<li>
+                            <i class="icon-angle-right"></i><code>customers.all</code><br>
+                            Operator/Department admin/Customer can view all customers , if you assigned anyone customers.create , customers.edit , customers.delete then assigning this permission is mandatory so they can view customer
+						</li>
+						
+						<li>
+                            <i class="icon-angle-right"></i><code>customers.delete</code><br>
+                            Operator/Department admin/Customer can delete customer 
+                        </li>
+						
+						<li>
+                            <i class="icon-angle-right"></i><code>operators.create</code><br>
+                            Operator/Department admin/Customer can create operator 
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>operators.edit</code><br>
+                            Operator/Department admin/Customer can edit operator
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>operators.activate</code><br>
+                            Operator/Department admin/Customer can activate operators
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>operators.delete</code><br>
+                            Operator/Department admin/Customer can delete operator
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>operators.all</code><br>
+                            Operator/Department admin/Customer can view all operators , if you assigned anyone operators.create , operators.edit , operators.delete then assigning this permission is mandatory so they can view operator
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments.create</code><br>
+                            Operator/Department admin/Customer can create department
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments.edit</code><br>
+                            Operator/Department admin/Customer can edit department
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments.all</code><br>
+                            Operator/Department admin/Customer can view all departments , if you assigned anyone departments.create , departments.edit , departments.delete then assigning this permission is mandatory so they can view department
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments.delete</code><br>
+                            Operator/Department admin/Customer can delete department
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>companies.create</code><br>
+                            Operator/Department admin/Customer can create company
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>companies.edit</code><br>
+                            Operator/Department admin/Customer can edit company
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>companies.all</code><br>
+                            Operator/Department admin/Customer can view all companies , if you assigned anyone companies.create , companies.edit , companies.delete then assigning this permission is mandatory so they can view company
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>companies.delete</code><br>
+                            Operator/Department admin/Customer can delete company
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>canned_messages.create</code><br>
+                            Operator/Department admin/Customer can create canned messages
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>canned_messages.edit</code><br>
+                            Operator/Department admin/Customer can edit canned messages
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>canned_messages.all</code><br>
+                            Operator/Department admin/Customer can view all canned messages , if you assigned anyone canned_messages.create , canned_messages.edit , canned_messages.delete then assigning this permission is mandatory so they can view canned message
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>canned_messages.delete</code><br>
+                            Operator/Department admin/Customer can delete canned messages
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>conversations.accept</code><br>
+                            Operator/Department admin/Customer can accept new chats .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>conversations.close</code><br>
+                            Operator/Department admin/Customer can close conversations . conversations will be moved to closed conversations
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>conversations.delete</code><br>
+                            Operator/Department admin/Customer can delete closed conversations . conversations will be permanently deleted
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>conversations.closed</code><br>
+                            Operator/Department admin/Customer can view closed conversations .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>mailchimp.pair_email</code><br>
+                            Operator/Department admin/Customer can pair emails to templates .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>mailchimp.all</code><br>
+                            Operator/Department admin/Customer can view all mailchimp templates  .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>mailchimp.delete</code><br>
+                            Operator/Department admin/Customer can delete paired templates  .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>blocking.block</code><br>
+                            Operator/Department admin/Customer can block ip .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>blocking.all</code><br>
+                            Operator/Department admin/Customer can view all blocked ip's , if you assigned anyone blocking.delete then assigning this permission is mandatory so they can view blocked ip
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>blocking.delete</code><br>
+                            Operator/Department admin/Customer can remove blocked ip .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>settings.all</code><br>
+                            Operator/Department admin/Customer can change settings which includes smtp , mailchimp , mailgun configurations .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments_admins.create</code><br>
+                            Operator/Department admin/Customer can create department admin .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments_admins.edit</code><br>
+                            Operator/Department admin/Customer can edit department admin .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments_admins.remove</code><br>
+                            Operator/Department admin/Customer can remove department admin .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments_admins.activate</code><br>
+                            Operator/Department admin/Customer can activate department admin .
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments_admins.all</code><br>
+                            Operator/Department admin/Customer can view all department admins , if you assigned anyone departments_admins.create , departments_admins.edit , departments_admins.delete then assigning this permission is mandatory so they can view department admin
+                        </li>
+
+                        <li>
+                            <i class="icon-angle-right"></i><code>departments_admins.delete</code><br>
+                            Operator/Department admin/Customer can delete department admin .
+                        </li>
+
+
+
+                    </ul>
+                   
+                    <h1>Javascript</h1>
+                    <p>Below, you can see the Javascript files along with their description.</p>
+                    <ul class="icons">
+                        <li>
+                            <i class="icon-angle-right"></i><code>/js/helpers/excanvas.min.js</code><br>
+                            Required for the Flot charts to work correctly in IE8 (loaded only in IE8)
+                        </li>
+                        <li>
+                            <i class="icon-angle-right"></i><code>/js/helpers/jqvmap.maps.js</code><br>
+                            JQVmaps data! Include it in your page if you want to use a vector map with the JQVmap plugin!
+                        </li>
+                        <li>
+                            <i class="icon-angle-right"></i><code>/js/vendor/bootstrap.min.js</code><br>
+                            Javasript components of Bootstrap framework
+                        </li>
+                        <li>
+                            <i class="icon-angle-right"></i><code>/js/vendor/jquery-1.9.1.min.js</code><br>
+                            The popular Javascript library that greatly reduces the amount of code you must write. This is the local file and is only included in case the version from google apis cannot be loaded for some reason (eg working local without a network connection available)
+                        </li>
+                        <li>
+                            <i class="icon-angle-right"></i><code>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js</code><br>
+                            Modernizr, a browser feature detection library and<br>Respond.js, enabling responsive CSS code on browsers that do not natively support it
+                        </li>
+                        <li>
+                            <i class="icon-angle-right"></i><code>/js/plugins.js</code><br>
+                            All Javascript plugins minimized and included in a single file. If you are not planning on using most of the plugins throughout your app, it is recommended to remove the plugins that you don't need (if you do, make sure you also remove plugin related code from <code>js/main.js</code> or code in a page that is used). Furthermore, if for example you only going to use a plugin in one page, it's better to remove it, put it in a seperate file and include only in the page you need it. This way you won't load a plugin you won't use in most pages.
+                        </li>
+                        <li>
+                            <i class="icon-angle-right"></i><code>/js/main.js</code><br>
+                            Initialization of various plugins as well as Javascript code used in <strong>FlatApp</strong> features such as main navigation functionality
+                        </li>
+                    </ul>
+                    <p>The Javascript code required and used throughout <strong>FlatApp</strong>, exists in <code>/js/main.js</code>. In some pages, because some functionality is needed individually, there is some initialization code at the bottom of each file only (as it happens in the <code>index.php</code> for example).</p>
+                    <p>There are a lot of examples in <strong>FlatApp</strong> but you can check out their websites where you could find more examples. I've included their links in the last section of this documentation.</p>
+                    <p>At last, all Javascript files are included at the bottom of the page (<code>/inc/footer.php</code> for the PHP version), except from the <code>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js</code> which needs to be loaded in the <code>&lt;head&gt;</code> tag (<code>/inc/top.php</code> for the PHP version).</p>
+
+                    <h1>Retina</h1>
+                    <p><strong>FlatApp</strong> is retina ready! This means that it looks crystal clear on retina displays found on high-end mobile or other devices. If such display is available, the high resolution images will be served. If you add extra images and you want to have a retina ready interface, just add along with the original images (in the same folder), the same images with double pixels and append the text <span class="text-info"><strong>@2x</strong></span> to their original name. They will automatically be served if necessary! Just have a look at <code>/img/template/</code> folder for an example. You only have to use the default image in your app. The high res image (@2x) will be served automatically if needed.</p>
+                    <p class="text-warning">*only exception are the CSS Image Sprite based Icons</p>
+
+                    <h1>Source and Credits</h1>
+                    <p>I've used the following frameworks, fonts, icons and scripts as listed. My thanks goes to all the authors!</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Frameworks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="http://twitter.github.com/bootstrap/index.html">Bootstrap</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Fonts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="http://www.google.com/fonts/specimen/Roboto">Google Web Fonts (Roboto)</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Textures</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="http://subtlepatterns.com">Subtle Patterns</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Icons</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="http://glyphicons.com">Glyphicons (PRO License acquired - for use with this template)</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://fortawesome.github.com/Font-Awesome">FontAwesome</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://gemicon.net">Gemicon</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://preloaders.net">Preloaders.net</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Scripts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="http://jquery.com">Jquery</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://jqueryui.com">JqueryUI</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://modernizr.com">Modernizr</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/paulirish/matchMedia.js">matchMedia() polyfill</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://j.mp/respondjs">Respond.js</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://www.datatables.net">Datatables</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://arshaw.com/fullcalendar">FullCalendar</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://unwrongest.com/projects/elastic">Elastic</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://www.dropzonejs.com">Dropzone.js</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/harvesthq/chosen">Chosen</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://rocha.la/jQuery-slimScroll">Slimscroll</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://retinajs.com">Retina.js</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/carhartl/jquery-cookie">Jquery Cookie</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://www.datejs.com">DateJS</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/xing/wysihtml5">Wysihtml5</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/jhollingworth/bootstrap-wysihtml5">Bootstrap Wysihtml5</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://www.eyecon.ro/bootstrap-colorpicker">Boostrap Colorpicker</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/jdewit/bootstrap-timepicker">Bootstrap Timepicker</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://www.eyecon.ro/bootstrap-datepicker">Boostrap Datepicker</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/dangrossman/bootstrap-daterangepicker">Bootstrap DateRangePicker</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://gist.github.com/hagenburger/379601">jQuery HTML5 placeholder fix</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/manifestinteractive/jqvmap">JQVmap</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://hpneo.github.com/gmaps">Gmaps</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://malsup.com/jquery/form">Jquery Form</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/jzaefferer/jquery-validation">Jquery Validation</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://www.thecodemine.org">Jquery Wizard</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://prismjs.com">Prism.js</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://www.appelsiini.net/projects/jeditable">jEditable</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/damirfoy/iCheck/">iCheck</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://www.eyecon.ro/bootstrap-slider/">Bootstrap Slider</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://omnipotent.net/jquery.sparkline">Sparklines</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="author-comment">Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme. No guarantees, but I'll do my best to assist. If you have a more general question relating to the themes on ThemeForest, you might consider visiting the forums and asking your question in the "Item Discussion" section.<br><br>Have a nice day!<br><br><a href="http://goo.gl/D4SfK"><strong>pixelcave</strong></a></p>
+                </div>
+                <!-- END Main Content -->
+            </div>
+            <!-- END Container for navigation and content -->
+
+            <!-- Footer -->
+            <footer class="cf">
+                <div id="footer-info"><script>var d = new Date(); if (d.getFullYear() === 2013) { document.write('2015'); } else { document.write('2013-' + d.getFullYear()); }</script> &copy; <strong>Xenon Docs</strong> - Crafted with <i class="icon-heart"></i> by <strong><a href="http://codecanyon.net/user/kodeinfo" target="_blank">kodeinfo</a></strong></div>
+
+                <!-- Social Navigation -->
+                <nav id="footer-nav">
+                    <ul id="footer-nav-list">
+                        <li>
+                            <a href="http://twitter.com/kode_info" target="_blank" data-rel="twitter" data-info="Follow me on Twitter to stay up to date and download freebies" class="footer-link-twitter"></a>
+                        </li>
+                        <li>
+                            <a href="http://facebook.com/kodeinfo" target="_blank" data-rel="facebook" data-info="Like my facebook page to stay up to date and download freebies" class="footer-link-facebook"></a>
+                        </li>
+                        <li>
+                            <a href="http://codecanyon.net/user/kodeinfo" target="_blank" data-rel="contact" data-info="Feel free to contact me via my themeforest contact form" class="footer-link-contact"></a>
+                        </li>
+                        <li>
+                            <a href="http://kodeinfo.com" target="_blank" data-rel="website" data-info="Check out my website" class="footer-link-website"></a>
+                        </li>
+                        <li>
+                            <a href="http://codecanyon.net/user/kodeinfo" target="_blank" data-rel="portfolio" data-info="Check out my portfolio on Themeforest" class="footer-link-portfolio"></a>
+                        </li>
+                        <li class="footer-info-text"></li>
+                    </ul>
+                </nav>
+                <!-- END Social Navigation -->
+            </footer>
+            <!-- END Footer -->
+        </div>
+        <!-- END Page Container -->
+
+        <!-- Scripts -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>!window.jQuery && document.write(unescape('%3Cscript src="js/vendor/jquery.min.js"%3E%3C/script%3E'));</script>
+
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

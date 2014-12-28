@@ -12,7 +12,7 @@ class OperatorsController extends BaseController {
 
         $this->beforeFilter('has_permission:operators.create', array('only' => array('create','store')));
         $this->beforeFilter('has_permission:operators.edit', array('only' => array('edit','update')));
-        $this->beforeFilter('has_permission:operators.view', array('only' => array('all')));
+        $this->beforeFilter('has_permission:operators.all', array('only' => array('all')));
         $this->beforeFilter('has_permission:operators.delete', array('only' => array('delete')));
         $this->beforeFilter('has_permission:operators.activate', array('only' => array('activate')));
 

@@ -102,7 +102,7 @@ class TemplatesController extends BaseController {
         }
 
         if($send_mail){
-            Session::flash('success_msg','Mail sent successfully');
+            Session::flash('success_msg',trans('msgs.mail_sent_success'));
             return Redirect::to('/templates/pair/all');
         }else{
             return View::make('emails.users.mailchimp_view',$data);
@@ -122,18 +122,18 @@ class TemplatesController extends BaseController {
             $paired->template_id = Input::get('template_id');
             $paired->save();
 
-            Session::flash('success_msg','Template paired successfully');
+            Session::flash('success_msg',trans('msgs.template_paired_success'));
 
             return Redirect::to('/templates/pair/all');
         }else{
-            Session::flash('error_msg','All field are required');
+            Session::flash('error_msg',trans('msgs.all_fields_required'));
             return Redirect::to('/templates/pair/create');
         }
     }
 
     public function deletePair($pairing_id){
         PairedTemplates::where('id',$pairing_id)->delete();
-        Session::flash('success_msg','Pairing deleted successfully');
+        Session::flash('success_msg',trans('msgs.template_deleted_success'));
         return Redirect::to('/templates/pair/all');
     }
 }

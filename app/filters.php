@@ -10,17 +10,17 @@ App::before(function ($request) {
         if (!empty($blocking)) {
 
             if ($blocking->should_block_web_access) {
-                return "You dont have website access . Contact Support";
+                return trans('msgs.you_dont_have_website_access');
             }
 
             $path = $request->path();
 
-            if ($path == "login"&&$blocking->should_block_login) {
-                return "You dont have login access . Contact Support";
+            if ($path == "login" && $blocking->should_block_login) {
+                return trans('msgs.you_dont_have_login_access');
             }
 
-            if ($path == "customer/tickets"&&$blocking->should_block_tickets) {
-                return "You dont have tickets access . Contact Support";
+            if ($path == "customer/tickets" && $blocking->should_block_tickets) {
+                return trans('msgs.you_dont_have_tickets_access');
             }
 
         }
@@ -34,23 +34,20 @@ Route::filter('has_permission', function ($route, $request, $permission) {
     if (Auth::check()) {
 
         if (!\KodeInfo\Utilities\Utils::canViewBackend(Auth::user()->id)) {
-            //Not a backend user then fuckoff
             Auth::logout();
             Session::flush();
-            Session::flash('error_msg', 'Access has been denied. Please contact an administrator to escalate your rights.');
+            Session::flash('error_msg', trans('msgs.access_denied_escalate_rights'));
             return Redirect::to('/login');
         }
 
         if (!Permissions::hasPermission($permission)) {
-
-            $permission_obj = Permissions::where('key',$permission)->pluck('text');
-
-            Session::flash('error_msg', 'Access has been denied . You dont have following permission " '.$permission_obj.' " . Please contact an administrator to escalate your rights.');
+            $permission_obj = Permissions::where('key', $permission)->pluck('text');
+            Session::flash('error_msg', trans('msgs.access_denied_escalate_rights', ['permission_obj' => $permission_obj]));
             return Redirect::to('/dashboard');
         }
 
     } else {
-        Session::flash('error_msg', 'Please Login to continue');
+        Session::flash('error_msg', trans('msgs.please_login_to_continue'));
         return Redirect::to('/login');
     }
 
@@ -62,11 +59,11 @@ Route::filter('backend', function () {
         if (!\KodeInfo\Utilities\Utils::canViewBackend(Auth::user()->id)) {
             Auth::logout();
             Session::flush();
-            Session::flash('error_msg', 'Access has been denied. Please contact an administrator to escalate your rights.');
+            Session::flash('error_msg', trans('msgs.access_denied_escalate_rights'));
             return Redirect::to('/login');
         }
     } else {
-        Session::flash('error_msg', 'Please Login to continue');
+        Session::flash('error_msg', trans('msgs.please_login_to_continue'));
         return Redirect::to('/login');
     }
 
@@ -76,12 +73,12 @@ Route::filter('department-admin', function () {
     if (Auth::check()) {
 
         if (!\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
-            Session::flash('error_msg', 'Access has been denied. Please contact an administrator to escalate your rights.');
+            Session::flash('error_msg', trans('msgs.access_denied_escalate_rights'));
             return Redirect::to('/dashboard');
         }
 
     } else {
-        Session::flash('error_msg', 'Please Login to continue');
+        Session::flash('error_msg', trans('msgs.please_login_to_continue'));
         return Redirect::to('/login');
     }
 });
@@ -91,12 +88,12 @@ Route::filter('admin', function () {
     if (Auth::check()) {
 
         if (!\KodeInfo\Utilities\Utils::isAdmin(Auth::user()->id)) {
-            Session::flash('error_msg', 'Access has been denied. Please contact an administrator to escalate your rights.');
+            Session::flash('error_msg', trans('msgs.access_denied_escalate_rights'));
             return Redirect::to('/dashboard');
         }
 
     } else {
-        Session::flash('error_msg', 'Please Login to continue');
+        Session::flash('error_msg', trans('msgs.please_login_to_continue'));
         return Redirect::to('/login');
     }
 });
@@ -106,12 +103,12 @@ Route::filter('operator', function () {
     if (Auth::check()) {
 
         if (!\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
-            Session::flash('error_msg', 'Access has been denied. Please contact an administrator to escalate your rights.');
+            Session::flash('error_msg', trans('msgs.access_denied_escalate_rights'));
             return Redirect::to('/dashboard');
         }
 
     } else {
-        Session::flash('error_msg', 'Please Login to continue');
+        Session::flash('error_msg', trans('msgs.please_login_to_continue'));
         return Redirect::to('/login');
     }
 });

@@ -48,6 +48,8 @@
  * @method static \Illuminate\Database\Query\Builder|\User whereTimezone($value)
  * @method static \Illuminate\Database\Query\Builder|\User wherePermissions($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereIsOnline($value)
+ * @property string $reset_requested_on
+ * @method static \Illuminate\Database\Query\Builder|\User whereResetRequestedOn($value) 
  */
 
 class User extends Eloquent {

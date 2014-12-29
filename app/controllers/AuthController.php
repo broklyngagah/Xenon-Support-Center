@@ -10,29 +10,31 @@ class AuthController extends BaseController
     public $userManager;
     public $mailer;
 
-    function __construct(UserManagement $userManager,UsersMailer $mailer){
+    function __construct(UserManagement $userManager, UsersMailer $mailer)
+    {
         $this->userManager = $userManager;
         $this->mailer = $mailer;
     }
 
-    public function profile(){
+    public function profile()
+    {
         try {
             $this->data["user"] = User::findOrFail(Auth::user()->id);
 
             $this->data["countries"] = DB::table("countries")->remember(60)->get();
             $this->data['timezones'] = Config::get("timezones");
 
-            return View::make('profile',$this->data);
-        }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash("error_msg", "Account not found");
+            return View::make('profile', $this->data);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Session::flash("error_msg", trans('msgs.account_not_found'));
             return Redirect::to("/dashboard");
         }
     }
 
-    public function storeProfile(){
+    public function storeProfile()
+    {
 
-        try
-        {
+        try {
             $user = User::findOrFail(Input::get("user_id"));
             $user->name = Input::get("name");
             $user->birthday = Input::get("birthday");
@@ -40,63 +42,66 @@ class AuthController extends BaseController
             $user->mobile_no = Input::get("mobile_no");
             $user->country = Input::get("country");
             $user->gender = Input::get("gender");
-            $user->avatar = Input::hasFile('avatar')?Utils::imageUpload(Input::file('avatar'),'profile'):Input::get("old_avatar");
+            $user->avatar = Input::hasFile('avatar') ? Utils::imageUpload(Input::file('avatar'), 'profile') : Input::get("old_avatar");
             $user->save();
 
 
-            Session::flash("success_msg","Profile updated successfully");
+            Session::flash("success_msg", trans('msgs.profile_updated_success'));
             return Redirect::to("/profile");
 
-        }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            Session::flash("error_msg","Account not found");
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Session::flash("error_msg", trans('msgs.account_not_found'));
             return Redirect::to("/dashboard");
         }
     }
 
-    public function getChangePassword(){
-        return View::make('change-password',$this->data);
+    public function getChangePassword()
+    {
+        return View::make('change-password', $this->data);
     }
 
-    public function postChangePassword(){
+    public function postChangePassword()
+    {
 
-        $current_password = Input::get('current_password','');
-        $password = Input::get('password','');
-        $password_confirmation = Input::get('password_confirmation','');
+        $current_password = Input::get('current_password', '');
+        $password = Input::get('password', '');
+        $password_confirmation = Input::get('password_confirmation', '');
 
-        if($password==$password_confirmation){
-            if(Auth::validate(['email'=>Auth::user()->email,'password'=>$current_password])){
+        if ($password == $password_confirmation) {
+            if (Auth::validate(['email' => Auth::user()->email, 'password' => $current_password])) {
                 $user = User::find(Auth::user()->id);
                 $user->password = Hash::make($password);
                 $user->save();
 
-                Session::flash('success_msg', 'Your password was changed successfully.');
+                Session::flash('success_msg', trans('msgs.your_password_changed_success'));
                 return Redirect::back();
 
-            }else{
-                Session::flash('error_msg', 'An invalid password was entered.');
+            } else {
+                Session::flash('error_msg', trans('msgs.invalid_password_entered'));
                 return Redirect::back();
             }
-        }else{
-            Session::flash('error_msg', 'Both your new password and your password confirmation must be the same.');
+        } else {
+            Session::flash('error_msg', trans('msgs.both_passwords_should_be_same'));
             return Redirect::back();
         }
     }
 
-    public function activateUser($user_id=null,$activation_code=null){
-        if(is_null($user_id)||is_null($activation_code)){
-            Session::flash('error_msg','Unable to activate the account. Please contact support.');
+    public function activateUser($user_id = null, $activation_code = null)
+    {
+        if (is_null($user_id) || is_null($activation_code)) {
+            Session::flash('error_msg', trans('msgs.unable_to_activate_account_contact_support'));
             return Redirect::to('/login');
-        }else{
-            DB::table('users')->where('id',$user_id)->where('activation_code',$activation_code)->update(['activated'=>1,'activation_code'=>null,'activated_at'=>\Carbon\Carbon::now()]);
+        } else {
+            DB::table('users')->where('id', $user_id)->where('activation_code', $activation_code)->update(['activated' => 1, 'activation_code' => null, 'activated_at' => \Carbon\Carbon::now()]);
 
-            Session::flash('success_msg','Your account has been activated. Please log in below.');
+            Session::flash('success_msg', trans('msgs.account_activated_login_below'));
             return Redirect::to('/login');
         }
     }
 
     public function getForgotPassword()
     {
-        return View::make("forgot-password",$this->data);
+        return View::make("forgot-password", $this->data);
     }
 
     public function postForgotPassword()
@@ -106,7 +111,7 @@ class AuthController extends BaseController
         $user = User::where('email', $email)->first();
 
         if (sizeof($user) <= 0) {
-            Session::flash("error_msg", "An account was not found with that e-mail address. Please input another and try again!");
+            Session::flash("error_msg", trans('msgs.account_not_found_with_email_try_again'));
             return Redirect::back();
         } else {
             $reset_code = $this->userManager->generateResetCode();
@@ -114,68 +119,70 @@ class AuthController extends BaseController
             $user->reset_requested_on = \Carbon\Carbon::now();
             $user->save();
 
-            $this->mailer->reset_password($user->email,$user->name,User::getResetPasswordFields(false,$user->id));
+            $this->mailer->reset_password($user->email, $user->name, User::getResetPasswordFields(false, $user->id));
 
-            Session::flash('success_msg','Please click on the link we sent to your email to reset password');
+            Session::flash('success_msg', trans('msgs.please_click_on_link_to_reset'));
             return Redirect::to('/forgot-password');
         }
 
     }
 
-    public function getReset($email,$code){
+    public function getReset($email, $code)
+    {
 
-        if(strlen($email)<=0 || strlen($code)<=0){
-            Session::flash("error_msg","Invalid Request. Please reset your password.");
+        if (strlen($email) <= 0 || strlen($code) <= 0) {
+            Session::flash("error_msg", trans('msgs.invalid_request_reset_password'));
             return Redirect::to('/forgot-password');
         }
 
         //Check code and email
-        $user = User::where('email',$email)->where('reset_password_code',$code)->first();
+        $user = User::where('email', $email)->where('reset_password_code', $code)->first();
 
-        if(sizeof($user)<=0){
-            Session::flash("error_msg","Invalid Request. Please reset your password.");
+        if (sizeof($user) <= 0) {
+            Session::flash("error_msg", trans('msgs.invalid_request_reset_password'));
             return Redirect::to('/forgot-password');
-        }else{
+        } else {
             //check for 24 hrs for token
-            $reset_requested_on = \Carbon\Carbon::createFromFormat('Y-m-d G:i:s',$user->reset_requested_on);
+            $reset_requested_on = \Carbon\Carbon::createFromFormat('Y-m-d G:i:s', $user->reset_requested_on);
             $present_day = \Carbon\Carbon::now();
 
-            if($reset_requested_on->addDay()>$present_day){
+            if ($reset_requested_on->addDay() > $present_day) {
                 //Show new password view
                 $this->data['email'] = $email;
                 $this->data['code'] = $code;
-                return View::make('reset-password',$this->data);
-            }else{
-                Session::flash("error_msg","Your password change token has expired. Please reset your password.");
+                return View::make('reset-password', $this->data);
+            } else {
+                Session::flash("error_msg", trans('msgs.reset_password_token_expired'));
                 return Redirect::to('/forgot-password');
             }
         }
     }
 
-    public function postReset(){
+    public function postReset()
+    {
 
-        $password = Input::get('password','');
-        $password_confirmation = Input::get('password_confirmation','');
+        $password = Input::get('password', '');
+        $password_confirmation = Input::get('password_confirmation', '');
 
-        if($password==$password_confirmation){
+        if ($password == $password_confirmation) {
 
-            $validate_reset = User::where('email',Input::get('email',''))->where('reset_password_code',Input::get('code',''))->first();
+            $validate_reset = User::where('email', Input::get('email', ''))->where('reset_password_code', Input::get('code', ''))->first();
 
-            if(sizeof($validate_reset)>0){
-                $user = User::where('email',Input::get('email'))->first();
+            if (sizeof($validate_reset) > 0) {
+                $user = User::where('email', Input::get('email'))->first();
                 $user->password = Hash::make($password);
                 $user->save();
 
-                $this->mailer->password_changed($user->email,$user->name,User::getPasswordChangedFields(false,$user->id));
+                $this->mailer->password_changed($user->email, $user->name, User::getPasswordChangedFields(false, $user->id));
 
-                Session::flash('success_msg', 'Your password was changed successfully.');
+                Session::flash('success_msg', trans('msgs.password_changed_success'));
                 return Redirect::to('/login');
-            }else{
-                Session::flash('error_msg', 'An invalid password was entered.');
+            } else {
+                Session::flash('error_msg', trans('msgs.invalid_password_entered'));
                 return Redirect::back();
             }
-        }else{
-            Session::flash('error_msg', 'Both your new password and your password confirmation must be the same.');
+        } else {
+            Session::flash('error_msg', trans('msgs.both_passwords_should_be_same'));
             return Redirect::back();
         }
     }
@@ -187,12 +194,12 @@ class AuthController extends BaseController
             return Redirect::route('dashboard');
         }
 
-        return View::make('login',$this->data);
+        return View::make('login', $this->data);
     }
 
     public function logout()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $user = Auth::user();
             $user->is_online = 0;
             $user->save();
@@ -200,64 +207,6 @@ class AuthController extends BaseController
 
         $this->userManager->logout();
         return Redirect::to('/login');
-    }
-
-    public function signInWithFacebook()
-    {
-
-        $fb = OAuth::consumer('Facebook');
-
-        if (Input::has('code')) {
-
-            $fb->requestAccessToken(Input::get('code'));
-
-            $result = json_decode($fb->request('/me'), true);
-
-            if (isset($result['email'])) {
-                //Is he registered user
-                $user = DB::table('users')->where('email', $result['email'])->get();
-
-                if (sizeof($user) > 0) {
-                    //is registered so do login
-                    try {
-
-                        $this->userManager->loginWithID($result['email'], true);
-
-                        if(Auth::user()->is_admin)
-                            return Redirect::route('dashboard');
-                        else
-                            return Redirect::route('all_sandboxes');
-
-                    } catch (\KodeInfo\UserManagement\Exceptions\LoginFieldsMissingException $e) {
-                        Session::flash('error_msg', Utils::buildMessages($e->getErrors()));
-                        return Redirect::back();
-                    } catch (\KodeInfo\UserManagement\Exceptions\UserNotFoundException $e) {
-                        Session::flash('error_msg', Utils::buildMessages($e->getErrors()));
-                        return Redirect::back();
-                    } catch (\KodeInfo\UserManagement\Exceptions\UserNotActivatedException $e) {
-                        Session::flash('error_msg', Utils::buildMessages($e->getErrors()));
-                        return Redirect::back();
-                    } catch (\KodeInfo\UserManagement\Exceptions\UserBannedException $e) {
-                        Session::flash('error_msg', Utils::buildMessages($e->getErrors()));
-                        return Redirect::back();
-                    } catch (\KodeInfo\UserManagement\Exceptions\UserSuspendedException $e) {
-                        Session::flash('error_msg', Utils::buildMessages($e->getErrors()));
-                        return Redirect::back();
-                    }
-                } else {
-
-                    Session::flash('error_msg','An account was not found. Please register below!');
-                    return Redirect::to('/register');
-                }
-            }
-
-            Session::flash('error_msg', 'User was not found. Please register to continue!');
-            return Redirect::to('/register');
-
-        } else {
-            $url = $fb->getAuthorizationUri();
-            return Redirect::away((string)$url);
-        }
     }
 
     public function postLogin()

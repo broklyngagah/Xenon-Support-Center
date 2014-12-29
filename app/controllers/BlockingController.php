@@ -30,11 +30,11 @@ class BlockingController extends BaseController {
             $block->should_block_web_access = Input::get('should_block_web_access');
             $block->save();
 
-            Session::flash('success_msg','Ip successfully blocked');
+            Session::flash('success_msg',trans('msgs.ip_blocked_success'));
             return Redirect::back();
 
         }else{
-            Session::flash('error_msg','Ip Address is required');
+            Session::flash('error_msg',trans('msgs.ip_address_required'));
             return Redirect::back();
         }
 
@@ -42,7 +42,7 @@ class BlockingController extends BaseController {
 
     public function delete($id){
         Blocking::where('id',$id)->delete();
-        Session::flash('success_msg','IP deleted successfully');
+        Session::flash('success_msg',trans('msgs.ip_deleted_success'));
         return Redirect::to('/blocking/all');
     }
 

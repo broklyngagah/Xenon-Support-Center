@@ -153,9 +153,6 @@
 @stop
 
 @section('scripts')
-
-{{HTML::style("/assets/js/plugins/datepicker/css/datepicker3.css")}}
-{{HTML::script("/assets/js/plugins/datepicker/js/bootstrap-datepicker.js")}}
 <script type="text/javascript">
 	$('#birthday').datepicker({
 		format : "dd-mm-yyyy"

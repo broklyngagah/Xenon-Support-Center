@@ -180,11 +180,6 @@
 @stop
 
 @section('scripts')
-{{HTML::style("/assets/plugins/jquery-multi-select/css/multi-select.css")}}
-{{HTML::script("/assets/plugins/jquery-multi-select/js/jquery.multi-select.js")}}
-
-{{HTML::style("/assets/plugins/datepicker/css/datepicker3.css")}}
-{{HTML::script("/assets/plugins/datepicker/js/bootstrap-datepicker.js")}}
 <script type="text/javascript">
 	$(document).ready(function() {
 

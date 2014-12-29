@@ -19,6 +19,10 @@
  * @method static \Illuminate\Database\Query\Builder|\OnlineUsers whereRequestedOn($value)
  * @method static \Illuminate\Database\Query\Builder|\OnlineUsers whereStartedOn($value)
  * @method static \Illuminate\Database\Query\Builder|\OnlineUsers whereToken($value)
+ * @property integer $company_id
+ * @property integer $department_id
+ * @method static \Illuminate\Database\Query\Builder|\OnlineUsers whereCompanyId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\OnlineUsers whereDepartmentId($value) 
  */
 class OnlineUsers extends Eloquent {
 

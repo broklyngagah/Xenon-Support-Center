@@ -141,7 +141,7 @@ class Permissions extends Eloquent
             $company_department_admin = DepartmentAdmins::where("user_id", Auth::user()->id)->first();
 
             if(empty($company_department_admin)){
-                Session::flash("error_msg","You are not connected to any department . Please contact your company admin");
+                Session::flash("error_msg",trans('msgs.you_are_not_connected_to_any_department'));
                 //Not connected to any department so no permissions available
                 return false;
             }

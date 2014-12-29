@@ -101,11 +101,11 @@ class CompaniesController extends BaseController
                 $company->logo = Input::hasFile('logo') ? Utils::imageUpload(Input::file('logo'), 'companies') : '';
                 $company->save();
 
-                Session::flash('success_msg', trans('users.company_added'));
+                Session::flash('success_msg', trans('msgs.company_created_success'));
                 return Redirect::to('/companies/create')->withInput();
 
             } catch (\Exception $e) {
-                Session::flash('error_msg', trans('users.company_not_added'));
+                Session::flash('error_msg', trans('msgs.unable_to_add_company'));
                 return Redirect::to('/companies/create')->withInput();
             }
         }
@@ -118,7 +118,7 @@ class CompaniesController extends BaseController
             $this->data['company'] = Company::findOrFail($company_id);
             return View::make('companies.edit', $this->data);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash('error_msg', trans('users.company_not_found'));
+            Session::flash('error_msg', trans('msgs.company_not_found'));
             return Redirect::back();
         }
 
@@ -134,7 +134,7 @@ class CompaniesController extends BaseController
         $old_logo = Input::get('old_logo');
 
         if (sizeof(Company::where('name', $name)->where('id', '!=', $id)->get()) > 0) {
-            Session::flash('error_msg', trans('users.company_already_exists'));
+            Session::flash('error_msg', trans('msgs.company_already_exists'));
             return Redirect::to('/companies/update/')->withInput();
         }
 
@@ -153,11 +153,11 @@ class CompaniesController extends BaseController
                 $company->logo = Input::hasFile('logo') ? Utils::imageUpload(Input::file('logo'), 'companies') : $old_logo;
                 $company->save();
 
-                Session::flash('success_msg', 'Company updated successfully');
+                Session::flash('success_msg', trans('msgs.company_updated_success'));
                 return Redirect::to('/companies/all')->withInput();
 
             } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-                Session::flash('error_msg', trans('users.company_not_updated'));
+                Session::flash('error_msg', trans('msgs.unable_to_update_company'));
                 return Redirect::to('/companies/update/' . $id)->withInput();
             }
         }
@@ -228,7 +228,7 @@ class CompaniesController extends BaseController
 
         Company::where('id',$company_id)->delete();
 
-        Session::flash('success_msg', "Company deleted successfully");
+        Session::flash('success_msg', trans('msgs.company_deleted_success'));
 
         return Redirect::to('/companies/all');
     }

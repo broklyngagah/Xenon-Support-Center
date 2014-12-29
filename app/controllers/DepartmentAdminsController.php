@@ -134,10 +134,10 @@ class DepartmentAdminsController extends BaseController
                     $this->mailer->activate($user->email,$user->name,User::getActivateFields(false,$user->id,Input::get('company')));
 
 
-                Session::flash('success_msg', "Department Admin created successfully");
+                Session::flash('success_msg', trans('msgs.department_admin_created_success'));
                 return Redirect::to('/departments/admins/all');
             } catch (\Exception $e) {
-                Session::flash('error_msg', "Unable to create department admin");
+                Session::flash('error_msg', trans('msgs.unable_to_create_department_admin'));
                 return Redirect::to('/departments/admins/create')->withInput(Input::except("avatar"));
             }
         }
@@ -147,7 +147,7 @@ class DepartmentAdminsController extends BaseController
     {
 
         if (!Input::has("user_id")) {
-            Session::flash("error_msg", "Invalid request");
+            Session::flash("error_msg", trans('msgs.invalid_request'));
             return Redirect::to("/departments/admins/all");
         }
 
@@ -179,10 +179,10 @@ class DepartmentAdminsController extends BaseController
                 $department_admin->save();
             }
 
-            Session::flash('success_msg', "Department Admin updated successfully");
+            Session::flash('success_msg', trans('msgs.department_admin_updated_success'));
             return Redirect::to('/departments/admins/all');
         } catch (\Exception $e) {
-            Session::flash('error_msg', "Unable to update department admin");
+            Session::flash('error_msg', trans('msgs.unable_to_update_department_admin'));
             return Redirect::to('/departments/admins/update/' . Input::get("user_id"))->withInput(Input::except("avatar"));
         }
 
@@ -217,7 +217,7 @@ class DepartmentAdminsController extends BaseController
 
         User::where('id', $admin_id)->delete();
 
-        Session::flash('success_msg', "Department admin deleted successfully , all tickets and conversations are assigned to admin");
+        Session::flash('success_msg', trans('msgs.department_admin_deleted_success'));
 
         return Redirect::to('/departments/admins/all');
     }
@@ -227,10 +227,10 @@ class DepartmentAdminsController extends BaseController
 
         try {
             DepartmentAdmins::where('user_id', $admin_id)->delete();
-            Session::flash('success_msg', "Department admin removed successfully");
+            Session::flash('success_msg', trans('msgs.department_admin_removed_success'));
             return Redirect::to('/departments/admins/all');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash("error_msg", "Department admin not found");
+            Session::flash("error_msg", trans('msgs.department_admin_not_found'));
             return Redirect::to("/departments/admins/all");
         }
 
@@ -293,13 +293,12 @@ class DepartmentAdminsController extends BaseController
             $user->activated = 1;
             $user->activated_at = \Carbon\Carbon::now();
             $user->save();
-            Session::flash("success_msg", "Account activated successfully");
+            Session::flash("success_msg", trans('msgs.account_activated_successfully'));
             return Redirect::to("/departments/admins/all");
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash("error_msg", "Account not found");
+            Session::flash("error_msg", trans('msgs.account_not_found'));
             return Redirect::to("/departments/admins/all");
         }
     }
-
 
 }

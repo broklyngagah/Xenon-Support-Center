@@ -88,7 +88,7 @@
                 <label class="col-sm-2 control-label">Department Admin</label>
 
                 <div class="col-sm-10">
-                    <select class="form-control multi-select-search" name="department_admin" id="department_admin">
+                    <select class="form-control" name="department_admin" id="department_admin">
                         <option value="0">NONE</option>
                         @foreach($admins as $admin)
                             <option value="{{$admin->id}}">{{$admin->name}}</option>
@@ -108,8 +108,6 @@
 @stop
 
 @section('scripts')
-    {{HTML::style("/assets/js/plugins/jquery-multi-select/css/multi-select.css")}}
-    {{HTML::script("/assets/js/plugins/jquery-multi-select/js/jquery.multi-select.js")}}
     <script type="text/javascript">
         $(document).ready(function () {
 

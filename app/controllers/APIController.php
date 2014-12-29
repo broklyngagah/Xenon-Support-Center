@@ -67,23 +67,23 @@ class APIController extends BaseController {
             $single_conversation[] = $online->id;
             $single_conversation[] = $online->user->name;
             $single_conversation[] = $online->user->email;
-            $single_conversation[] = isset($online->operator)?$online->operator->name:"<label class='label label-warning'>NONE</label>";
+            $single_conversation[] = isset($online->operator)?$online->operator->name:"<label class='label label-warning'>".trans('msgs.none')."</label>";
             $single_conversation[] = \KodeInfo\Utilities\Utils::prettyDate($online->requested_on,true);
             $single_conversation[] = \KodeInfo\Utilities\Utils::prettyDate($online->started_on,true);
-            $single_conversation[] = $online->locked_by_operator==1?"<label class='label label-warning'>Yes</label>":"<label class='label label-primary'>No</label>";
+            $single_conversation[] = $online->locked_by_operator==1?"<label class='label label-warning'>".trans('msgs.yes')."</label>":"<label class='label label-primary'>".trans('msgs.no')."</label>";
 
             if(!isset($online->operator))
-                $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> Accept </a></td>';
+                $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> '.trans('msgs.accept').' </a></td>';
 
             if(isset($online->operator)&&$online->operator->id==Auth::user()->id)
-                $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> Reply </a></td>';
+                $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> '.trans('msgs.reply').' </a></td>';
 
             if(isset($online->operator)&&$online->operator->id!=Auth::user()->id)
-                $single_conversation[] ='<td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> Accept </a></td>';
+                $single_conversation[] ='<td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> '.trans('msgs.accept').' </a></td>';
 
-            $single_conversation[] = '<td><a href="/conversations/transfer/'.$online->id.'" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> Transfer </a></td>';
+            $single_conversation[] = '<td><a href="/conversations/transfer/'.$online->id.'" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> '.trans('msgs.transfer').' </a></td>';
 
-            $single_conversation[] = '<td><a href="/conversations/close/'.$online->thread_id.'" class="btn btn-danger btn-sm"> <i class="icon-lock3"></i> Close </a></td>';
+            $single_conversation[] = '<td><a href="/conversations/close/'.$online->thread_id.'" class="btn btn-danger btn-sm"> <i class="icon-lock3"></i> '.trans('msgs.close').' </a></td>';
 
             $conversations_arr[] = $single_conversation;
         }
@@ -112,45 +112,45 @@ class APIController extends BaseController {
 
             $single_ticket = [];
             $single_ticket[] = $ticket->id;
-            $single_ticket[] = isset($ticket->company)?$ticket->company->name:"NONE";
-            $single_ticket[] = isset($ticket->department)?$ticket->department->name:"NONE";
-            $single_ticket[] = isset($ticket->customer)?$ticket->customer->name:"NONE";
-            $single_ticket[] = isset($ticket->customer)?$ticket->customer->email:"NONE";
+            $single_ticket[] = isset($ticket->company)?$ticket->company->name:trans('msgs.none');
+            $single_ticket[] = isset($ticket->department)?$ticket->department->name:trans('msgs.none');
+            $single_ticket[] = isset($ticket->customer)?$ticket->customer->name:trans('msgs.none');
+            $single_ticket[] = isset($ticket->customer)?$ticket->customer->email:trans('msgs.none');
             $single_ticket[] = $ticket->subject;
-            $single_ticket[] = isset($ticket->operator)?$ticket->operator->name:"NONE";
+            $single_ticket[] = isset($ticket->operator)?$ticket->operator->name:trans('msgs.none');
 
             if($ticket->priority==Tickets::PRIORITY_LOW)
-                $single_ticket[] = '<td ><label class="label label-primary" > Low</label ></td >';
+                $single_ticket[] = '<td ><label class="label label-primary" > '.trans("msgs.low").' </label ></td >';
 
             if($ticket->priority==Tickets::PRIORITY_MEDIUM)
-                $single_ticket[] = '<td><label class="label label-primary">Medium</label></td>';
+                $single_ticket[] = '<td><label class="label label-primary">'.trans("msgs.medium").'</label></td>';
 
             if($ticket->priority==Tickets::PRIORITY_HIGH)
-                $single_ticket[] = '<td><label class="label label-warning">High</label></td>';
+                $single_ticket[] = '<td><label class="label label-warning">'.trans("msgs.high").'</label></td>';
 
             if($ticket->priority==Tickets::PRIORITY_URGENT)
-                $single_ticket[] = '<td><label class="label label-danger">Urgent</label></td>';
+                $single_ticket[] = '<td><label class="label label-danger">'.trans("msgs.urgent").'</label></td>';
 
             if($ticket->status==Tickets::TICKET_NEW)
-                $single_ticket[] = '<td><label class="label label-warning">New</label></td>';
+                $single_ticket[] = '<td><label class="label label-warning">'.trans("msgs.new").'</label></td>';
 
             if($ticket->status==Tickets::TICKET_PENDING)
-                $single_ticket[] = '<td><label class="label label-primary">Pending</label></td>';
+                $single_ticket[] = '<td><label class="label label-primary">'.trans("msgs.pending").'</label></td>';
 
             if($ticket->status==Tickets::TICKET_RESOLVED)
-                $single_ticket[] = '<td><label class="label label-success">Resolved</label></td>';
+                $single_ticket[] = '<td><label class="label label-success">'.trans("msgs.resolved").'</label></td>';
 
             if(!isset($ticket->operator))
-                $single_ticket[] = '<td><a href="/tickets/read/'.$ticket->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> Accept </a></td>';
+                $single_ticket[] = '<td><a href="/tickets/read/'.$ticket->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> '.trans("msgs.accept").' </a></td>';
 
             if(isset($ticket->operator)&&$ticket->operator->id==Auth::user()->id)
-                $single_ticket[] = '<td><a href="/tickets/read/'.$ticket->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> Reply </a></td>';
+                $single_ticket[] = '<td><a href="/tickets/read/'.$ticket->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> '.trans("msgs.reply").' </a></td>';
 
             if(isset($ticket->operator)&&$ticket->operator->id!=Auth::user()->id)
-                $single_ticket[] = '<td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> Accept </a></td>';
+                $single_ticket[] = '<td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> '.trans("msgs.accept").' </a></td>';
 
-            $single_ticket[] = '<td><a href="/tickets/transfer/'.$ticket->id.'" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> Transfer </a></td>';
-            $single_ticket[] = '<td><a href="/tickets/delete/'.$ticket->thread_id.'" class="btn btn-danger btn-sm"> <i class="icon-remove3"></i> Delete </a></td>';
+            $single_ticket[] = '<td><a href="/tickets/transfer/'.$ticket->id.'" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> '.trans("msgs.transfer").' </a></td>';
+            $single_ticket[] = '<td><a href="/tickets/delete/'.$ticket->thread_id.'" class="btn btn-danger btn-sm"> <i class="icon-remove3"></i> '.trans("msgs.delete").' </a></td>';
 
             $tickets_arr[] = $single_ticket;
 

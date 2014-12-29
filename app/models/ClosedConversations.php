@@ -19,6 +19,10 @@
  * @method static \Illuminate\Database\Query\Builder|\ClosedConversations whereStartedOn($value)
  * @method static \Illuminate\Database\Query\Builder|\ClosedConversations whereToken($value)
  * @method static \Illuminate\Database\Query\Builder|\ClosedConversations whereEndedOn($value)
+ * @property integer $company_id
+ * @property integer $department_id
+ * @method static \Illuminate\Database\Query\Builder|\ClosedConversations whereCompanyId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\ClosedConversations whereDepartmentId($value) 
  */
 class ClosedConversations extends Eloquent {
 

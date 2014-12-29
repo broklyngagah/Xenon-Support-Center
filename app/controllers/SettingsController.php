@@ -91,7 +91,7 @@ class SettingsController extends BaseController
 
         \File::put(app_path() . "/config/packages/bogardo/mailgun/config.php", $mail_content);
 
-        Session::flash('success_msg', 'Mailgun settings updated');
+        Session::flash('success_msg', trans('msgs.mailgun_settings_updated'));
 
         return Redirect::to('/settings/all#tab-mailgun');
 
@@ -116,7 +116,7 @@ class SettingsController extends BaseController
 
         \File::put(app_path() . "/config/mail.php", $mail_content);
 
-        Session::flash('success_msg', 'SMTP settings updated');
+        Session::flash('success_msg', trans('msgs.smtp_settings_updated'));
 
         return Redirect::to('/settings/all#tab-smtp');
 
@@ -132,7 +132,7 @@ class SettingsController extends BaseController
 
         Settings::where('key', 'mailchimp')->update(['value' => json_encode($values)]);
 
-        Session::flash('success_msg', 'Mailchimp settings updated');
+        Session::flash('success_msg', trans('msgs.mailchimp_settings_updated'));
 
         return Redirect::to('/settings/all#tab-mailchimp');
 
@@ -148,7 +148,7 @@ class SettingsController extends BaseController
 
         Settings::where('key', 'tickets')->update(['value' => json_encode($values)]);
 
-        Session::flash('success_msg', 'Tickets settings updated');
+        Session::flash('success_msg', trans('msgs.tickets_settings_updated'));
 
         return Redirect::to('/settings/all#tab-tickets');
 

@@ -23,7 +23,7 @@ class AccountsController extends BaseController {
             $this->data["countries"] = DB::table("countries")->remember(60)->get();
             return View::make('accounts.edit',$this->data);
         }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            Session::flash("error_msg","Account not found");
+            Session::flash("error_msg",trans('users.account_not_found'));
             return Redirect::to("/accounts/all");
         }
 
@@ -53,11 +53,11 @@ class AccountsController extends BaseController {
                             'admin',
                             Input::has("activated"));
 
-                Session::flash('success_msg',trans('users.account_added'));
+                Session::flash('success_msg',trans('users.account_created_success'));
                 return Redirect::to('/accounts/all');
             }
             catch (\Exception $e){
-                Session::flash('error_msg',trans('users.account_not_added'));
+                Session::flash('error_msg',trans('users.account_not_found'));
                 return Redirect::to('/accounts/create')->withInput(Input::except("avatar"));
             }
         }
@@ -69,10 +69,10 @@ class AccountsController extends BaseController {
             $user->activated = 1;
             $user->activated_at = \Carbon\Carbon::now();
             $user->save();
-            Session::flash("success_msg","Account activated successfully");
+            Session::flash("success_msg",trans('users.account_activated_success'));
             return Redirect::to("/accounts/all");
         }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            Session::flash("error_msg","Account not found");
+            Session::flash("error_msg",trans('users.account_not_found'));
             return Redirect::to("/accounts/all");
         }
     }
@@ -91,11 +91,11 @@ class AccountsController extends BaseController {
            $user->avatar = Input::hasFile('avatar')?Utils::imageUpload(Input::file('avatar'),'profile'):Input::get("old_avatar");
            $user->save();
 
-            Session::flash("success_msg","Account updated successfully");
+            Session::flash("success_msg",trans("users.account_updated_success"));
             return Redirect::to("/accounts/all");
 
         }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            Session::flash("error_msg","Account not found");
+            Session::flash("error_msg",trans('users.account_not_found'));
             return Redirect::to("/accounts/all");
         }
 
@@ -107,7 +107,7 @@ class AccountsController extends BaseController {
             Session::flash('success_msg', trans('users.account_deleted_success'));
             return Redirect::to('/accounts/all');
         }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            Session::flash("error_msg","Account not found");
+            Session::flash("error_msg",trans('users.account_not_found'));
             return Redirect::to("/accounts/all");
         }
     }

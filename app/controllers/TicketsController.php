@@ -83,7 +83,7 @@ class TicketsController extends BaseController
 
                     if(!empty($admin_id)){
                         $user = User::where('id',$admin_id)->first();
-                        $user->name = $user->name . " - Department Admin";
+                        $user->name = $user->name . " -  ".trans('msgs.department_admin');
                         $users[] = $user;
                     }
 
@@ -121,12 +121,12 @@ class TicketsController extends BaseController
 
             $ticket->save();
 
-            Session::flash('success_msg','Ticket transferred successfully');
+            Session::flash('success_msg',trans('msgs.ticket_transfer_success'));
             return Redirect::to('/tickets/all');
 
 
         }else{
-            Session::flash('error_msg','Cannot transfer ticket');
+            Session::flash('error_msg',trans('msgs.cannot_transfer_ticket'));
             return Redirect::back();
         }
 
@@ -252,11 +252,11 @@ class TicketsController extends BaseController
             $this->ticketMailer->created($customer->email, $customer->name, $mailer_extra);
 
             if(\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id)){
-                Session::flash('success_msg', 'Ticket created successfully');
+                Session::flash('success_msg', trans('msgs.ticket_created_success'));
                 return Redirect::to('/tickets/customer/all');
             }
 
-            Session::flash('success_msg', 'Ticket created successfully');
+            Session::flash('success_msg', trans('msgs.ticket_created_success'));
             return Redirect::to('/tickets/all');
 
         } else {
@@ -402,7 +402,7 @@ class TicketsController extends BaseController
         $ticket = Tickets::where('thread_id', $thread_id)->first();
 
         if ($ticket->operator_id > 0 && $ticket->operator_id != Auth::user()->id) {
-            Session::flash('error_msg', 'Operator have locked the ticket . Ask the admin/operator to transfer the ticket');
+            Session::flash('error_msg', trans('msgs.another_operator_is_in_chat'));
             return Redirect::to('/tickets/all');
         }
 
@@ -532,7 +532,7 @@ class TicketsController extends BaseController
             }
 
 
-            return json_encode(['result' => 1, 'errors' => 'Ticket updated successfully']);
+            return json_encode(['result' => 1, 'errors' => trans('msgs.ticket_updated_success')]);
 
         } else {
             return json_encode(['result' => 0, 'errors' => \KodeInfo\Utilities\Utils::buildMessages($v->messages()->all())]);
@@ -547,7 +547,7 @@ class TicketsController extends BaseController
         ThreadMessages::where('thread_id', $thread_id)->delete();
         ThreadGeoInfo::where('thread_id', $thread_id)->delete();
 
-        Session::flash('success_msg', 'Ticket deleted successfully');
+        Session::flash('success_msg', trans('msgs.ticket_deleted_success'));
         return Redirect::to('/tickets/all');
     }
 

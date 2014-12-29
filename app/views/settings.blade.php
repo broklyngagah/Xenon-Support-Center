@@ -287,7 +287,6 @@
 
             // Change hash for page-reload
             $('.nav-tabs li a').on('shown.bs.tab', function (e) {
-                console.log('shown' + e.target.hash);
                 window.location.hash = e.target.hash;
             })
         });

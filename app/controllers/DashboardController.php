@@ -107,5 +107,67 @@ class DashboardController extends BaseController
         return View::make('index', $this->data);
     }
 
+    public function cleanDB(){
+
+        //Not truncating countries , migrations , permissions , settings
+
+        DB::table('blocking')->truncate();
+        DB::table('canned_messages')->truncate();
+        DB::table('closed_conversations')->truncate();
+        DB::table('companies')->truncate();
+        DB::table('company_customers')->truncate();
+        DB::table('company_department_admins')->truncate();
+        DB::table('departments')->truncate();
+        DB::table('department_admins')->truncate();
+        DB::table('groups')->truncate();
+        DB::table('message_threads')->truncate();
+        DB::table('online_users')->truncate();
+        DB::table('operators_department')->truncate();
+        DB::table('paired_templates')->truncate();
+        DB::table('thread_geo_info')->truncate();
+        DB::table('thread_messages')->truncate();
+        DB::table('throttle')->truncate();
+        DB::table('tickets')->truncate();
+        DB::table('tickets_attachment')->truncate();
+        DB::table('translations')->truncate();
+        DB::table('users')->truncate();
+        DB::table('users_groups')->truncate();
+
+        $group = new Groups();
+        $group->name="admin";
+        $group->save();
+
+        $group = new Groups();
+        $group->name="department-admin";
+        $group->save();
+
+        $group = new Groups();
+        $group->name="operator";
+        $group->save();
+
+        $group = new Groups();
+        $group->name="customer";
+        $group->save();
+
+        $admin = new User();
+        $admin->name = "Admin";
+        $admin->email = "admin@mail.com";
+        $admin->password = Hash::make("admin");
+        $admin->avatar = "/assets/images/default-avatar.jpg";
+        $admin->show_avatar = 1;
+        $admin->birthday = "01-01-1990";
+        $admin->bio = "This is bio";
+        $admin->gender = "Male";
+        $admin->mobile_no = "1111111111";
+        $admin->country = "India";
+        $admin->activated = 1;
+        $admin->activated_at = \Carbon\Carbon::now();
+        $admin->save();
+
+        DB::table('users_groups')->insert(['user_id'=>1,'group_id'=>1]);
+
+        return 'Success';
+
+    }
 
 }

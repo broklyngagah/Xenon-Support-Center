@@ -20,11 +20,11 @@ class PermissionsController extends BaseController {
             $permission->text = Input::get("text");
             $permission->save();
 
-            Session::flash("success_msg","Permission created successfully");
+            Session::flash("success_msg",trans('msgs.permission_created_success'));
             return Redirect::to("/permissions/create")->withInput();
 
         }else{
-            Session::flash("error_msg","All fields are required");
+            Session::flash("error_msg",trans('msgs.all_fields_required'));
             return Redirect::to("/permissions/all");
         }
     }
@@ -36,7 +36,7 @@ class PermissionsController extends BaseController {
     public function update(){
 
         if(!Input::has("id") || !Input::has("text")){
-            Session::flash('error_msg',"All fields are required");
+            Session::flash('error_msg',trans('msgs.all_fields_required'));
             return Redirect::to('/permissions/all');
         }
 
@@ -45,11 +45,11 @@ class PermissionsController extends BaseController {
             $permission->text = Input::get('text');
             $permission->save();
 
-            Session::flash('success_msg',"Permission updated successfully");
+            Session::flash('success_msg',trans('msgs.permission_updated_success'));
             return Redirect::to('/permissions/all');
         }
         catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            Session::flash('error_msg',"Permission not found");
+            Session::flash('error_msg',trans('msgs.permission_not_found'));
             return Redirect::to('/permissions/all');
         }
     }
@@ -58,11 +58,11 @@ class PermissionsController extends BaseController {
         try{
 
             Permissions::findOrFail($id)->delete();
-            Session::flash("success_msg","Permission deleted successfully");
+            Session::flash("success_msg",trans('msgs.permission_deleted_success'));
             return Redirect::to("/permissions/all");
 
         }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            Session::flash("error_msg","Permission not found");
+            Session::flash("error_msg",trans('msgs.permission_not_found'));
             return Redirect::to("/permissions/all");
         }
     }

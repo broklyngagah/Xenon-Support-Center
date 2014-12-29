@@ -30,7 +30,7 @@ class ChatAPIController extends BaseController {
 
             if(!empty($blocking)){
                 if($blocking->should_block_chat || $blocking->should_block_web_access){
-                   return $this->send(['blocked'=>1,'errors'=>'You IP is blocked by admin . Please contact support']);
+                   return $this->send(['blocked'=>1,'errors'=>trans('msgs.your_ip_blocked_by_admin_contact_support')]);
                 }else{
                     return $this->send(['blocked'=>0,'data'=>$this->init_data()]);
                 }
@@ -39,7 +39,7 @@ class ChatAPIController extends BaseController {
             }
 
         }else{
-            return $this->send(['blocked'=>1,'errors'=>'Unable to initialize chat']);
+            return $this->send(['blocked'=>1,'errors'=> trans('msgs.unable_to_initialize_chat')]);
         }
 
     }
@@ -115,13 +115,13 @@ class ChatAPIController extends BaseController {
             if(!empty($blocking)){
                 if($blocking->should_block_chat || $blocking->should_block_web_access){
                     $response['blocked'] = 1;
-                    $response['errors'] = 'Your IP is blocked by admin . Please contact support';
+                    $response['errors'] = trans('msgs.your_ip_blocked_by_admin_contact_support');
                 }
             }
 
         }else{
             $response['blocked'] = 1;
-            $response['errors'] = 'Your IP is blocked by admin . Please contact support';
+            $response['errors'] = trans('msgs.your_ip_blocked_by_admin_contact_support');
         }
 
         $response['blocked'] = 0;
@@ -151,7 +151,7 @@ class ChatAPIController extends BaseController {
             $request_check = Company::where('id',Input::get('company_id'))->where('domain',Input::get('domain'))->get();
 
             if(sizeof($request_check)<=0)
-                return $this->send(['result'=>0,'errors'=>"Invalid request check your company id and domain name"]);
+                return $this->send(['result'=>0,'errors'=>trans('msgs.invalid_request_check_id_and_domain')]);
 
             $company_customers = CompanyCustomers::where('company_id',Input::get('company_id'))->lists('customer_id');
 
@@ -162,7 +162,7 @@ class ChatAPIController extends BaseController {
             }
 
             $operator_online = Company::operatorsOnline(Input::get('company_id'));
-            $success_msg = "Thanks for contacting us . we will get back to you shortly .";
+            $success_msg = trans('msgs.thanks_for_contacting_will_get_back');
             $response['is_online'] = $operator_online;
 
             $repo = new KodeInfo\Repo\MessageRepo();
@@ -357,20 +357,20 @@ class ChatAPIController extends BaseController {
 
                 $department_admin = DepartmentAdmins::where('department_id',$department->id)->first();
 
-                $status = "(Offline)";
+                $status = trans('msgs._offline_');
 
                 $admin = User::where('id',$company->user_id)->first();
 
                 if(!empty($admin)){
                     if($admin->is_online==1){
-                        $status = "(Online)";
+                        $status = trans('msgs._online_');
                     }
                 }
 
                 if(!empty($department_admin)){
                     $user = User::where('id',$department_admin->user_id)->first();
                     if(!empty($user)&&$user->is_online==1){
-                        $status = "(Online)";
+                        $status = trans('msgs._online_');
                     }
                 }
 
@@ -379,7 +379,7 @@ class ChatAPIController extends BaseController {
                 foreach($operators as $operator){
                     $user = User::find($operator->user_id);
                     if($user->is_online==1){
-                        $status = "(Online)";
+                        $status = trans('msgs._online_');
                     }
                 }
 
@@ -410,7 +410,7 @@ class ChatAPIController extends BaseController {
                 //Is conversation already closed
                 if(sizeof(ClosedConversations::where('thread_id',Input::get('thread_id'))->get())>0){
 
-                    $response['success_msg'] = "Thanks for contacting support";
+                    $response['success_msg'] = trans('msgs.thanks_for_contacting_support');
 
                     $response['token'] = 0;
                     $response['in_conversation'] = 1;

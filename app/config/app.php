@@ -125,7 +125,6 @@ return array(
         'KodeInfo\UserManagement\UserManagementServiceProvider',
 		'KodeInfo\Templates\TemplatesListServiceProvider',
 		'Bogardo\Mailgun\MailgunServiceProvider',
-		'KodeInfo\Translator\Provider\Translator',
 	),
 
 	/*

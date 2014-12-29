@@ -155,7 +155,7 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Select Permissions</label>
 			<div class="col-sm-10">
-				<select id="permissions" multiple="multiple" name="permissions[]">
+				<select id="permissions" multiple="multiple" class="form-control" name="permissions[]">
 					@foreach($permissions as $permission)
 					<option {{Input::old('permissions')==$permission->id?"selected":""}} value="{{$permission->key}}">{{$permission->text}}</option>
 					@endforeach
@@ -187,11 +187,6 @@
 @stop
 
 @section('scripts')
-{{HTML::style("/assets/plugins/jquery-multi-select/css/multi-select.css")}}
-{{HTML::script("/assets/plugins/jquery-multi-select/js/jquery.multi-select.js")}}
-
-{{HTML::style("/assets/plugins/datepicker/css/datepicker3.css")}}
-{{HTML::script("/assets/plugins/datepicker/js/bootstrap-datepicker.js")}}
 <script type="text/javascript">
 	$(document).ready(function() {
 

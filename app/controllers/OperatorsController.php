@@ -53,7 +53,7 @@ class OperatorsController extends BaseController {
                 $department = Department::where("company_id",$companies[0]->id)->first();
 
                 if(empty($department)){
-                    Session::flash('error_msg','Please create department before adding operators');
+                    Session::flash('error_msg',trans('msgs.create_department_before_adding_operators'));
                     return Redirect::back();
                 }
 
@@ -134,11 +134,11 @@ class OperatorsController extends BaseController {
                 if(!Input::has("activated"))
                     $this->mailer->activate($user->email,$user->name,User::getActivateFields(false,$user->id,Input::get('company')));
 
-                Session::flash('success_msg',"Operator created successfully");
+                Session::flash('success_msg',trans('msgs.operator_created_success'));
                 return Redirect::to('/operators/all');
             }
             catch (\Exception $e){
-                Session::flash('error_msg',"Unable to create operator");
+                Session::flash('error_msg',trans('msgs.unable_to_create_operator'));
                 return Redirect::to('/operators/create')->withInput(Input::except("avatar"));
             }
         }
@@ -147,7 +147,7 @@ class OperatorsController extends BaseController {
     public function update(){
 
         if(!Input::has("id")){
-            Session::flash("error_msg","Invalid request");
+            Session::flash("error_msg",trans('msgs.invalid_request'));
             return Redirect::to("/operators/all");
         }
 
@@ -181,11 +181,11 @@ class OperatorsController extends BaseController {
                 $operator_department->department_id = Input::get('department');
                 $operator_department->save();
 
-                Session::flash('success_msg',"Operator updated successfully");
+                Session::flash('success_msg',trans('msgs.operator_updated_success'));
                 return Redirect::to('/operators/all');
             }
             catch (\Exception $e){
-                Session::flash('error_msg',"Unable to update operator");
+                Session::flash('error_msg',trans('msgs.unable_to_update_operator'));
                 return Redirect::to('/operators/update/'.Input::get("id"))->withInput(Input::except("avatar"));
             }
         }
@@ -214,7 +214,7 @@ class OperatorsController extends BaseController {
         CannedMessages::where('operator_id',$user_id)->delete();
         UsersGroups::where('user_id',$user_id)->delete();
 
-        Session::flash('success_msg',"Operator deleted successfully");
+        Session::flash('success_msg',trans('msgs.operator_deleted_success'));
         return Redirect::to('/operators/all');
     }
 
@@ -224,10 +224,10 @@ class OperatorsController extends BaseController {
             $user->activated = 1;
             $user->activated_at = \Carbon\Carbon::now();
             $user->save();
-            Session::flash("success_msg","Operator activated successfully");
+            Session::flash("success_msg",trans('msgs.operator_activated_success'));
             return Redirect::to("/operators/all");
         }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            Session::flash("error_msg","Operator not found");
+            Session::flash("error_msg",trans('msgs.operator_not_found'));
             return Redirect::to("/operators/all");
         }
     }

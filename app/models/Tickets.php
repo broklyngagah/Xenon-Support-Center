@@ -28,9 +28,9 @@
  * @property integer $operator_id
  * @property string $requested_on
  * @property string $started_on
- * @method static \Illuminate\Database\Query\Builder|\Tickets whereOperatorId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Tickets whereRequestedOn($value) 
- * @method static \Illuminate\Database\Query\Builder|\Tickets whereStartedOn($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Tickets whereOperatorId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Tickets whereRequestedOn($value)
+ * @method static \Illuminate\Database\Query\Builder|\Tickets whereStartedOn($value)
  */
 class Tickets extends Eloquent {
 
@@ -161,18 +161,18 @@ class Tickets extends Eloquent {
 
     static function resolveStatus($status){
 
-        $status_txt = "New";
+        $status_txt = trans('msgs.new');
 
         if($status == Tickets::TICKET_NEW){
-            $status_txt = "New";
+            $status_txt = trans('msgs.new');
         }
 
         if($status == Tickets::TICKET_PENDING){
-            $status_txt = "Pending";
+            $status_txt = trans('msgs.pending');
         }
 
         if($status == Tickets::TICKET_RESOLVED){
-            $status_txt = "Resolved";
+            $status_txt = trans('msgs.resolved');
         }
 
         return $status_txt;
@@ -181,22 +181,22 @@ class Tickets extends Eloquent {
 
     static function resolvePriority($priority){
 
-        $priority_txt = "Low";
+        $priority_txt = trans('msgs.low');
 
         if($priority == Tickets::PRIORITY_LOW){
-            $priority_txt = "Low";
+            $priority_txt = trans('msgs.low');
         }
 
         if($priority == Tickets::PRIORITY_MEDIUM){
-            $priority_txt = "Medium";
+            $priority_txt = trans('msgs.medium');
         }
 
         if($priority == Tickets::PRIORITY_HIGH){
-            $priority_txt = "High";
+            $priority_txt = trans('msgs.high');
         }
 
         if($priority == Tickets::PRIORITY_URGENT){
-            $priority_txt = "Urgent";
+            $priority_txt = trans('msgs.urgent');
         }
 
         return $priority_txt;

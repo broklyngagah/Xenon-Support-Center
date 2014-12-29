@@ -79,7 +79,7 @@ class DepartmentsController extends BaseController
             $this->data['companies'] = Company::all();
             return View::make('departments.edit', $this->data);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash("error_msg", "Department not found");
+            Session::flash("error_msg", trans('msgs.department_not_found'));
             return Redirect::to("/departments/all");
         }
     }
@@ -102,11 +102,11 @@ class DepartmentsController extends BaseController
                 $department_admin->save();
             }
 
-            Session::flash("success_msg", "Department created successfully");
+            Session::flash("success_msg", trans('msgs.department_created_success'));
             return Redirect::to("/departments/all");
 
         } else {
-            Session::flash("error_msg", "All fields required");
+            Session::flash("error_msg", trans('msgs.all_fields_required'));
             return Redirect::to("/departments/create")->withInput();
         }
     }
@@ -142,11 +142,11 @@ class DepartmentsController extends BaseController
                 $department_admin->save();
             }
 
-            Session::flash("success_msg", "Department updated successfully");
+            Session::flash("success_msg", trans('msgs.department_updated_success'));
             return Redirect::to("/departments/all");
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash("error_msg", "Department not found");
+            Session::flash("error_msg", trans('msgs.department_not_found'));
             return Redirect::to("/departments/all");
         }
     }
@@ -162,9 +162,9 @@ class DepartmentsController extends BaseController
     public function delete($department_id)
     {
 
-        $department = Department::where('id',$department_id)->first();
+        $department = Department::where('id', $department_id)->first();
 
-        if(!empty($department)) {
+        if (!empty($department)) {
 
             $tickets = Tickets::where('department_id', $department_id)->get();
 
@@ -196,30 +196,30 @@ class DepartmentsController extends BaseController
 
             ClosedConversations::where('department_id', $department_id)->delete();
 
-            $operators = OperatorsDepartment::where('department_id',$department_id)->lists('user_id');
+            $operators = OperatorsDepartment::where('department_id', $department_id)->lists('user_id');
 
-            if(sizeof($operators)>0) {
+            if (sizeof($operators) > 0) {
                 User::whereIn('id', $operators)->delete();
                 UsersGroups::whereIn('user_id', $operators)->delete();
-                CannedMessages::where('operator_id',$operators)->delete();
+                CannedMessages::where('operator_id', $operators)->delete();
             }
 
-            OperatorsDepartment::where('department_id',$department_id)->delete();
+            OperatorsDepartment::where('department_id', $department_id)->delete();
         }
 
-        $department_admin = DepartmentAdmins::where('department_id',$department_id)->first();
+        $department_admin = DepartmentAdmins::where('department_id', $department_id)->first();
 
-        if(!empty($department_admin)){
-            UsersGroups::where('user_id',$department_admin->user_id)->delete();
-            User::where("id",$department_admin->user_id)->delete();
-            CompanyDepartmentAdmins::where("user_id",$department_admin->user_id)->delete();
+        if (!empty($department_admin)) {
+            UsersGroups::where('user_id', $department_admin->user_id)->delete();
+            User::where("id", $department_admin->user_id)->delete();
+            CompanyDepartmentAdmins::where("user_id", $department_admin->user_id)->delete();
         }
 
-        DepartmentAdmins::where('department_id',$department_id)->delete();
+        DepartmentAdmins::where('department_id', $department_id)->delete();
 
-        Department::where('id',$department_id)->delete();
+        Department::where('id', $department_id)->delete();
 
-        Session::flash('success_msg', "Department deleted successfully");
+        Session::flash('success_msg', trans('msgs.department_deleted_success'));
 
         return Redirect::to('/departments/all');
 

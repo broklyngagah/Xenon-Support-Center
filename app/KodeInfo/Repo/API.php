@@ -23,7 +23,7 @@ class API {
 
             if(!empty($admin_id)){
                 $user = User::where('id',$admin_id)->first();
-                $user->name = $user->name . " - Department Admin";
+                $user->name = $user->name . " - ".trans('msgs.department_admin');
                 $users[] = $user;
             }
 

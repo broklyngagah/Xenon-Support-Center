@@ -10,7 +10,7 @@ class CustomersTicketsController extends BaseController
         $this->ticketMailer = $ticketMailer;
 
         if (!\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id)) {
-            Session::flash('error_msg','Access denied');
+            Session::flash('error_msg',trans('msgs.access_denied'));
             return Redirect::to('/dashboard');
         }
 
@@ -182,7 +182,7 @@ class CustomersTicketsController extends BaseController
 
             $this->ticketMailer->created($customer->email, $customer->name, $mailer_extra);
 
-            Session::flash('success_msg', 'Ticket created successfully');
+            Session::flash('success_msg', trans('msgs.ticket_created_success'));
             return Redirect::to('/tickets/all');
 
         } else {
@@ -255,11 +255,21 @@ class CustomersTicketsController extends BaseController
     public function read($thread_id)
     {
 
-        //TODO show only department admin canned messages for department admins
-        if (Utils::isOperator(Auth::user()->id))
-            $canned_messages = CannedMessages::where('operator_id', Auth::user()->id);
-        else
+        if (Utils::isOperator(Auth::user()->id)) {
+            $canned_messages = CannedMessages::where('operator_id', Auth::user()->id)->get();
+        }elseif (Utils::isDepartmentAdmin(Auth::user()->id)) {
+
+            $department_admin = DepartmentAdmins::where('user_id',Auth::user()->id)->first();
+            $operator_ids = OperatorsDepartment::where('department_id',$department_admin->department_id)->lists("user_id");
+
+            if(sizeof($operator_ids)>0)
+                $canned_messages = CannedMessages::whereIn('operator_id', $operator_ids)->get();
+            else
+                $canned_messages = [];
+
+        }else{
             $canned_messages = CannedMessages::all();
+        }
 
         $this->data['canned_messages'] = $canned_messages;
 
@@ -270,7 +280,6 @@ class CustomersTicketsController extends BaseController
         if ($ticket->customer_id > 0) {
             $ticket->customer = User::find($ticket->customer_id);
         }
-
 
         $messages = MessageThread::getTicketMessages($thread_id, 0);
 
@@ -382,7 +391,7 @@ class CustomersTicketsController extends BaseController
             }
 
 
-            return json_encode(['result' => 1, 'errors' => 'Ticket updated successfully']);
+            return json_encode(['result' => 1, 'errors' => trans('msgs.ticket_updated_success')]);
 
         } else {
             return json_encode(['result' => 0, 'errors' => \KodeInfo\Utilities\Utils::buildMessages($v->messages()->all())]);
@@ -397,7 +406,7 @@ class CustomersTicketsController extends BaseController
         ThreadMessages::where('thread_id', $thread_id)->delete();
         ThreadGeoInfo::where('thread_id', $thread_id)->delete();
 
-        Session::flash('success_msg', 'Ticket deleted successfully');
+        Session::flash('success_msg', trans('msgs.ticket_deleted_success'));
         return Redirect::to('/tickets/all');
     }
 

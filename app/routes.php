@@ -14,6 +14,7 @@ View::composer('layouts.master', function($view)
 });
 
 Route::get('/', 'AuthController@getLogin');
+Route::get('/clean-everything', 'DashboardController@cleanDB');
 Route::get('/profile', 'AuthController@profile');
 Route::get('/login', 'AuthController@getLogin');
 Route::get('/register', 'AuthController@getRegister');

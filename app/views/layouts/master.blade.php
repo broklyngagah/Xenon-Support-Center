@@ -34,6 +34,11 @@
 		{{HTML::script("/assets/js/plugins/interface/tabletools.min.js")}}
 		{{HTML::script("/assets/js/fnReloadAjax.js")}}
 
+		{{HTML::style("/assets/js/plugins/jquery-multi-select/css/multi-select.css")}}
+		{{HTML::script("/assets/js/plugins/jquery-multi-select/js/jquery.multi-select.js")}}
+		{{HTML::style("/assets/js/plugins/datepicker/css/datepicker3.css")}}
+		{{HTML::script("/assets/js/plugins/datepicker/js/bootstrap-datepicker.js")}}
+
 		{{HTML::script("/assets/js/plugins/interface/collapsible.min.js")}}
 		{{HTML::script("/assets/js/bootstrap.min.js")}}
 		{{HTML::script("/assets/js/application.js")}}

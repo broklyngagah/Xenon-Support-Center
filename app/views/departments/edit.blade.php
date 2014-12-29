@@ -102,8 +102,6 @@
 @stop
 
 @section('scripts')
-{{HTML::style("/assets/plugins/jquery-multi-select/css/multi-select.css")}}
-{{HTML::script("/assets/plugins/jquery-multi-select/js/jquery.multi-select.js")}}
 <script type="text/javascript">
 	$(document).ready(function () {
 

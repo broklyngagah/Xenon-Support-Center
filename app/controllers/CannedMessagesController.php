@@ -54,8 +54,6 @@ class CannedMessagesController extends BaseController
     public function store()
     {
 
-        //TODO validate if inputs changed in html directly .
-
         $v = Validator::make(["message" => Input::get("message"), "company" => Input::get("company"),
             "department" => Input::get("department"), "operator" => Input::get("operator")],
             ["message" => "required", "company" => "required|exists:companies,id",
@@ -69,7 +67,7 @@ class CannedMessagesController extends BaseController
             $message->operator_id = Input::get('operator');
             $message->save();
 
-            Session::flash('success_msg', 'Canned message successfully created');
+            Session::flash('success_msg', trans('msgs.canned_messages_created_success'));
             return Redirect::to('/canned_messages/all');
         } else {
             Session::flash('error_msg', Utils::buildMessages($v->messages()->all()));
@@ -82,10 +80,10 @@ class CannedMessagesController extends BaseController
     {
         try {
             CannedMessages::findOrFail($message_id)->delete();
-            Session::flash('success_msg', "Canned message deleted successfully");
+            Session::flash('success_msg', trans('msgs.canned_messages_deleted_success'));
             return Redirect::to('/canned_messages/all');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Session::flash('error_msg', "Canned message not found");
+            Session::flash('error_msg', trans('msgs.canned_messages_not_found'));
             return Redirect::to('/canned_messages/all');
         }
     }

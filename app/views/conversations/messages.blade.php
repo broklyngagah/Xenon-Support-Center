@@ -155,6 +155,7 @@
                 $.ajax({
                     'type': 'GET',
                     'url': '/conversations/get_server_messages',
+                    'async': false,
                     'data': {
                         'user_id': operator_id,
                         'thread_id': thread_id,

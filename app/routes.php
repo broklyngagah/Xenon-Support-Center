@@ -92,6 +92,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('get_company_free_admins/{company_id}', 'APIController@getCompanyFreeDepartmentAdmins');
     Route::get('get_department_permissions/{department_id}', 'APIController@getDepartmentPermissions');
     Route::get('log_ip', 'APIController@logIP');
+    Route::get('get_code/{company_id}', 'APIController@getCode');
 
     Route::get('change_status/{status}', 'APIController@changeStatus');
     Route::get('online_conversations_refresh', 'APIController@conversationsRefresh');

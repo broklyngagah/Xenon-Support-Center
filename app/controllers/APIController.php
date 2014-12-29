@@ -10,6 +10,18 @@ class APIController extends BaseController {
         return Response::json(API::getDepartmentOperatorsWithAdmin($department_id));
     }
 
+    public function getCode($company_id){
+
+        $company = Company::where('id',$company_id)->first();
+
+        $arr = [];
+
+        $arr['code'] =  '&lt;link href=&quot;'.URL::to('/').'/assets/xenon_chat/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;<br/>&lt;script src=&quot;'.URL::to('/').'/assets/xenon_chat/script.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br/><br/>&lt;script type=&quot;text/javascript&quot;&gt;<br/><br/>$(document).ready(function () {<br/>$(&quot;#xenon-chat-widget&quot;).XENON_Initialize({company: '.$company_id.', domain: &quot;'.URL::to('/').'&quot;});<br/>});<br/><br/>&lt;/script&gt;';
+        $arr['domain'] = $company->domain;
+
+        return json_encode($arr);
+    }
+
     public function changeStatus($status){
         $user = User::find(Auth::user()->id);
         $user->is_online = $status;

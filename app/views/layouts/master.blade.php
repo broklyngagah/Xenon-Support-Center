@@ -14,10 +14,8 @@
 
 		{{HTML::script("http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js")}}
 		{{HTML::script("http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js")}}
-		{{HTML::script("/assets/js/plugins/charts/sparkline.min.js")}}
 		{{HTML::script("/assets/js/plugins/forms/uniform.min.js")}}
 		{{HTML::script("/assets/js/plugins/forms/select2.min.js")}}
-		{{HTML::script("/assets/js/plugins/forms/inputmask.js")}}
 		{{HTML::script("/assets/js/plugins/forms/autosize.js")}}
 		{{HTML::script("/assets/js/plugins/forms/inputlimit.min.js")}}
 		{{HTML::script("/assets/js/plugins/forms/listbox.js")}}
@@ -26,8 +24,6 @@
 
 		{{HTML::script("/assets/js/plugins/forms/tags.min.js")}}
 		{{HTML::script("/assets/js/plugins/forms/switch.min.js")}}
-		{{HTML::script("/assets/js/plugins/forms/uploader/plupload.full.min.js")}}
-		{{HTML::script("/assets/js/plugins/forms/uploader/plupload.queue.min.js")}}
 		{{HTML::script("/assets/js/plugins/forms/wysihtml5/wysihtml5.min.js")}}
 		{{HTML::script("/assets/js/plugins/forms/wysihtml5/toolbar.js")}}
 		{{HTML::script("/assets/js/plugins/interface/daterangepicker.js")}}
@@ -38,9 +34,6 @@
 		{{HTML::script("/assets/js/plugins/interface/tabletools.min.js")}}
 		{{HTML::script("/assets/js/fnReloadAjax.js")}}
 
-		{{HTML::script("/assets/js/plugins/interface/colorpicker.js")}}
-		{{HTML::script("/assets/js/plugins/interface/fullcalendar.min.js")}}
-		{{HTML::script("/assets/js/plugins/interface/timepicker.min.js")}}
 		{{HTML::script("/assets/js/plugins/interface/collapsible.min.js")}}
 		{{HTML::script("/assets/js/bootstrap.min.js")}}
 		{{HTML::script("/assets/js/application.js")}}

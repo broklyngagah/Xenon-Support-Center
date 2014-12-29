@@ -3,7 +3,7 @@
     $.fn.XENON_Initialize = function (options) {
 
         var XENON = {
-            domain: "http://support.dev",
+            domain: options.hasOwnProperty("domain") ? options["domain"] : "http://support.dev",
             user_id: 0,
             thread_id: 0,
             token: 0,
@@ -191,7 +191,7 @@
                             $('#xenon-chat-view .chat').append(response.messages.messages_str);
 
                             if (response.messages.messages_str.length > 0) {
-                                var audio = new Audio('/assets/message.mp3');
+                                var audio = new Audio(XENON.domain + '/assets/message.mp3');
                                 audio.play();
                             }
 

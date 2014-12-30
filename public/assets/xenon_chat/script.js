@@ -469,7 +469,7 @@ if ("undefined" == typeof jQuery)throw new Error("Xenon Livechat's JavaScript re
             },
 
             to_bottom: function () {
-                var objDiv = document.getElementsByClassName("panel-body-xenon");
+                var objDiv = document.getElementById("xenon-chat-view");
                 objDiv.scrollTop = objDiv.scrollHeight;
             },
 

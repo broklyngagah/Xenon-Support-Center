@@ -10,8 +10,7 @@
             <div class="panel-body-xenon">
 
                 <div id="xenon-form-view">
-                    <p>At this moment there are no logged members, but you can leave your messages.</p>
-
+                    
                     <div style="display: none;" id="xenon-errors" class="alert alert-danger"></div>
                     <div style="display: none;" id="xenon-success" class="alert alert-success"></div>
 

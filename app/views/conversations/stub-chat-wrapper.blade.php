@@ -47,7 +47,7 @@
 
             <div id="xenon-chat-footer" class="panel-footer-xenon" style="display: none;">
                 <div class="input-group">
-                    <textarea placeholder="Type your message here..." style="height:30px;" id="xenon-message" class="form-control input-sm"></textarea>
+                    <textarea placeholder="Type your message here..." style="height:30px;width:90%;" id="xenon-message" class="form-control input-sm"></textarea>
                         <span class="input-group-btn">
                             <button id="xenon-message-send" class="btn btn-warning btn-sm" id="btn-chat">Send</button>
                         </span>

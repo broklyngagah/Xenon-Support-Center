@@ -215,6 +215,10 @@ fieldset[disabled] .btn-success.active {
 
 .panel-body-xenon {
     padding: 15px;
+    height: 480px;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: auto;
 }
 
 .panel-heading-xenon {

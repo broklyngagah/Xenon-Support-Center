@@ -12,17 +12,21 @@ class AddColumnsOnlineUsers extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create("closed_conversations", function(Blueprint $table)
-		{
-			$table->increments("id");
-			$table->integer("user_id");
-			$table->integer("thread_id");
-			$table->integer("operator_id");
-			$table->datetime("requested_on");
-			$table->datetime("started_on");
-			$table->string("token");
-			$table->datetime("ended_on");
-		});
+
+			Schema::create("closed_conversations", function(Blueprint $table)
+			{
+				$table->increments("id");
+				$table->integer("user_id");
+				$table->integer("thread_id");
+				$table->integer("operator_id");
+				$table->datetime("requested_on");
+				$table->datetime("started_on");
+				$table->string("token");
+				$table->datetime("ended_on");
+			});
+
+
+
 	}
 
 	/**

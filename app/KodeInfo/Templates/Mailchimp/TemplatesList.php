@@ -15,7 +15,9 @@ class TemplatesList implements TemplatesListInterface {
     function __construct(){
         $raw_settings = Settings::where('key','mailchimp')->first();
         $settings = json_decode($raw_settings->value);
-        $this->mailchimp = new Mailchimp($settings->api_key);
+
+        if(strlen($settings->api_key)>0)
+            $this->mailchimp = new Mailchimp($settings->api_key);
     }
 
 

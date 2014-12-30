@@ -81,7 +81,7 @@
 			</div>
 			<div class="modal-body with-padding">
 				<p>Copy and paste below code . Livechat will only work on <strong><span id="livechat_domain"></span></strong></p>
-				<p><code id="livechat_code">&lt;link href=&quot;{{URL::to('/')}}/assets/xenon_chat/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;<br/>&lt;script src=&quot;{{URL::to('/')}}/assets/xenon_chat/script.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br/><br/>&lt;script type=&quot;text/javascript&quot;&gt;<br/><br/>$(document).ready(function () {<br/>$(&quot;#xenon-chat-widget&quot;).XENON_Initialize({company: 1, domain: &quot;{{URL::to('/')}}&quot;});<br/>});<br/><br/>&lt;/script&gt;</code></p>
+				<p><pre id="livechat_code">&lt;link href=&quot;{{URL::to('/')}}/assets/xenon_chat/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;<br/>&lt;script src=&quot;{{URL::to('/')}}/assets/xenon_chat/script.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br/><br/>&lt;script type=&quot;text/javascript&quot;&gt;<br/><br/>$(document).ready(function () {<br/>$(&quot;#xenon-chat-widget&quot;).XENON_Initialize({company: 1, domain: &quot;{{URL::to('/')}}&quot;});<br/>});<br/><br/>&lt;/script&gt;</pre></p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>

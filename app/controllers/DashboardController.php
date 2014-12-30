@@ -134,6 +134,7 @@ class DashboardController extends BaseController
         DB::table('users_groups')->truncate();
         DB::table('permissions')->truncate();
 
+        /*
         DB::statement("INSERT INTO `permissions` (`id`, `key`, `text`, `created_at`, `updated_at`) VALUES
 (1, 'tickets.create', 'Operator/Department admin/Customer can create tickets', '2014-12-28 03:30:28', '2014-12-28 03:30:28'),
 (2, 'tickets.edit', 'Operator/Department admin/Customer can reply to ticket', '2014-12-28 03:30:43', '2014-12-28 03:30:43'),
@@ -178,7 +179,7 @@ class DashboardController extends BaseController
 (41, 'departments_admins.all', 'Operator/Department admin/Customer can view all department admins , if you assigned anyone departments_admins.create , departments_admins.edit , departments_admins.delete then assigning this permission is mandatory so they can view department admin', '2014-12-28 03:44:15', '2014-12-28 03:44:15'),
 (42, 'departments_admins.delete', 'Operator/Department admin/Customer can delete department admin .', '2014-12-28 03:44:34', '2014-12-28 03:44:34')"
         );
-
+*/
 
 
         $group = new Groups();

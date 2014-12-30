@@ -10,7 +10,7 @@
             <div class="panel-body-xenon">
 
                 <div id="xenon-form-view">
-                    
+
                     <div style="display: none;" id="xenon-errors" class="alert alert-danger"></div>
                     <div style="display: none;" id="xenon-success" class="alert alert-success"></div>
 

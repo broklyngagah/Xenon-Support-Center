@@ -257,6 +257,8 @@ if ("undefined" == typeof jQuery)throw new Error("Xenon Livechat's JavaScript re
                                 //errors = your ip have been blocked by admin contact support
                                 $('#xenon-errors').html(response.errors);
                                 $('#xenon-errors').show();
+                                $('#xenon-success').html("");
+                                $('#xenon-success').show();
                             } else {
                                 $('#xenon-chat-widget').html(response.data.wrapper);
                                 XENON.check_new_messages();

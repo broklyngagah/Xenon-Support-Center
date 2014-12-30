@@ -329,11 +329,13 @@ fieldset[disabled] .btn-success.active {
 .chat li.left .chat-body
 {
     margin-left: 60px;
+    margin-bottom: 8px;
 }
 
 .chat li.right .chat-body
 {
     margin-right: 60px;
+    margin-bottom: 8px;
 }
 
 

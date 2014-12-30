@@ -1,13 +1,13 @@
 <div id="xenon-wrapper">
-    <div class="panel panel-success">
+    <div class="panel-xenon panel-success-xenon">
 
-        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion-color" href="#xenon-widget">
-            <h6 id="xenon-widget-title" class="panel-title">Contact Us - Offline</h6>
+        <div class="panel-heading-xenon" data-toggle="collapse" data-parent="#accordion-color" href="#xenon-widget">
+            <h6 id="xenon-widget-title" class="panel-title-xenon">Contact Us - Offline</h6>
         </div>
 
         <div id="xenon-widget" class="panel-collapse collapse">
 
-            <div class="panel-body">
+            <div class="panel-body-xenon">
 
                 <div id="xenon-form-view">
                     <p>At this moment there are no logged members, but you can leave your messages.</p>
@@ -46,7 +46,7 @@
 
             </div>
 
-            <div id="xenon-chat-footer" class="panel-footer" style="display: none;">
+            <div id="xenon-chat-footer" class="panel-footer-xenon" style="display: none;">
                 <div class="input-group">
                     <textarea placeholder="Type your message here..." style="height:30px;" id="xenon-message" class="form-control input-sm"></textarea>
                         <span class="input-group-btn">

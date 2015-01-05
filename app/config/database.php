@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'xenon_support',
+			'database'  => 'xenon-support',
 			'username'  => 'root',
 			'password'  => 'kodeinfo@#1100',
 			'charset'   => 'utf8',

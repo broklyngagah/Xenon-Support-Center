@@ -30,15 +30,15 @@ class DatabaseSeeder extends Seeder {
         $group->save();
 
         $admin = new User();
-        $admin->name = "Imran Iqbal";
-        $admin->email = "shellprog@gmail.com";
-        $admin->password = Hash::make("311311");
+        $admin->name = "Admin";
+        $admin->email = "admin@mail.com";
+        $admin->password = Hash::make("admin");
         $admin->avatar = "/assets/images/default-avatar.jpg";
         $admin->show_avatar = 1;
         $admin->birthday = "01-15-1990";
-        $admin->bio = "Imran is a web developer and consultant from India. He is the founder of KodeInfo, the PHP and Laravel Community . In the meantime he follows other projects, works as a freelance backend consultant for PHP applications and studies IT Engineering . He loves to learn new things, not only about PHP or development but everything.";
+        $admin->bio = "This is dummy admin bio";
         $admin->gender = "Male";
-        $admin->mobile_no = "8686371915";
+        $admin->mobile_no = "0000000000";
         $admin->country = "India";
         $admin->activated = 1;
         $admin->activated_at = \Carbon\Carbon::now();

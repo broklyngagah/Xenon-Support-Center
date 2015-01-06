@@ -96,7 +96,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-		$('#code_modal').click(function(){
+		$('a#code_modal').click(function(){
 
 			$.ajax({
 				'type': 'GET',

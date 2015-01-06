@@ -61,7 +61,7 @@
 					<td>{{$company->domain}}</td>
 					<td><a class="btn btn-primary" href="/companies/operators/{{$company->id}}">View Operators</a></td>
 					<td><a class="btn btn-primary" href="/companies/customers/{{$company->id}}">View Customers</a></td>
-					<td><button class="btn btn-info" data-toggle="modal" data-id="{{$company->id}}" id="code_modal" role="button" href="#livechat_modal" id="livechat_code">Show Code</button></td>
+					<td><a class="btn btn-info" data-toggle="modal" data-id="{{$company->id}}" id="code_modal" role="button" href="#livechat_modal" id="livechat_code">Show Code</a></td>
 					<td><a href="/companies/update/{{$company->id}}" class="btn btn-success btn-sm edit_operator"> <i class="icon-pencil"></i> Edit </a></td>
 					<td><a href="/companies/delete/{{$company->id}}" class="btn btn-danger btn-sm"> <i class="icon-remove3"></i> Delete </a></td>
 				</tr>
@@ -96,7 +96,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-		$('button#code_modal').click(function(){
+		$('a#code_modal').click(function(){
 
 			$.ajax({
 				'type': 'GET',

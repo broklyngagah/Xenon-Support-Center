@@ -63,6 +63,9 @@ class AuthController extends BaseController
     public function postChangePassword()
     {
 
+        Session::flash('error_msg','Changing Password is disabled');
+        return Redirect::back();
+
         $current_password = Input::get('current_password', '');
         $password = Input::get('password', '');
         $password_confirmation = Input::get('password_confirmation', '');

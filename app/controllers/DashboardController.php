@@ -132,7 +132,7 @@ class DashboardController extends BaseController
         DB::table('translations')->truncate();
         DB::table('users')->truncate();
         DB::table('users_groups')->truncate();
-        DB::table('permissions')->truncate();
+        //DB::table('permissions')->truncate();
 
         /*
         DB::statement("INSERT INTO `permissions` (`id`, `key`, `text`, `created_at`, `updated_at`) VALUES

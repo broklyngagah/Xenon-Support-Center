@@ -13,10 +13,13 @@
     <link href="http://support.dev/assets/xenon_chat/style.css" rel="stylesheet" type="text/css">
     <script src="http://support.dev/assets/xenon_chat/script.js" type="text/javascript"></script>
 
+    <link href="http://162.243.17.238/assets/xenon_chat/style.css" rel="stylesheet" type="text/css">
+    <script src="http://162.243.17.238/assets/xenon_chat/script.js" type="text/javascript"></script>
+
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $("#xenon-chat-widget").XENON_Initialize({company: 1, domain: "http://support.dev"});
+            $("#xenon-chat-widget").XENON_Initialize({company: 1, domain: "http://162.243.17.238"});
         });
 
     </script>
@@ -25,8 +28,7 @@
 
 <div class="container">
 
-    <div id="xenon-chat-widget"></div>
-
+    
 </div>
 </body>
 </html>

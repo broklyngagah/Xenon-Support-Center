@@ -119,6 +119,11 @@ class DepartmentsController extends BaseController
             return Redirect::to('/departments/update/' . Input::get("id"))->withInput();
         }
 
+        if(Config::get('site-config.is_demo')&&Input::get("id")==1){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         try {
 
             if (Department::where('name', Input::get('name'))->where('id', '!=', Input::get('id'))->count() > 0) {

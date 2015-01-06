@@ -138,6 +138,11 @@ class CompaniesController extends BaseController
             return Redirect::to('/companies/update/')->withInput();
         }
 
+        if(Config::get('site-config.is_demo')&&$id==1){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         if (!$this->companyAddValidator->validate(Input::all())) {
             $messages = Utils::buildMessages($this->companyAddValidator->getValidation()->messages()->all());
             Session::flash('error_msg', $messages);

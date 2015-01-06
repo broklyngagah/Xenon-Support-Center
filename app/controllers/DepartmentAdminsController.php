@@ -151,6 +151,12 @@ class DepartmentAdminsController extends BaseController
             return Redirect::to("/departments/admins/all");
         }
 
+        if(Config::get('site-config.is_demo')&&Input::get("user_id")==2){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
+
         try {
             $admin = User::find(Input::get("user_id"));
             $admin->name = Input::get("name");
@@ -229,6 +235,11 @@ class DepartmentAdminsController extends BaseController
 
     public function remove($admin_id)
     {
+
+        if(Config::get('site-config.is_demo')&&$admin_id==2){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
 
         try {
             DepartmentAdmins::where('user_id', $admin_id)->delete();

@@ -22,6 +22,11 @@ class BlockingController extends BaseController {
 
         if(strlen(Input::get('ip_address'))>0){
 
+            if(Config::get('site-config.is_demo')){
+                Session::flash('error_msg','Demo - Feature is disabled');
+                return Redirect::to('/dashboard');
+            }
+
             $block = new Blocking();
             $block->ip_address = Input::get('ip_address');
             $block->should_block_chat = Input::get('should_block_chat');

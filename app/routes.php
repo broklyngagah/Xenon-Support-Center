@@ -14,6 +14,12 @@ View::composer('layouts.master', function($view)
 });
 
 Route::get('/', 'AuthController@getLogin');
+
+/*
+Route::get('/setup', 'DashboardController@getSetup');
+Route::post('/setup', 'DashboardController@postSetup');
+*/
+
 Route::get('/clean-everything', 'DashboardController@cleanDB');
 Route::get('/profile', 'AuthController@profile');
 Route::get('/login', 'AuthController@getLogin');

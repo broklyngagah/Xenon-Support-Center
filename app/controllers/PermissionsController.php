@@ -55,6 +55,12 @@ class PermissionsController extends BaseController {
     }
 
     public function delete($id){
+
+        if(Config::get('site-config.is_demo')){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         try{
 
             Permissions::findOrFail($id)->delete();

@@ -55,6 +55,11 @@ class SettingsController extends BaseController
     public function setMailGun()
     {
 
+        if(Config::get('site-config.is_demo')){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         if (Input::has('use_mailgun')) {
             $mail_content = "<?php
             return [
@@ -100,6 +105,11 @@ class SettingsController extends BaseController
     public function setSMTP()
     {
 
+        if(Config::get('site-config.is_demo')){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         $mail_content = "<?php
         return [
 	          'driver' => 'smtp',
@@ -124,6 +134,11 @@ class SettingsController extends BaseController
 
     public function setMailchimp()
     {
+
+        if(Config::get('site-config.is_demo')){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
 
         $values = [
             'use_mailchimp' => Input::has('use_mailchimp'),

@@ -29,32 +29,31 @@
 
     @include('layouts.notify')
 
-  <form action="/reset/change-password" method="POST" role="form">
-    <div class="popup-header"><a href="#" class="pull-left"><i class="icon-user-plus"></i></a><span class="text-semibold">New Password</span>
-      <div class="btn-group pull-right"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs"></i></a>
-        <ul class="dropdown-menu icons-right dropdown-menu-right">
-          <li><a href="/login"><i class="icon-info"></i> Login</a></li>
-        </ul>
-      </div>
+  <form action="/setup" method="POST" role="form">
+    <div class="popup-header"><a href="#" class="pull-left"><i class="icon-user-plus"></i></a><span class="text-semibold">Setup</span>
     </div>
     <div class="well">
       <div class="form-group has-feedback">
-        <label>New Password</label>
-        <input type="password" class="form-control" name="password" placeholder="New Password">
-        <i class="icon-users form-control-feedback"></i>
+        <label>Database Host</label>
+        <input type="text" class="form-control" name="db_host" placeholder="Database Host" value="{{Input::old("db_host","localhost")}}">
       </div>
       <div class="form-group has-feedback">
-        <label>Confirm New Password</label>
-        <input type="password" class="form-control" name="password_confirmation" placeholder="New Password Confirmation">
-        <input type="hidden" name="email" value="{{$email}}"/>
-        <input type="hidden" name="code" value="{{$code}}"/>
-        <i class="icon-users form-control-feedback"></i>
+        <label>Database Name</label>
+        <input type="text" class="form-control" name="db_name" placeholder="Database Name" value="{{Input::old("db_name")}}">
+      </div>
+      <div class="form-group has-feedback">
+        <label>Database User</label>
+        <input type="text" class="form-control" name="db_user" placeholder="Database User" value="{{Input::old("db_user")}}">
+      </div>
+      <div class="form-group has-feedback">
+        <label>Database Password</label>
+        <input type="text" class="form-control" name="db_password" placeholder="Database Password" value="{{Input::old("db_password")}}">
       </div>
       <div class="row form-actions">
         <div class="col-xs-6">
         </div>
         <div class="col-xs-6">
-          <button type="submit" class="btn btn-warning pull-right"><i class="icon-lock"></i> Change</button>
+          <button type="submit" class="btn btn-warning pull-right"><i class="icon-tools"></i> Setup</button>
         </div>
       </div>
 
@@ -68,27 +67,5 @@
   <div class="pull-right icons-group"> <a href="#"><i class="icon-screen2"></i></a> <a href="#"><i class="icon-balance"></i></a> <a href="#"><i class="icon-cog3"></i></a> </div>
 </div>
 <!-- /footer -->
-<script>
-$(document).ready(function($) {
-
-    @if(!Session::has('client_ip'))
-    $.get("http://ipinfo.io", function (response) {
-
-      $.ajax({
-        'type': 'GET',
-        'url': '/api/log_ip',
-        'data': {
-          'ip_address': response.ip
-        },
-        'success': function (data) {
-
-        }
-      });
-
-    }, "jsonp");
-    @endif
-
-});
-</script>
 </body>
 </html>

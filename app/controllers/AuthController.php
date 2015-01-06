@@ -63,8 +63,10 @@ class AuthController extends BaseController
     public function postChangePassword()
     {
 
-        Session::flash('error_msg','Changing Password is disabled');
-        return Redirect::back();
+        if(Config::get('site-config.is_demo')){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
 
         $current_password = Input::get('current_password', '');
         $password = Input::get('password', '');
@@ -109,6 +111,11 @@ class AuthController extends BaseController
 
     public function postForgotPassword()
     {
+        if(Config::get('site-config.is_demo')){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         $email = Input::get("email");
 
         $user = User::where('email', $email)->first();

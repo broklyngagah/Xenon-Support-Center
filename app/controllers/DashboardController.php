@@ -3,6 +3,62 @@
 class DashboardController extends BaseController
 {
 
+    function getSetup()
+    {
+        return View::make("setup");
+    }
+
+    function postSetup()
+    {
+
+        $con = null;
+
+        try {
+            $con = mysqli_connect(Input::get('db_host'), Input::get('db_user'), Input::get('db_password'), Input::get('db_name'));
+
+            if (!is_null($con) && is_object($con)) {
+
+                $db_content = "<?php
+                return [
+                    'fetch' => PDO::FETCH_CLASS,
+	                'default' => 'mysql',
+	                'connections' => [
+		                'mysql' => [
+			                'driver'    => 'mysql',
+			                'host'      => '" . Input::get('db_host') . "',
+			                'database'  => '" . Input::get('db_name') . "',
+			                'username'  => '" . Input::get('db_user') . "',
+			                'password'  => '" . Input::get('db_password') . "',
+			                'charset'   => 'utf8',
+			                'collation' => 'utf8_unicode_ci',
+			                'prefix'    => '',
+		                ]
+	                ],
+	                'migrations' => 'migrations',
+                ];";
+
+                \File::put(app_path() . "/config/database.php", $db_content);
+
+                //exec("php artisan migrate");
+                //exec("php artisan db:seed");
+                //exec("chgrp -R www-data /your-uploaded-folder");
+                //exec("php artisan db:seed");
+                //exec("php artisan db:seed");
+
+                Session::flash('success_msg', 'Setup is successfully . Please login below');
+                return Redirect::to("/login");
+
+            } else {
+                Session::flash('error_msg', 'Unable to connect . check database settings');
+                return Redirect::back()->withInput(Input::all());
+            }
+
+        } catch (Exception $e) {
+            Session::flash('error_msg', 'Unable to connect . check database settings');
+            return Redirect::back()->withInput(Input::all());
+        }
+    }
+
     function index()
     {
 
@@ -107,7 +163,8 @@ class DashboardController extends BaseController
         return View::make('index', $this->data);
     }
 
-    public function cleanDB(){
+    public function cleanDB()
+    {
 
         //Not truncating countries , migrations , permissions , settings
 
@@ -183,19 +240,19 @@ class DashboardController extends BaseController
 
 
         $group = new Groups();
-        $group->name="admin";
+        $group->name = "admin";
         $group->save();
 
         $group = new Groups();
-        $group->name="department-admin";
+        $group->name = "department-admin";
         $group->save();
 
         $group = new Groups();
-        $group->name="operator";
+        $group->name = "operator";
         $group->save();
 
         $group = new Groups();
-        $group->name="customer";
+        $group->name = "customer";
         $group->save();
 
         $admin = new User();
@@ -213,7 +270,7 @@ class DashboardController extends BaseController
         $admin->activated_at = \Carbon\Carbon::now();
         $admin->save();
 
-        DB::table('users_groups')->insert(['user_id'=>1,'group_id'=>1]);
+        DB::table('users_groups')->insert(['user_id' => 1, 'group_id' => 1]);
 
         return 'Success';
 

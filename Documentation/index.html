@@ -57,7 +57,7 @@
                     <ol>
                         <li>
                             <strong>Release v1.0 (January 1, 2015)</strong>
-                            <strong>Works with Wordpress</strong>
+                            <strong>Works with Wordpress,Joomla,Drupal,Magento</strong>
                         </li>
                     </ol>
 
@@ -66,39 +66,48 @@
                     <h1>Installation</h1>
                     <p>We have used Laravel Framework to craft best possible support center :</p>
                     <ul class="icons">
+						<li>
+                            <i class="icon-ok"></i><strong>Database</strong><br>
+                            Change database settings in <code>app/config/database.php</code> . Change database name , username and password in mysql section and save the file .   
+                        </li>
                         <li>
-                            <i class="icon-ok"></i><strong>Setting up laravel and other dependencies </strong><br>
-                            I have written a complete post on how to setup laravel on digitalocean if you are using digitalocean then <a href="http://kodeinfo.com/post/deploying-laravel-on-digitalocean-using-github-and-dployio"> click here and follow </a> . If you are not using digitalocean then just upload all files from source folder and
+                            <i class="icon-ok"></i><strong>Upload Files to Server </strong><br>
+                            Upload all files from Xenon Support Center folder to your server . SSH to your server and run below commands 
+							<p><code>php composer install</code> which will install all dependencies</p> 
+							<p><code>php artisan migrate</code> which will create all tables schema</p>
+							<p><code>php artisan db:seed</code> which will insert our demo admin</p>							
+							By default admin email is admin@mail.com and password is admin
                         </li>
                         <li>
                             <i class="icon-ok"></i><strong>Permissions</strong><br>
-                            As stated in laravel installation documentation you need to give write permission to <code>app/storage</code> directory . Other directories/files which require write access are <code>app/views/emails</code> , <code>public/uploads</code> , <code>app/config/mail.php</code> and <code>app/config/packages/bogardo/mailgun/config.php</code>
-                        </li>
-						<li>
-                            <i class="icon-ok"></i><strong>Database</strong><br>
-                            You can change database settings in <code>app/config/database.php</code> . Change database , username and password in mysql section and save the file . Now run <code>php artisan migrate</code> which will create all tables schema and insert required data . By default admin email is admin@mail.com and password is admin  
-                        </li>
+                            You need to give write permission to <code>app/storage</code> directory . Other directories/files which require write access are <code>app/views/emails</code> , <code>public/uploads</code> , <code>app/config/mail.php</code> and <code>app/config/packages/bogardo/mailgun/config.php</code>
+							<h3>Example</h3>
+							<p><code>chgrp -R www-data /your-uploaded-folder</code></p>
+							<p><code>chmod -R 775 /your-uploaded-folder/app/storage</code></p>
+							<p><code>chmod -R 775 /your-uploaded-folder/app/views/emails</code></p>
+							<p><code>chmod -R 775 /your-uploaded-folder/public/uploads</code></p>
+							<p><code>chmod -R 775 /your-uploaded-folder/app/config/mail.php</code></p>
+							<p><code>chmod -R 775 /your-uploaded-folder/app/config/packages/bogardo/mailgun/config.php</code></p>	
+						</li>
+						
                         <li>
                             <i class="icon-ok"></i><strong>Creating your company</strong><br>
                             Xenon support center is crafted to real-world situation . In real-world a company have departments which are managed by department managers/admins , department admins are take care of operators in respective department . So we first have to create a company before we create anything . Login with your default email and password and click on company in sidebar and on next page click on + sign to create a new company . If you are using livechat then company domain should match with the domain which is using livechat , like if you want to put livechat on <code>http://kodeinfo.com</code> then domain should be <code>http://kodeinfo.com</code>
                         </li>
+						
                         <li>
                             <i class="icon-ok"></i><strong>Create Department admins and Departments</strong><br>
                             Click on departments and click on Create new department admin , fill the fields and click save . Now you have a department admin which is not handling any department . So lets create a new department and assign that department to him . Click on departments and then click on create new department , enter name , select permissions , select department admin and click save . I have listed all permissions in the end of documentation .
                         </li>
+						
 						<li>
                             <i class="icon-ok"></i><strong>Setup mail using smtp/mailgun</strong><br>
                             You can choose between smtp/mailgun to send mails . Go to settings , if you want to use mailgun check use mailgun and fill all fields then click save . If you want to use smtp then uncheck use mailgun in mailgun settings and save then go to smtp tab and fill all fields and save . 
                         </li>
-						<li>
-                            <i class="icon-ok"></i><strong>Mail Templates using blade/mailchimp</strong><br>
-                            You can choose between blade/mailchimp templating . Go to settings and then click on mailchimp tab enter mailchimp api key and check "use mailchimp for email templates" and save . If you want to use default templates then just uncheck "use mailchimp" . If you are using mailchimp then go to mailchimp templates in sidebar and click pair emails to template and pair all emails to mailchimp templates . You can use custom variables in template to replace information , at the end of documentation i have shown  list of variable available to each email template .
-                        </li>
-						<li>
-                            <i class="icon-ok"></i><strong>Mail Templates using blade/mailchimp</strong><br>
-                            You can choose between blade/mailchimp templating . Go to settings and then click on mailchimp tab enter mailchimp api key and check "use mailchimp for email templates" and save . If you want to use default templates then just uncheck "use mailchimp" . If you are using mailchimp then go to mailchimp templates in sidebar and click pair emails to template and pair all emails to mailchimp templates . You can use custom variables in template to replace information , at the end of documentation i have shown  list of variable available to each email template .
-                        </li>
+						
                     </ul>
+					
+					<iframe width="420" height="315" src="http//www.youtube.com/embed/LiB4VqXdOV8" frameborder="0" allowfullscreen></iframe>
 
                     <h1>Features</h1>
 					<ul class="icons">

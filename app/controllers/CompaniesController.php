@@ -167,6 +167,11 @@ class CompaniesController extends BaseController
     {
         $departments = Department::where('company_id',$company_id)->get();
 
+        if(Config::get('site-config.is_demo')&&$company_id==1){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         foreach($departments as $department) {
 
             if (!empty($department)) {

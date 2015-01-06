@@ -164,6 +164,11 @@ class DepartmentsController extends BaseController
 
         $department = Department::where('id', $department_id)->first();
 
+        if(Config::get('site-config.is_demo')&&$department_id==1){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         if (!empty($department)) {
 
             $tickets = Tickets::where('department_id', $department_id)->get();

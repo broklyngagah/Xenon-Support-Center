@@ -192,6 +192,11 @@ class DepartmentAdminsController extends BaseController
     {
         $department_admin = DepartmentAdmins::where("user_id", $admin_id)->first();
 
+        if(Config::get('site-config.is_demo')&&$admin_id==2){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
         if (!empty($department_admin)) {
 
             $department = Department::where('id',$department_admin->department_id)->first();

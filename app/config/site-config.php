@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'is_demo' => false
+    'is_demo' => true
 ];

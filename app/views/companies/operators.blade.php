@@ -51,12 +51,12 @@
 			@foreach($operators as $operator)
 				<tr>
 					<td><img class="img-circle" style="width:80px;" src="{{$operator->avatar}}"/></td>
-					<td>{{$operator->name}}</td>
-					<td>{{$operator->email}}</td>
-					<td>{{$operator->mobile_no}}</td>
-					<td>{{$operator->country}}</td>
-					<td>{{$operator->company->name}}</td>
-					<td>{{$operator->department->name}}</td>
+					<td>{{{$operator->name}}}</td>
+					<td>{{{$operator->email}}}</td>
+					<td>{{{$operator->mobile_no}}}</td>
+					<td>{{{$operator->country}}}</td>
+					<td>{{{$operator->company->name}}}</td>
+					<td>{{{$operator->department->name}}}</td>
 					<td>{{$operator->show_avatar==1?"<label class='label label-info'>Yes</label>":"<label class='label label-warning'>No</label>"}}</td>
 					<td>{{$operator->activated==1?"<a class='btn btn-primary' disabled><i class='icon-checkmark4'></i>Activated</button>":"<a href='/operators/activate/".$operator->id."' class='btn btn-primary'><i class='icon-checkmark3'></i>Activate</button>"}}</td>
 					<td><a href="/operators/update/{{$operator->id}}" class="btn btn-success btn-sm edit_operator"><i class="icon-pencil4"></i> Edit </a></td>

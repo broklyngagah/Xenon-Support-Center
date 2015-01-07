@@ -49,9 +49,9 @@
 				@foreach($customers as $customer)
 					<tr>
 						<td><img class="img-circle" style="width:80px;" src="{{$customer->avatar}}"/></td>
-						<td>{{$customer->name}}</td>
-						<td>{{$customer->email}}</td>
-						<td>{{$customer->company->name}}</td>
+						<td>{{{$customer->name}}}</td>
+						<td>{{{$customer->email}}}</td>
+						<td>{{{$customer->company->name}}}</td>
 						<td><a href="/tickets/customers/{{$customer->id}}/all"><span class="label label-info">{{$customer->all_ticket_count}}</span></a></td>
 						<td><a href="/tickets/customers/{{$customer->id}}/{{Tickets::TICKET_RESOLVED}}"><span class="label label-success">{{$customer->resolved_ticket_count}}</span></a></td>
 						<td><a href="/tickets/customers/{{$customer->id}}/{{Tickets::TICKET_PENDING}}"><span class="label label-warning">{{$customer->pending_ticket_count}}</span></a></td>

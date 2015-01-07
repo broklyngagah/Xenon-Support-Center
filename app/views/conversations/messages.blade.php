@@ -49,15 +49,15 @@
                 <div class="panel-body" style="height:250px;overflow: auto;">
                     <dl style="margin: 0;">
                         <dt class="text-info">IP Address</dt>
-                        <dd>{{$geo->ip_address}}</dd>
+                        <dd>{{{$geo->ip_address}}}</dd>
                         <dt class="text-info">Country</dt>
-                        <dd>{{$geo->country}}</dd>
+                        <dd>{{{$geo->country}}}</dd>
                         <dt class="text-info">Currently Viewing</dt>
-                        <dd><span id="current_page">{{$geo->current_page}}</span></dd>
+                        <dd><span id="current_page">{{{$geo->current_page}}}</span></dd>
                         <dt class="text-info">Previous Pages</dt>
                         <span id="previous_pages">
                         @foreach($geo_pages->pages as $page)
-                            <dd>{{$page}}</dd>
+                            <dd>{{{$page}}}</dd>
                         @endforeach
                         </span>
                     </dl>
@@ -74,7 +74,7 @@
                             <li data-id="{{$message->id}}" class="canned_messages">
                                 <div class="clearfix">
                                     <div class="chat-member">
-                                        <p>{{$message->message}}</p>
+                                        <p>{{{$message->message}}}</p>
                                     </div>
                                 </div>
 

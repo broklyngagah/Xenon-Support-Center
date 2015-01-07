@@ -44,7 +44,7 @@
 
                 <div class="col-sm-10">
                     <input name="id" type="hidden" class="form-control" value="{{$company->id}}">
-                    <input name="name" type="text" class="form-control" value="{{Input::old('name',$company->name)}}">
+                    <input name="name" type="text" class="form-control" value="{{{Input::old('name',$company->name)}}}">
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
 
                 <div class="col-sm-10">
                     <textarea name="description"
-                              class="form-control">{{Input::old('description',$company->description)}}</textarea>
+                              class="form-control">{{{Input::old('description',$company->description)}}}</textarea>
                 </div>
             </div>
 
@@ -62,7 +62,7 @@
 
                 <div class="col-sm-10">
                     <input name="domain" type="text" class="form-control" placeholder="http://kodeinfo.com"
-                           value="{{Input::old('domain',$company->domain)}}">
+                           value="{{{Input::old('domain',$company->domain)}}}">
                 </div>
             </div>
 

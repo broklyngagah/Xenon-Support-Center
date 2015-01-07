@@ -32,9 +32,9 @@
 				@foreach($closed_conversations as $closed_conversation)
 					<tr>
 						<td>{{$closed_conversation->id}}</td>
-						<td>{{$closed_conversation->user->name}}</td>
-						<td>{{$closed_conversation->user->email}}</td>
-						<td>{{isset($closed_conversation->operator)?$closed_conversation->operator->name:"<label class='label label-danger'>NONE</label>"}}</td>
+						<td>{{{$closed_conversation->user->name}}}</td>
+						<td>{{{$closed_conversation->user->email}}}</td>
+						<td>{{{isset($closed_conversation->operator)?$closed_conversation->operator->name:"<label class='label label-danger'>NONE</label>"}}}</td>
 						<td>{{\KodeInfo\Utilities\Utils::prettyDate($closed_conversation->requested_on,true)}}</td>
 						<td>{{\KodeInfo\Utilities\Utils::prettyDate($closed_conversation->started_on,true)}}</td>
 						<td>{{\KodeInfo\Utilities\Utils::prettyDate($closed_conversation->ended_on,true)}}</td>

@@ -61,8 +61,8 @@
 					<td>{{{$admin->email}}}</td>
 					<td>{{{$admin->mobile_no}}}</td>
 					<td>{{{$admin->country}}}</td>
-					<td>{{isset($admin->company)?$admin->company->name:"NONE"}}</td>
-					<td>{{isset($admin->department)?$admin->department->name:"NONE"}}</td>
+					<td>{{isset($admin->company)?htmlentities($admin->company->name):"NONE"}}</td>
+					<td>{{isset($admin->department)?htmlentities($admin->department->name):"NONE"}}</td>
 					<td>{{$admin->show_avatar==1?"<label class='label label-info'>Yes</label>":"<label class='label label-warning'>No</label>"}}</td>
 					<td>{{$admin->activated==1?"<a class='btn btn-primary' disabled><i class='icon-checkmark4'></i> Activated </button>":"<a href='/departments/admins/activate/".$admin->id."' class='btn btn-primary'><i class='icon-checkmark3'></i>Activate</button>"}}</td>
 					<td><a href="/departments/admins/update/{{$admin->id}}" class="btn btn-success btn-sm edit_operator"><i class="icon-pencil4"></i></a></td>

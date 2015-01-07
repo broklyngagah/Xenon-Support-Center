@@ -56,9 +56,9 @@
 				<tr>
 					<td>{{$company->id}}</td>
 					<td><img class="img-circle" style="width:80px;" src="{{$company->logo}}"/></td>
-					<td>{{$company->name}}</td>
-					<td>{{$company->description}}</td>
-					<td>{{$company->domain}}</td>
+					<td>{{{$company->name}}}</td>
+					<td>{{{$company->description}}}</td>
+					<td>{{{$company->domain}}}</td>
 					<td><a class="btn btn-primary" href="/companies/operators/{{$company->id}}">View Operators</a></td>
 					<td><a class="btn btn-primary" href="/companies/customers/{{$company->id}}">View Customers</a></td>
 					<td><a class="btn btn-info" data-toggle="modal" data-id="{{$company->id}}" id="code_modal" role="button" href="#livechat_modal" id="livechat_code">Show Code</a></td>

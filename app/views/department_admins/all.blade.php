@@ -57,10 +57,10 @@
 			@foreach($admins as $admin)
 				<tr>
 					<td><img class="img-circle" style="width:80px;" src="{{$admin->avatar}}"/></td>
-					<td>{{$admin->name}}</td>
-					<td>{{$admin->email}}</td>
-					<td>{{$admin->mobile_no}}</td>
-					<td>{{$admin->country}}</td>
+					<td>{{{$admin->name}}}</td>
+					<td>{{{$admin->email}}}</td>
+					<td>{{{$admin->mobile_no}}}</td>
+					<td>{{{$admin->country}}}</td>
 					<td>{{isset($admin->company)?$admin->company->name:"NONE"}}</td>
 					<td>{{isset($admin->department)?$admin->department->name:"NONE"}}</td>
 					<td>{{$admin->show_avatar==1?"<label class='label label-info'>Yes</label>":"<label class='label label-warning'>No</label>"}}</td>

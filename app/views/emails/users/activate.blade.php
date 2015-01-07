@@ -8,7 +8,7 @@
         <p>Please confirm your email address and activate your account by <a href="{{$activation_url}}">clicking here</a></p>
 
         <p style="font-family: Arial, sans-serif; font-size: 15px;">Thank you, <br />
-            ~ {{$company_name}}</p>
+            ~ {{{$company_name}}}</p>
 
     </td>
 </tr>

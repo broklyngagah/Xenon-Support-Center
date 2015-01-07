@@ -39,7 +39,7 @@
 		@endif
 
 		<li class="user dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown"><img src="{{Auth::user()->avatar}}" alt=""><span>{{Auth::user()->name}}</span><i class="caret"></i></a>
+			<a class="dropdown-toggle" data-toggle="dropdown"><img src="{{Auth::user()->avatar}}" alt=""><span>{{{Auth::user()->name}}}</span><i class="caret"></i></a>
 			<ul class="dropdown-menu dropdown-menu-right icons-right">
 				<li>
 					<a href="/profile"><i class="icon-user"></i> Profile</a>

@@ -51,13 +51,13 @@
 
                     <dl style="margin: 0;">
                         <dt class="text-info">Name</dt>
-                        <dd>{{$ticket->customer->name}}</dd>
+                        <dd>{{{$ticket->customer->name}}}</dd>
                         <dt class="text-info">Email</dt>
-                        <dd>{{$ticket->customer->email}}</dd>
+                        <dd>{{{$ticket->customer->email}}}</dd>
                         <dt class="text-info">Country</dt>
-                        <dd id="info_country">{{$geo->country}}</dd>
+                        <dd id="info_country">{{{$geo->country}}}</dd>
                         <dt class="text-info">IP Address</dt>
-                        <dd id="info_ip">{{$geo->ip_address}}</dd>
+                        <dd id="info_ip">{{{$geo->ip_address}}}</dd>
 
                         <dt class="text-info">Priority</dt>
                         @if($ticket->priority==Tickets::PRIORITY_LOW)
@@ -103,7 +103,7 @@
                             <li data-id="{{$message->id}}" class="canned_messages">
                                 <div class="clearfix">
                                     <div class="chat-member">
-                                        <p>{{$message->message}}</p>
+                                        <p>{{{$message->message}}}</p>
                                     </div>
                                 </div>
 
@@ -125,7 +125,7 @@
                     <input type="hidden" id="thread_id" value="{{$thread->id}}"/>
                     <input type="hidden" id="sender_id" value="{{$thread->sender_id}}"/>
                     <input type="hidden" id="operator_id" value="{{$thread->operator_id}}"/>
-                    <h4>Subject : {{$ticket->subject}}</h4>
+                    <h4>Subject : {{{$ticket->subject}}}</h4>
 
                     <div class="chat" style="height:400px;overflow: auto;" id="chat_messages">
                         {{$message_str}}

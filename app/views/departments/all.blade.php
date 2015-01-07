@@ -52,9 +52,9 @@
 				@foreach($departments as $department)
 				<tr>
 					<td>{{$department->id}}</td>
-					<td>{{$department->name}}</td>
-					<td>{{$department->company->name}}</td>
-					<td>{{isset($department->admin)?"<label class='label label-success'>".$department->admin->name."</label>":"<label class='label label-warning'>NONE</label>"}}</td>
+					<td>{{{$department->name}}}</td>
+					<td>{{{$department->company->name}}}</td>
+					<td>{{{isset($department->admin)?"<label class='label label-success'>".$department->admin->name."</label>":"<label class='label label-warning'>NONE</label>"}}}</td>
 					<td><label>{{implode("</br>",explode(",",$department->permissions))}}</label></td>
 					<td>
 					    <a href="/departments/update/{{$department->id}}" class="btn btn-success btn-sm">

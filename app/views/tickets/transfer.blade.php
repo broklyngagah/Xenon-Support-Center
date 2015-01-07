@@ -37,12 +37,12 @@
 			<div class="row">
 				<div class="col-md-6">
 					<label>Name:</label>
-					<input disabled type="text" class="form-control" name="name" value="{{$customer->name}}">
+					<input disabled type="text" class="form-control" name="name" value="{{{$customer->name}}}">
 					<input type="hidden" class="form-control" name="ticket_id" value="{{$ticket->id}}">
 				</div>
 				<div class="col-md-6">
 					<label>Email:</label>
-					<input disabled type="text" class="form-control" name="email" value="{{$customer->email}}">
+					<input disabled type="text" class="form-control" name="email" value="{{{$customer->email}}}">
 				</div>
 			</div>
 		</div>
@@ -54,7 +54,7 @@
 					<label>Company:</label>
 					<select id="company" name="company" class="form-control">
 						@foreach($companies as $company)
-							<option {{Input::old('company',$company_id)==$company->id?"selected":""}} value="{{$company->id}}">{{$company->name}}</option>
+							<option {{Input::old('company',$company_id)==$company->id?"selected":""}} value="{{$company->id}}">{{{$company->name}}}</option>
 						@endforeach
 					</select>
 				</div>
@@ -62,7 +62,7 @@
 					<label>Department:</label>
 					<select id="department" name="department" class="form-control">
 						@foreach($departments as $department)
-							<option {{Input::old('department',$department_id)==$department->id?"selected":""}} value="{{$department->id}}">{{$department->name}}</option>
+							<option {{Input::old('department',$department_id)==$department->id?"selected":""}} value="{{$department->id}}">{{{$department->name}}}</option>
 						@endforeach
 					</select>
 				</div>
@@ -75,20 +75,20 @@
 					<label>Operator:</label>
 					<select id="operator" name="operator" class="form-control">
 						@foreach($operators as $operator)
-							<option {{Input::old('operator',$ticket->operator_id)==$operator->id?"selected":""}} value="{{$operator->id}}">{{$operator->name}}</option>
+							<option {{Input::old('operator',$ticket->operator_id)==$operator->id?"selected":""}} value="{{$operator->id}}">{{{$operator->name}}}</option>
 						@endforeach
 					</select>
 				</div>
 				<div class="col-md-6">
 					<label>Subject:</label>
-					<input disabled name="subject" value="{{$ticket->subject}}" type="text" class="elastic form-control"/>
+					<input disabled name="subject" value="{{{$ticket->subject}}}" type="text" class="elastic form-control"/>
 				</div>
 			</div>
 
 		</div>
 		<div class="form-group">
 			<label>Additional information:</label>
-			<textarea disabled rows="5" cols="5" name="description" class="elastic form-control editor">{{$ticket->description}}</textarea>
+			<textarea disabled rows="5" cols="5" name="description" class="elastic form-control editor">{{htmlentities($ticket->description)}}</textarea>
 		</div>
 		<div class="form-actions text-right">
 			<input type="submit" value="Transfer ticket" class="btn btn-primary">

@@ -17,7 +17,7 @@
         <p>File Attached : {{isset($has_attachment)&&$has_attachment==1?"Yes":"No Attachments"}}</p>
 
         <p style="font-family: Arial, sans-serif; font-size: 15px;">Thank you, <br />
-            ~ {{$company_name}}</p>
+            ~ {{{$company_name}}}</p>
 
     </td>
 </tr>

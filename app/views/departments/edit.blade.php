@@ -39,7 +39,7 @@
          <div class="form-group">
             <label class="col-sm-2 control-label">Enter Name</label>
             <div class="col-sm-10">
-            	<input name="name" type="text" class="form-control" value="{{Input::old('name',$department->name)}}" placeholder="Enter name">
+            	<input name="name" type="text" class="form-control" value="{{{Input::old('name',$department->name)}}}" placeholder="Enter name">
             	<input name="id" type="hidden" class="form-control" value="{{$department->id}}">
             </div>
          </div>
@@ -59,7 +59,7 @@
 				<div class="col-sm-10">
 					<select class="form-control" name="company" id="companies">
 						@foreach($companies as $company)
-							<option {{$department->company->id==$company->id?"selected":""}} value="{{$company->id}}">{{$company->name}}</option>
+							<option {{$department->company->id==$company->id?"selected":""}} value="{{$company->id}}">{{{$company->name}}}</option>
 						@endforeach
 					</select>
 				</div>
@@ -85,7 +85,7 @@
 				<select class="form-control" name="department_admin" id="department_admin">
 					<option value="0">NONE</option>
 					@foreach($admins as $admin)
-						<option {{(isset($department_admin)&&$department_admin->user_id==$admin->id)?"selected":""}} value="{{$admin->id}}">{{$admin->name}}</option>
+						<option {{(isset($department_admin)&&$department_admin->user_id==$admin->id)?"selected":""}} value="{{$admin->id}}">{{{$admin->name}}}</option>
 					@endforeach
 				</select>
 			</div>

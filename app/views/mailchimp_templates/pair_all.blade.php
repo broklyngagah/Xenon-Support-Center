@@ -47,8 +47,8 @@
 				@foreach($paired_templates as $paired_template)
 				<tr>
 					<td>{{$paired_template->id}}</td>
-					<td>{{$paired_template->name}}</td>
-					<td>{{$paired_template->view}}</td>
+					<td>{{{$paired_template->name}}}</td>
+					<td>{{{$paired_template->view}}}</td>
 					<td>{{$paired_template->template_id}}</td>
 					<td><a href="/templates/pair/preview/{{$paired_template->id}}?send_mail=true" class="btn btn-info">Send Mail</a></td>
 					<td><a href="/templates/pair/preview/{{$paired_template->id}}?send_mail=false" class="btn btn-info">Preview</a></td>

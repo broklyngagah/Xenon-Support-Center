@@ -1,7 +1,7 @@
 <tr>
     <td bgcolor="#ffffff" style="padding: 15px;">
 
-        <h4 style="font-family:Arial,san-serif;margin:0 0 5px 0;">Hi {{$name}}</h4>
+        <h4 style="font-family:Arial,san-serif;margin:0 0 5px 0;">Hi {{{$name}}}</h4>
 
         <p style="font-family: Arial, sans-serif; font-size: 15px;">To reset your password, <a href="{{$reset_url}}">click here.</a></p>
 

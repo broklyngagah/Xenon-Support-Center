@@ -36,34 +36,34 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Enter Email</label>
 			<div class="col-sm-10">
-				<input name="email" type="text" class="form-control" disabled value="{{Input::old('email',$operator->email)}}">
+				<input name="email" type="text" class="form-control" disabled value="{{{Input::old('email',$operator->email)}}}">
 				<input name="id" type="hidden" value="{{$operator->id}}">
 			</div>
 		</div>
 		<div class="form-group">
         	<label class="col-sm-2 control-label">Enter Name</label>
         	<div class="col-sm-10">
-        		<input name="name" type="text" class="form-control" value="{{Input::old('name',$operator->name)}}">
+        		<input name="name" type="text" class="form-control" value="{{{Input::old('name',$operator->name)}}}">
         	</div>
         </div>
 		<div class="form-group">
         	<label class="col-sm-2 control-label">Birthday</label>
         	<div class="col-sm-10">
-        		<input id="birthday" name="birthday" type="text" class="form-control" value="{{Input::old('birthday',date('d-m-Y',strtotime($operator->birthday)))}}"/>
+        		<input id="birthday" name="birthday" type="text" class="form-control" value="{{{Input::old('birthday',date('d-m-Y',strtotime($operator->birthday)))}}}"/>
         	</div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label">Bio</label>
             <div class="col-sm-10">
-                <textarea name="bio" class="form-control">{{Input::old('bio',$operator->bio)}}</textarea>
+                <textarea name="bio" class="form-control">{{{Input::old('bio',$operator->bio)}}}</textarea>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label">Mobile No</label>
             <div class="col-sm-10">
-                <input name="mobile_no" class="form-control" value="{{Input::old('mobile_no',$operator->mobile_no)}}"/>
+                <input name="mobile_no" class="form-control" value="{{{Input::old('mobile_no',$operator->mobile_no)}}}"/>
             </div>
         </div>
 
@@ -72,7 +72,7 @@
             <div class="col-sm-10">
                 <select name="country" class="form-control">
                 @foreach($countries as $country)
-                    <option {{Input::old("country",$operator->country)==$country->countryName?"selected":""}} value="{{$country->countryName}}">{{$country->countryName}}</option>
+                    <option {{Input::old("country",$operator->country)==$country->countryName?"selected":""}} value="{{{$country->countryName}}}">{{{$country->countryName}}}</option>
                 @endforeach
                 </select>
             </div>
@@ -129,7 +129,7 @@
 				<div class="col-sm-10">
 					<select id="companies" class="form-control" name="company">
 						@foreach($companies as $company)
-							<option {{Input::old('company_id',$company_id)==$company->id?"selected":""}} value="{{$company->id}}">{{$company->name}}</option>
+							<option {{Input::old('company_id',$company_id)==$company->id?"selected":""}} value="{{$company->id}}">{{{$company->name}}}</option>
 						@endforeach
 					</select>
 				</div>
@@ -140,7 +140,7 @@
 				<div class="col-sm-10">
 					<select id="departments" class="form-control" name="department">
 						@foreach($departments as $department)
-							<option {{Input::old('department_id',$department_id)==$department->id?"selected":""}} value="{{$department->id}}">{{$department->name}}</option>
+							<option {{Input::old('department_id',$department_id)==$department->id?"selected":""}} value="{{$department->id}}">{{{$department->name}}}</option>
 						@endforeach
 					</select>
 				</div>

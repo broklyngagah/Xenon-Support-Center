@@ -43,8 +43,8 @@
 				@foreach($templates as $template)
 				<tr>
 					<td>{{$template['id']}}</td>
-					<td>{{$template['name']}}</td>
-					<td>{{$template['layout']}}</td>
+					<td>{{{$template['name']}}}</td>
+					<td>{{{$template['layout']}}}</td>
 					<td><a target="_blank" href='{{$template['preview_image']}}'><img style="width:80px;" src='{{$template['preview_image']}}'/></a></td>
 					<td>{{\KodeInfo\Utilities\Utils::prettyDate($template['date_created'])}}</td>
 					<td><a href="/templates/view/{{$template['id']}}" class="btn btn-success btn-sm"><i class="icon-eye"></i> View HTML</a></td>

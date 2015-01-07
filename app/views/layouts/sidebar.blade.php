@@ -4,9 +4,9 @@
         <!-- User dropdown -->
         <div class="user-menu dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img style="width:50%;margin-left:10%;" src="{{Auth::user()->avatar}}" alt="{{Auth::user()->name}}">
+                <img style="width:50%;margin-left:10%;" src="{{Auth::user()->avatar}}" alt="{{{Auth::user()->name}}}">
                 <div class="user-info" style="width:100%;">
-                    {{Auth::user()->name}} <span>{{Str::limit(Auth::user()->bio,80,'...')}}</span>
+                    {{{Auth::user()->name}}} <span>{{{Str::limit(Auth::user()->bio,80,'...')}}}</span>
                 </div>
             </a>
 
@@ -19,8 +19,8 @@
                         </div>
                     </div>
                     <div class="caption text-center">
-                        <h6>{{Auth::user()->name}}
-                            <small>{{Auth::user()->bio}}</small>
+                        <h6>{{{Auth::user()->name}}}
+                            <small>{{{Auth::user()->bio}}}</small>
                         </h6>
                     </div>
                 </div>

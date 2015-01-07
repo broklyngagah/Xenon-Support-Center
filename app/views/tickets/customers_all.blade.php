@@ -50,11 +50,11 @@
 			@foreach($tickets as $ticket)
 				<tr>
 					<td>{{$ticket->id}}</td>
-					<td>{{isset($ticket->company)?$ticket->company->name:"NONE"}}</td>
-					<td>{{isset($ticket->department)?$ticket->department->name:"NONE"}}</td>
-					<td>{{isset($ticket->customer)?$ticket->customer->name:"NONE"}}</td>
-					<td>{{isset($ticket->customer)?$ticket->customer->email:"NONE"}}</td>
-					<td>{{$ticket->subject}}</td>
+					<td>{{{isset($ticket->company)?$ticket->company->name:"NONE"}}}</td>
+					<td>{{{isset($ticket->department)?$ticket->department->name:"NONE"}}}</td>
+					<td>{{{isset($ticket->customer)?$ticket->customer->name:"NONE"}}}</td>
+					<td>{{{isset($ticket->customer)?$ticket->customer->email:"NONE"}}}</td>
+					<td>{{{$ticket->subject}}}</td>
 
 					@if($ticket->priority==Tickets::PRIORITY_LOW)
 						<td><label class="label label-primary">Low</label></td>

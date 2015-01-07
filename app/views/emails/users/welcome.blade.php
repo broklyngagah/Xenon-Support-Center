@@ -6,13 +6,13 @@
         <p style="font-family: Arial, sans-serif; font-size: 15px;">Dear {{{ $name }}},</p>
 
         <p>Your login credentials are below</p>
-        <p><strong>Email : </strong></p> {{$email}}
-        <p><strong>Password : </strong></p> {{$password}}
+        <p><strong>Email : </strong></p> {{{$email}}}
+        <p><strong>Password : </strong></p> {{{$password}}}
 
         <p><small>Password is temporary , please login and change your password</small></p>
 
         <p style="font-family: Arial, sans-serif; font-size: 15px;">Thank you, <br />
-            ~ {{$company_name}}</p>
+            ~ {{{$company_name}}}</p>
 
     </td>
 </tr>

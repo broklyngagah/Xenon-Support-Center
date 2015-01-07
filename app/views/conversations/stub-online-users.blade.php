@@ -18,7 +18,7 @@
         <td>{{$online->id}}</td>
         <td>{{{$online->user->name}}}</td>
         <td>{{{$online->user->email}}}</td>
-        <td>{{{isset($online->operator)?$online->operator->name:"<label class='label label-warning'>NONE</label>"}}}</td>
+        <td>{{isset($online->operator)?htmlentities($online->operator->name):"<label class='label label-warning'>NONE</label>"}}</td>
         <td>{{\KodeInfo\Utilities\Utils::prettyDate($online->requested_on,true)}}</td>
         <td>{{\KodeInfo\Utilities\Utils::prettyDate($online->started_on,true)}}</td>
         <td>{{$online->locked_by_operator==1?"<label class='label label-warning'>Yes</label>":"<label class='label label-primary'>No</label>"}}</td>

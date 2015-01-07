@@ -46,10 +46,10 @@
 				@foreach($messages as $message)
 				<tr>
 					<td>{{$message->id}}</td>
-					<td>{{$message->message}}</td>
-					<td>{{$message->company->name}}</td>
-					<td>{{$message->department->name}}</td>
-					<td>{{$message->operator->name}}</td>
+					<td>{{{$message->message}}}</td>
+					<td>{{{$message->company->name}}}</td>
+					<td>{{{$message->department->name}}}</td>
+					<td>{{{$message->operator->name}}}</td>
 					<td><a href="/canned_messages/delete/{{$message->id}}" class="btn btn-danger btn-sm"><i class="icon-remove2"></i> Delete </a></td>
 				</tr>
 				@endforeach

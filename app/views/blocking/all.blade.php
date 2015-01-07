@@ -48,7 +48,7 @@
 				@foreach($blocking as $blocked)
 				<tr>
 					<td>{{$blocked->id}}</td>
-					<td>{{$blocked->ip_address}}</td>
+					<td>{{{$blocked->ip_address}}}</td>
 					<td>{{$blocked->should_block_chat==1?"<label class='label label-success'>Yes</label>":"<label class='label label-warning'>No</label>"}}</td>
 					<td>{{$blocked->should_block_tickets==1?"<label class='label label-success'>Yes</label>":"<label class='label label-warning'>No</label>"}}</td>
 					<td>{{$blocked->should_block_login==1?"<label class='label label-success'>Yes</label>":"<label class='label label-warning'>No</label>"}}</td>

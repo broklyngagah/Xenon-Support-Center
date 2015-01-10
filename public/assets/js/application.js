@@ -33,6 +33,7 @@ $(function() {
 		"bAutoWidth": false,
 		"sPaginationType": "full_numbers",
 		"bSort": false,
+		"aaSorting": [],
 		"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		"oTableTools": {
 			"aButtons": [

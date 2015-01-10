@@ -117,6 +117,11 @@ $(function() {
 		"bJQueryUI": false,
 		"bAutoWidth": false,
 		"sPaginationType": "full_numbers",
+		"bSort": false,
+		"aoColumnDefs": [
+			{ "bSortable": false, "aTargets": [] }
+		],
+		"aaSorting": [],
 		"sDom": '<"datatable-header"Tfl><"datatable-scroll"t><"datatable-footer"ip>',
 		"oLanguage": {
 			"sSearch": "<span>Filter:</span> _INPUT_",

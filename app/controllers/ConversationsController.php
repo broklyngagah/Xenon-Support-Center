@@ -75,17 +75,17 @@ class ConversationsController extends BaseController
             $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
             $department = Department::where('id', $department_admin->department_id)->first();
 
-            $closed_conversations = ClosedConversations::where('company_id', $department->company_id)->where('company_id', $department->id)->get();
+            $closed_conversations = ClosedConversations::where('company_id', $department->company_id)->where('company_id', $department->id)->orderBy('id','desc')->get();
 
         } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
 
             $department_operator = OperatorsDepartment::where('user_id', Auth::user()->id)->first();
             $department = Department::where('id', $department_operator->department_id)->first();
 
-            $closed_conversations = ClosedConversations::where('company_id', $department->company_id)->where('company_id', $department->id)->where('operator_id', Auth::user()->id)->get();
+            $closed_conversations = ClosedConversations::where('company_id', $department->company_id)->where('company_id', $department->id)->where('operator_id', Auth::user()->id)->orderBy('id','desc')->get();
 
         } else {
-            $closed_conversations = ClosedConversations::all();
+            $closed_conversations = ClosedConversations::orderBy('id','desc')->get();
         }
 
 

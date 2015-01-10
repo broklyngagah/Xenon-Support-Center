@@ -36,6 +36,7 @@ $(function() {
 		"aoColumnDefs": [
 			{ "bSortable": false, "aTargets": [] }
 		],
+		"aaSorting": [],
 		"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		"oTableTools": {
 			"aButtons": [

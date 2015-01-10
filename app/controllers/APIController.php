@@ -59,34 +59,37 @@ class APIController extends BaseController {
         $conversations_arr = [];
 
         foreach($online_users as $online){
-            $online->user = User::find($online->user_id);
 
-            if($online->operator_id>0)
-                $online->operator = User::find($online->operator_id);
+            if(sizeof(User::where('id',$online->user_id)->get())>0) {
+                $online->user = User::find($online->user_id);
 
-            $single_conversation = [];
-            $single_conversation[] = $online->id;
-            $single_conversation[] = $online->user->name;
-            $single_conversation[] = $online->user->email;
-            $single_conversation[] = isset($online->operator)?$online->operator->name:"<label class='label label-warning'>".trans('msgs.none')."</label>";
-            $single_conversation[] = \KodeInfo\Utilities\Utils::prettyDate($online->requested_on,true);
-            $single_conversation[] = \KodeInfo\Utilities\Utils::prettyDate($online->started_on,true);
-            $single_conversation[] = $online->locked_by_operator==1?"<label class='label label-warning'>".trans('msgs.yes')."</label>":"<label class='label label-primary'>".trans('msgs.no')."</label>";
+                if ($online->operator_id > 0)
+                    $online->operator = User::find($online->operator_id);
 
-            if(!isset($online->operator))
-                $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> '.trans('msgs.accept').' </a></td>';
+                $single_conversation = [];
+                $single_conversation[] = $online->id;
+                $single_conversation[] = $online->user->name;
+                $single_conversation[] = $online->user->email;
+                $single_conversation[] = isset($online->operator) ? $online->operator->name : "<label class='label label-warning'>" . trans('msgs.none') . "</label>";
+                $single_conversation[] = \KodeInfo\Utilities\Utils::prettyDate($online->requested_on, true);
+                $single_conversation[] = \KodeInfo\Utilities\Utils::prettyDate($online->started_on, true);
+                $single_conversation[] = $online->locked_by_operator == 1 ? "<label class='label label-warning'>" . trans('msgs.yes') . "</label>" : "<label class='label label-primary'>" . trans('msgs.no') . "</label>";
 
-            if(isset($online->operator)&&$online->operator->id==Auth::user()->id)
-                $single_conversation[] ='<td><a href="/conversations/accept/'.$online->thread_id.'" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> '.trans('msgs.reply').' </a></td>';
+                if (!isset($online->operator))
+                    $single_conversation[] = '<td><a href="/conversations/accept/' . $online->thread_id . '" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> ' . trans('msgs.accept') . ' </a></td>';
 
-            if(isset($online->operator)&&$online->operator->id!=Auth::user()->id)
-                $single_conversation[] ='<td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> '.trans('msgs.accept').' </a></td>';
+                if (isset($online->operator) && $online->operator->id == Auth::user()->id)
+                    $single_conversation[] = '<td><a href="/conversations/accept/' . $online->thread_id . '" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> ' . trans('msgs.reply') . ' </a></td>';
 
-            $single_conversation[] = '<td><a href="/conversations/transfer/'.$online->id.'" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> '.trans('msgs.transfer').' </a></td>';
+                if (isset($online->operator) && $online->operator->id != Auth::user()->id)
+                    $single_conversation[] = '<td><a disabled class="btn btn-success btn-sm"> <i class="icon-lock3"></i> ' . trans('msgs.accept') . ' </a></td>';
 
-            $single_conversation[] = '<td><a href="/conversations/close/'.$online->thread_id.'" class="btn btn-danger btn-sm"> <i class="icon-lock3"></i> '.trans('msgs.close').' </a></td>';
+                $single_conversation[] = '<td><a href="/conversations/transfer/' . $online->id . '" class="btn btn-warning btn-sm"> <i class="icon-share3"></i> ' . trans('msgs.transfer') . ' </a></td>';
 
-            $conversations_arr[] = $single_conversation;
+                $single_conversation[] = '<td><a href="/conversations/close/' . $online->thread_id . '" class="btn btn-danger btn-sm"> <i class="icon-lock3"></i> ' . trans('msgs.close') . ' </a></td>';
+
+                $conversations_arr[] = $single_conversation;
+            }
         }
 
         return json_encode(['aaData'=>$conversations_arr]);

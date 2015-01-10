@@ -247,7 +247,7 @@ class OperatorsController extends BaseController {
         }
 
         if(sizeof($user_ids)>0){
-            $this->data["operators"] = User::whereIn("id",$user_ids)->get();
+            $this->data["operators"] = User::whereIn("id",$user_ids)->orderBy('id','desc')->get();
         }else{
             $this->data["operators"] = [];
         }

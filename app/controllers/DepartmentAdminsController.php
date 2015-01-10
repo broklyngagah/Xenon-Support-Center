@@ -282,7 +282,7 @@ class DepartmentAdminsController extends BaseController
 
 
         if (sizeof($user_ids) > 0) {
-            $this->data["admins"] = User::whereIn("id", $user_ids)->get();
+            $this->data["admins"] = User::whereIn("id", $user_ids)->orderBy('id','desc')->get();
         } else {
             $this->data["admins"] = [];
         }

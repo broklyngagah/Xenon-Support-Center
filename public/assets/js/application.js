@@ -33,7 +33,9 @@ $(function() {
 		"bAutoWidth": false,
 		"sPaginationType": "full_numbers",
 		"bSort": false,
-		"aaSorting": [],
+		"aoColumnDefs": [
+			{ "bSortable": false, "aTargets": [] }
+		],
 		"sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		"oTableTools": {
 			"aButtons": [

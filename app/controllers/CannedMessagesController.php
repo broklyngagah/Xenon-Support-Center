@@ -97,7 +97,7 @@ class CannedMessagesController extends BaseController
             $department = Department::where('id', $department_admin->department_id)->first();
             $company = Company::where('id', $department->company_id)->first();
 
-            $messages = CannedMessages::where('company_id',$company->id)->where('department_id',$department->id)->get();
+            $messages = CannedMessages::where('company_id',$company->id)->where('department_id',$department->id)->orderBy('id','desc')->get();
 
         } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
 
@@ -105,11 +105,11 @@ class CannedMessagesController extends BaseController
             $department = Department::where('id', $department_admin->department_id)->first();
             $company = Company::where('id', $department->company_id)->first();
 
-            $messages = CannedMessages::where('company_id',$company->id)->where('department_id',$department->id)->where('operator_id',Auth::user()->id)->get();
+            $messages = CannedMessages::where('company_id',$company->id)->where('department_id',$department->id)->where('operator_id',Auth::user()->id)->orderBy('id','desc')->get();
 
         } else {
 
-            $messages = CannedMessages::all();
+            $messages = CannedMessages::orderBy('id','desc')->get();
 
         }
 

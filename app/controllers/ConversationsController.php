@@ -213,7 +213,7 @@ class ConversationsController extends BaseController
 
         Session::flash('success_msg', trans('msgs.conversation_closed_success'));
 
-        return Redirect::to('/conversations/closed');
+        return Redirect::to('/conversations/all');
     }
 
     public function accept($thread_id)

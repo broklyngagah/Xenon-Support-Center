@@ -51,9 +51,9 @@ class APIController extends BaseController {
     public function conversationsRefresh(){
 
         if(Input::get('company_id',0)>0&&Input::get('department_id',0)>0){
-            $online_users = OnlineUsers::where('company_id',Input::get('company_id'))->where('department_id',Input::get('department_id'))->get();
+            $online_users = OnlineUsers::where('company_id',Input::get('company_id'))->where('department_id',Input::get('department_id'))->orderBy('id','desc')->get();
         }else{
-            $online_users = OnlineUsers::all();
+            $online_users = OnlineUsers::orderBy('id','desc')->get();
         }
 
         $conversations_arr = [];

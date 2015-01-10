@@ -245,17 +245,17 @@ class DepartmentsController extends BaseController
             $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
             $department = Department::where('id', $department_admin->department_id)->first();
 
-            $this->data['departments'] = Department::where('company_id', $department->company_id)->get();
+            $this->data['departments'] = Department::where('company_id', $department->company_id)->orderBy('id','desc')->get();
 
         } elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
 
             $department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
             $department = Department::where('id', $department_admin->department_id)->first();
 
-            $this->data['departments'] = Department::where('company_id', $department->company_id)->get();
+            $this->data['departments'] = Department::where('company_id', $department->company_id)->orderBy('id','desc')->get();
 
         } else {
-            $this->data['departments'] = Department::all();
+            $this->data['departments'] = Department::orderBy('id','desc')->get();
         }
 
 

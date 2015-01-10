@@ -217,7 +217,7 @@ class CustomersController extends BaseController
 
 
         if (sizeof($customer_ids) > 0) {
-            $this->data["customers"] = User::whereIn("id", $customer_ids)->get();
+            $this->data["customers"] = User::whereIn("id", $customer_ids)->orderBy('id','desc')->get();
         } else {
             $this->data["customers"] = [];
         }

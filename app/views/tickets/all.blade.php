@@ -69,7 +69,12 @@
                 var oTable = $('#tickets_all').dataTable({
                     "bJQueryUI": false,
                     "bAutoWidth": false,
-                    "sPaginationType": "full_numbers",
+                    "bPaginate": false,
+                    "bSort": false,
+                    "aoColumnDefs": [
+                        { "bSortable": false, "aTargets": [] }
+                    ],
+                    "aaSorting": [],
                     "sDom": '<"datatable-header"Tfl><"datatable-scroll"t><"datatable-footer"ip>',
                     "oLanguage": {
                         "sSearch": "<span>Filter:</span> _INPUT_",

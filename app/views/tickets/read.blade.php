@@ -103,7 +103,7 @@
                             <li data-id="{{$message->id}}" class="canned_messages">
                                 <div class="clearfix">
                                     <div class="chat-member">
-                                        <p>{{htmlentities($message->message)}}</p>
+                                        <p>{{{$message->message}}}</p>
                                     </div>
                                 </div>
 
@@ -194,19 +194,20 @@
 
 @section('scripts')
 
+    {{HTML::script("/assets/js/plugins/ckeditor/ckeditor.js")}}
     <script src="http://malsup.github.com/jquery.form.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var thread_id =
-            {{$thread->id}}
-            var user_id =
-            {{\KodeInfo\Utilities\Utils::isBackendUser($thread->operator_id)?$thread->operator_id:$thread->sender_id}}
+            CKEDITOR.replace( 'message_body' );
+
+            var thread_id = {{$thread->id}}
+            var user_id = {{\KodeInfo\Utilities\Utils::isBackendUser($thread->operator_id)?$thread->operator_id:$thread->sender_id}}
             var last_message_id = {{$last_message_id}};
 
             $('.canned_messages').on('click', function () {
-                $('#message_body').val($(this).find('p').html());
+                CKEDITOR.instances.message_body.setData($(this).find('p').html());
             });
 
             $('#reply_submit').submit(function () {
@@ -303,7 +304,7 @@
 
             $('#send_message').on('click', function () {
 
-                if ($('#message_body').val() == "") {
+                if (CKEDITOR.instances.message_body.getData() == "") {
                     return false; // do nothing
                 } else {
                     $.ajax({
@@ -312,10 +313,10 @@
                         'data': {
                             'user_id': user_id,
                             'thread_id': thread_id,
-                            'message': $('#message_body').val()
+                            'message': CKEDITOR.instances.message_body.getData()
                         },
                         'success': function (data) {
-                            $('#message_body').val("");
+                            CKEDITOR.instances.message_body.setData("");
                             getMessages();
                         }
                     });

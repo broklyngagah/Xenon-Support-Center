@@ -95,6 +95,43 @@ class APIController extends BaseController {
         return json_encode(['aaData'=>$conversations_arr]);
     }
 
+    public function masterRefresh(){
+
+        if(Input::get('company_id',0)>0&&Input::get('department_id',0)>0){
+            $online_users = OnlineUsers::where('company_id',Input::get('company_id'))->where('department_id',Input::get('department_id'))->orderBy('id','desc')->get();
+        }else{
+            $online_users = OnlineUsers::orderBy('id','desc')->get();
+        }
+
+        $conversations_arr = [];
+
+        foreach($online_users as $online){
+
+            if(sizeof(User::where('id',$online->user_id)->get())>0) {
+                $online->user = User::find($online->user_id);
+
+                if ($online->operator_id > 0)
+                    $online->operator = User::find($online->operator_id);
+
+                $single_conversation = [];
+                $single_conversation[] = $online->user->name;
+                $single_conversation[] = $online->user->email;
+
+                if (!isset($online->operator)) {
+                    $single_conversation[] = '<td><a href="/conversations/accept/' . $online->thread_id . '" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> ' . trans('msgs.accept') . ' </a></td>';
+                    $conversations_arr[] = $single_conversation;
+                }
+
+                if (isset($online->operator) && $online->operator->id == Auth::user()->id) {
+                    $single_conversation[] = '<td><a href="/conversations/accept/' . $online->thread_id . '" class="btn btn-success btn-sm"> <i class="icon-checkmark4"></i> ' . trans('msgs.reply') . ' </a></td>';
+                    $conversations_arr[] = $single_conversation;
+                }
+            }
+        }
+
+        return json_encode(['aaData'=>$conversations_arr]);
+    }
+
     public function ticketsRefresh(){
 
         if(Input::get('company_id',0)>0&&Input::get('department_id',0)>0){

@@ -11,6 +11,8 @@ View::composer('layouts.master', function($view)
     }
 
     $view->with('settings',$settings);
+    $view->with('raw_department_id', 2);
+    $view->with('raw_company_id', 3);
 });
 
 Route::get('/', 'AuthController@getLogin');
@@ -103,6 +105,7 @@ Route::group(['prefix' => 'api'], function () {
 
     Route::get('change_status/{status}', 'APIController@changeStatus');
     Route::get('online_conversations_refresh', 'APIController@conversationsRefresh');
+    Route::get('master_refresh', 'APIController@masterRefresh');
     Route::get('tickets_all_refresh', 'APIController@ticketsRefresh');
 });
 

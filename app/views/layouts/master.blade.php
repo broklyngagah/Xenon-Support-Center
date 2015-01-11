@@ -117,6 +117,31 @@
 				}, "jsonp");
 				@endif
 
+				var uni_interval = 5000;  // 1000 = 1 second, 3000 = 3 seconds
+				var uni_department_id = {{isset($uni_department_id)?$uni_department_id:0}};
+				var uni_company_id = {{isset($uni_company_id)?$uni_company_id:0}};
+
+				var uni_oTable = $('#header_online_users').dataTable({
+					"bJQueryUI": false,
+					"bAutoWidth": false,
+					"bPaginate": false,
+					"bSort": false,
+					"bFilter" : false,
+					"bLengthChange": false,
+					"bInfo" : false,
+					"aoColumnDefs": [
+						{ "bSortable": false, "aTargets": [] }
+					],
+					"aaSorting": []
+				});
+
+				uni_oTable.fnReloadAjax('/api/master_refresh?department_id=' + uni_department_id + '&company_id=' + uni_company_id);
+
+				setInterval(function () {
+					uni_oTable.fnReloadAjax('/api/master_refresh?department_id=' + uni_department_id + '&company_id=' + uni_company_id);
+
+				}, uni_interval);
+
 			});
 		</script>
 

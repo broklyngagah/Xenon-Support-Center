@@ -2,7 +2,7 @@
 <div class="navbar navbar-inverse" role="navigation">
 
 	<div class="navbar-header">
-		<a class="navbar-brand" href="#"><img src="/assets/images/logo.png" style="width:160px;" alt="Londinium"></a><a class="sidebar-toggle"><i class="icon-menu2"></i></a>
+		<a class="navbar-brand" href="#"><img src="/assets/images/logo.png" style="width:160px;" alt="Xenon"></a><a class="sidebar-toggle"><i class="icon-menu2"></i></a>
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-icons">
 			<span class="sr-only">Toggle navbar</span><i class="icon-grid3"></i>
 		</button>
@@ -37,6 +37,28 @@
 			<a href="/departments/create" ><i class="icon-users"></i> New Department</a>
 		</li>
 		@endif
+
+		<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-envelop"></i><span class="label label-info">6</span></a>
+			<div class="popup dropdown-menu dropdown-menu-right">
+				<div class="popup-header"><span>Online Chats</span><a href="/conversations/all" class="pull-right"><i class="icon-new-tab"></i></a></div>
+				<table id="header_online_users" class="table table-hover">
+					<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th class="text-center">Action</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td><span class="status status-success item-before"></span> Imran Iqbal</td>
+						<td><span class="text-smaller text-semibold">shellprog@gmail.com</span></td>
+						<td class="text-center"><a href="" class="btn btn-success">Accept</a></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</li>
 
 		<li class="user dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown"><img src="{{Auth::user()->avatar}}" alt=""><span>{{{Auth::user()->name}}}</span><i class="caret"></i></a>

@@ -139,9 +139,12 @@
 
 				$("#header_online_users_count").html($("#header_online_users tbody tr").length);
 
+				console.log(uni_oTable.fnSettings().fnRecordsTotal());
+
 				setInterval(function () {
 					uni_oTable.fnReloadAjax('/api/master_refresh?department_id=' + uni_department_id + '&company_id=' + uni_company_id);
 					$("#header_online_users_count").html($("#header_online_users tbody tr").length);
+					console.log(uni_oTable.fnSettings().fnRecordsTotal());
 				}, uni_interval);
 
 			});

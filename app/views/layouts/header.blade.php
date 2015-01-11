@@ -50,16 +50,6 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td><span class="status status-success item-before"></span> Imran Iqbal</td>
-						<td><span class="text-smaller text-semibold">shellprog@gmail.com</span></td>
-						<td class="text-center"><a href="" class="btn btn-success">Accept</a></td>
-					</tr>
-					<tr>
-						<td><span class="status status-success item-before"></span> Imran Iqbal</td>
-						<td><span class="text-smaller text-semibold">shellprog@gmail.com</span></td>
-						<td class="text-center"><a href="" class="btn btn-success">Accept</a></td>
-					</tr>
 					</tbody>
 				</table>
 			</div>

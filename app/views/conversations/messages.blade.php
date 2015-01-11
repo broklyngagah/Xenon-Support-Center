@@ -145,6 +145,8 @@
             var last_message_id = {{$last_message_id}};
 
             $('.canned_messages').click(function () {
+                console.log('got click');
+                console.log($(this).find('p').html());
                 $('#message_body').val($(this).find('p').html());
             });
 

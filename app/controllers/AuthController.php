@@ -78,7 +78,7 @@ class AuthController extends BaseController
                 $user->password = Hash::make($password);
                 $user->save();
 
-                RecentActivities::createActivity("User : '".$user->name."' changed password");
+                RecentActivities::createActivity("User : ".$user->name." ID : ".$user->id." changed password");
 
                 Session::flash('success_msg', trans('msgs.your_password_changed_success'));
                 return Redirect::back();

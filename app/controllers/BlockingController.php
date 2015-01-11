@@ -35,7 +35,7 @@ class BlockingController extends BaseController {
             $block->should_block_web_access = Input::get('should_block_web_access');
             $block->save();
 
-            RecentActivities::createActivity("IP '".$block->ip_address."' Blocked by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+            RecentActivities::createActivity("IP ".$block->ip_address." Blocked by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
             Session::flash('success_msg',trans('msgs.ip_blocked_success'));
             return Redirect::back();
@@ -48,7 +48,7 @@ class BlockingController extends BaseController {
     }
 
     public function delete($id){
-        RecentActivities::createActivity("Blocked IP '".Blocking::where('id',$id)->pluck('ip_address')."' deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+        RecentActivities::createActivity("Blocked IP ".Blocking::where('id',$id)->pluck('ip_address')." deleted by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
         Blocking::where('id',$id)->delete();
         Session::flash('success_msg',trans('msgs.ip_deleted_success'));
         return Redirect::to('/blocking/all');

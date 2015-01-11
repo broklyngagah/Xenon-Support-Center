@@ -102,7 +102,7 @@ class DepartmentsController extends BaseController
                 $department_admin->save();
             }
 
-            RecentActivities::createActivity("Department with ID:'".$department->id."' created by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+            RecentActivities::createActivity("Department with ID:".$department->id." created by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
             Session::flash("success_msg", trans('msgs.department_created_success'));
             return Redirect::to("/departments/all");
@@ -229,7 +229,7 @@ class DepartmentsController extends BaseController
 
         DepartmentAdmins::where('department_id', $department_id)->delete();
 
-        RecentActivities::createActivity("Department '".Department::where('id',$department_id)->pluck('name')."' deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+        RecentActivities::createActivity("Department ".Department::where('id',$department_id)->pluck('name')." deleted by User ID:".Auth::user()->id." Name:".Auth::user()->name);
 
         Department::where('id', $department_id)->delete();
 

@@ -101,7 +101,7 @@ class CompaniesController extends BaseController
                 $company->logo = Input::hasFile('logo') ? Utils::imageUpload(Input::file('logo'), 'companies') : '';
                 $company->save();
 
-                RecentActivities::createActivity("Company '".$company->name."' created #".$company->id." by User '".Auth::user()->name."' ID '".Auth::user()->id."'");
+                RecentActivities::createActivity("Company <a href='/companies/all'>".$company->name."</a> created Company ID:".$company->id." by User Name ".Auth::user()->name." User ID ".Auth::user()->id);
 
                 Session::flash('success_msg', trans('msgs.company_created_success'));
                 return Redirect::to('/companies/create')->withInput();
@@ -240,7 +240,7 @@ class CompaniesController extends BaseController
 
         $company = Company::where('id',$company_id)->first();
 
-        RecentActivities::createActivity("Company '".$company->name."' deleted by User '".Auth::user()->name."' ID '".Auth::user()->id."' ");
+        RecentActivities::createActivity("Company <a href='/companies/all'>".$company->name."</a> deleted by User Name ".Auth::user()->name." User ID ".Auth::user()->id);
 
         Company::where('id',$company_id)->delete();
 

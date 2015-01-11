@@ -148,7 +148,7 @@ class ConversationsController extends BaseController
 
             $online_users->save();
 
-            RecentActivities::createActivity("Online Conversation transferred by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+            RecentActivities::createActivity("Online Conversation transferred by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
             Session::flash('success_msg', trans('msgs.conversation_transfer_success'));
             return Redirect::to('/conversations/all');
@@ -211,7 +211,7 @@ class ConversationsController extends BaseController
         $closed_conversation->ended_on = \Carbon\Carbon::now();
         $closed_conversation->save();
 
-        RecentActivities::createActivity("Online Conversation ID:'".$closed_conversation->id."' closed by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+        RecentActivities::createActivity("Online Conversation <a href='/conversations/closed'>ID:".$closed_conversation->id."</a> closed by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
         OnlineUsers::where('thread_id', $thread_id)->delete();
 
@@ -249,7 +249,7 @@ class ConversationsController extends BaseController
             $online_users->locked_by_operator = 1;
             $online_users->save();
 
-            RecentActivities::createActivity("Online Conversation ID:'".$online_users->id."' accepted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+            RecentActivities::createActivity("Online Conversation <a href='/conversations/all'>ID:".$online_users->id."</a> accepted by Name ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
             //If transfered and sitting alone
             ThreadMessages::where('thread_id', $thread_id)->where('sender_id', 0)->update(['sender_id' => Auth::user()->id]);
@@ -307,7 +307,7 @@ class ConversationsController extends BaseController
         MessageThread::where('id', $thread_id)->delete();
         ThreadGeoInfo::where('thread_id', $thread_id)->delete();
         ClosedConversations::where('thread_id', $thread_id)->delete();
-        RecentActivities::createActivity("Conversation deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+        RecentActivities::createActivity("Conversation deleted by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
         Session::flash('success_msg', trans('msgs.conversation_deleted_success'));
         return Redirect::to('/conversations/closed');
     }

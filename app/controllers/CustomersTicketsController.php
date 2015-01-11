@@ -78,6 +78,8 @@ class CustomersTicketsController extends BaseController
             }
         }
 
+
+
         $this->data['tickets_all_str'] = View::make("tickets.stub-all-tickets", ['tickets' => $tickets])->render();
 
         return View::make('tickets.customer_view', $this->data);
@@ -181,6 +183,8 @@ class CustomersTicketsController extends BaseController
             ];
 
             $this->ticketMailer->created($customer->email, $customer->name, $mailer_extra);
+
+            RecentActivities::createActivity("New Ticket created by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
             Session::flash('success_msg', trans('msgs.ticket_created_success'));
             return Redirect::to('/tickets/all');
@@ -406,7 +410,7 @@ class CustomersTicketsController extends BaseController
         ThreadMessages::where('thread_id', $thread_id)->delete();
         ThreadGeoInfo::where('thread_id', $thread_id)->delete();
 
-        RecentActivities::createActivity("Ticket deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+        RecentActivities::createActivity("Ticket deleted by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
         Session::flash('success_msg', trans('msgs.ticket_deleted_success'));
         return Redirect::to('/tickets/all');

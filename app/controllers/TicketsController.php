@@ -251,7 +251,7 @@ class TicketsController extends BaseController
 
             $this->ticketMailer->created($customer->email, $customer->name, $mailer_extra);
 
-            RecentActivities::createActivity("Ticket ID:'".$ticket->id."' created by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+            RecentActivities::createActivity("Ticket <a href='/tickets/all'>ID:".$ticket->id."</a> created by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
             if(\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id)){
                 Session::flash('success_msg', trans('msgs.ticket_created_success'));
@@ -543,7 +543,7 @@ class TicketsController extends BaseController
 
     public function delete($thread_id)
     {
-        RecentActivities::createActivity("Ticket deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+        RecentActivities::createActivity("Ticket deleted by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
         Tickets::where('thread_id', $thread_id)->delete();
         TicketAttachments::where('thread_id', $thread_id)->delete();

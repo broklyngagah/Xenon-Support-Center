@@ -103,7 +103,7 @@ class CustomersController extends BaseController
 
                 $this->mailer->welcome($user->email, $user->name, User::getWelcomeFields(false, $user->id, Input::get("password"), Input::get('company')));
 
-                RecentActivities::createActivity("Customer '".$user->id."' created by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+                RecentActivities::createActivity("Customer <a href='/customers/all'>ID:".$user->id."</a> created by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
                 if (!Input::has("activated"))
                     $this->mailer->activate($user->email, $user->name, User::getActivateFields(false, $user->id, Input::get('company')));
@@ -187,7 +187,7 @@ class CustomersController extends BaseController
 
         User::where("id", $user_id)->delete();
 
-        RecentActivities::createActivity("Customer deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+        RecentActivities::createActivity("Customer deleted by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
         Session::flash('success_msg', trans('msgs.customer_deleted_success'));
 

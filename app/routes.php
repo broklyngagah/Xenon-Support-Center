@@ -11,8 +11,8 @@ View::composer('layouts.master', function($view)
     }
 
     $view->with('settings',$settings);
-    $view->with('raw_department_id', 2);
-    $view->with('raw_company_id', 3);
+    $view->with('uni_department_id', User::getUniDepartment());
+    $view->with('uni_company_id', User::getUniCompany());
 });
 
 Route::get('/', 'AuthController@getLogin');

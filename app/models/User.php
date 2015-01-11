@@ -64,6 +64,44 @@ class User extends Eloquent {
 
     public $timestamps=false;
 
+	static function getUniDepartment(){
+
+		$department_id = 0;
+
+		if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
+			$department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+			$department_id = $department_admin->department_id;
+		} elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+			$department_admin = OperatorsDepartment::where('user_id', Auth::user()->id)->first();
+			$department_id = $department_admin->department_id;
+		}
+
+		return $department_id;
+	}
+
+	static function getUniCompany(){
+
+		$company_id = 0;
+
+		if (\KodeInfo\Utilities\Utils::isDepartmentAdmin(Auth::user()->id)) {
+
+			$department_admin = DepartmentAdmins::where('user_id', Auth::user()->id)->first();
+			$department = Department::where('id', $department_admin->department_id)->first();
+
+			$company_id = $department->company_id;
+
+		} elseif (\KodeInfo\Utilities\Utils::isOperator(Auth::user()->id)) {
+
+			$department_admin = OperatorsDepartment::where('user_id', Auth::user()->id)->first();
+			$department = Department::where('id', $department_admin->department_id)->first();
+
+			$company_id = $department->company_id;
+
+		}
+
+		return $company_id;
+	}
+
 	static function getWelcomeFields($is_fake=false,$user_id = 0,$raw_password = "",$company_id = 0){
 
 		if(!$is_fake) {

@@ -304,6 +304,9 @@
 
             $('#send_message').on('click', function () {
 
+                for ( instance in CKEDITOR.instances )
+                    CKEDITOR.instances[instance].updateElement();
+
                 if (CKEDITOR.instances.message_body.getData() == "") {
                     return false; // do nothing
                 } else {

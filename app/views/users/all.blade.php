@@ -32,6 +32,7 @@
 			<thead>
 				<tr>
 					<th>ID</th>
+					<th>Avatar</th>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Type</th>
@@ -41,6 +42,7 @@
 				@foreach($users as $user)
 				<tr>
 					<td>{{$user->id}}</td>
+					<td><img class="img-circle" style="width:80px;" src="{{$user->avatar}}"/></td>
 					<td>{{{$user->name}}}</td>
 					<td>{{{$user->email}}}</td>
 					<td><label class="label label-primary">{{$user->type}}</label></td>

@@ -8,6 +8,11 @@ class DashboardController extends BaseController
         return View::make("setup");
     }
 
+    function allActivities(){
+        $activities = RecentActivities::orderBy('id','desc')->get();
+        return View::make('activities.all',['activities'=>$activities]);
+    }
+
     function postSetup()
     {
 

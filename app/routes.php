@@ -23,6 +23,7 @@ Route::post('/setup', 'DashboardController@postSetup');
 */
 
 Route::get('/clean-everything', 'DashboardController@cleanDB');
+Route::get('/activities/all', 'DashboardController@allActivities');
 Route::get('/profile', 'AuthController@profile');
 Route::get('/login', 'AuthController@getLogin');
 Route::get('/register', 'AuthController@getRegister');

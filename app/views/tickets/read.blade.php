@@ -274,7 +274,7 @@
                         $('#info_country').html(response.geo.country);
                         $('#info_ip').html(response.geo.ip_address);
 
-                        //$('#status option[value="'+response.ticket.status+'"]').prop('selected', true);
+                        $('#status option[value="'+response.ticket.status+'"]').prop('selected', true);
 
                         if(response.ticket.status==1){
                             $('.info_status').html('<label class="label label-warning">New</label>');

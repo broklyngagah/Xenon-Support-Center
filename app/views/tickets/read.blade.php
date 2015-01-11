@@ -97,7 +97,7 @@
                 <div class="panel-heading">
                     <h6 class="panel-title"><i class="icon-envelop"></i> Canned Messages</h6>
                 </div>
-                <div class="panel-body" style="height:292px;overflow: auto;">
+                <div class="panel-body" style="height:385px;overflow: auto;">
                     <ul class="message-list">
                         @foreach($canned_messages as $message)
                             <li data-id="{{$message->id}}" class="canned_messages">
@@ -127,7 +127,7 @@
                     <input type="hidden" id="operator_id" value="{{$thread->operator_id}}"/>
                     <h4>Subject : {{{$ticket->subject}}}</h4>
 
-                    <div class="chat" style="height:400px;overflow: auto;" id="chat_messages">
+                    <div class="chat" style="height:300px;overflow: auto;" id="chat_messages">
                         {{$message_str}}
                     </div>
                     <div id="msg"></div>

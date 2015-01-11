@@ -135,7 +135,7 @@
 		</div>
 		<div class="form-group">
 			<label>Additional information:</label>
-			<textarea rows="5" cols="5" name="description" placeholder="Add info about your ticket." class="elastic form-control editor"></textarea>
+			<textarea rows="5" cols="5" name="description" id="description" placeholder="Add info about your ticket." class="elastic form-control"></textarea>
 		</div>
 		<div class="form-actions text-right">
 			<input type="reset" value="Reset" class="btn btn-danger">
@@ -149,7 +149,14 @@
 
 @section('scripts')
 
+	{{HTML::script("/assets/js/plugins/ckeditor/ckeditor.js")}}
+
 <script type="text/javascript">
+
+	CKEDITOR.replace( 'description' );
+
+	CKEDITOR.instances.description.setData( '<p>This is the editor data.</p>' );
+	console.log(CKEDITOR.instances.description.getData());
 
 	$.get("http://ipinfo.io", function(response) {
 

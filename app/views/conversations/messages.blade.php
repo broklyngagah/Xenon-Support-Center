@@ -102,7 +102,7 @@
                     </div>
                     <div id="msg"></div>
                     @if(!isset($closed_conversation))
-                    <textarea id="message_body" class="form-control editor" rows="3" cols="1"
+                    <textarea id="message_body" class="form-control" rows="3" cols="1"
                                                                                placeholder="Enter your message..."></textarea>
                     @endif
                     <div class="message-controls">
@@ -135,9 +135,12 @@
 @stop
 
 @section('scripts')
+    {{HTML::script("/assets/js/plugins/ckeditor/ckeditor.js")}}
     @if(!isset($closed_conversation))
     <script type="text/javascript">
         $(document).ready(function () {
+
+            CKEDITOR.replace( 'message_body' );
 
             var thread_id = {{$thread->id}}
             var sender_id = {{$thread->sender_id}}
@@ -145,9 +148,7 @@
             var last_message_id = {{$last_message_id}};
 
             $('.canned_messages').click(function () {
-                console.log('got click');
-                console.log($(this).find('p').html());
-                $('#message_body').val($(this).find('p').html());
+                CKEDITOR.instances.message_body.setData($(this).find('p').html());
             });
 
             var interval = 3000;  // 1000 = 1 second, 3000 = 3 seconds
@@ -208,7 +209,7 @@
 
                 if (e.which == 13) {
 
-                    if ($(this).val() == "") {
+                    if (CKEDITOR.instances.message_body.getData() == "") {
                         return false; // do nothing
                     } else {
                         $.ajax({
@@ -217,10 +218,10 @@
                             'data': {
                                 'user_id': operator_id,
                                 'thread_id': thread_id,
-                                'message': $('#message_body').val()
+                                'message': CKEDITOR.instances.message_body.getData()
                             },
                             'success': function (data) {
-                                $('#message_body').val("");
+                                CKEDITOR.instances.message_body.setData("");
                                 getMessages();
                             }
                         });
@@ -232,20 +233,20 @@
                 }
             }).focus(function () {
 
-                if (this.value == "") {
-                    this.value = "";
+                if (CKEDITOR.instances.message_body.getData() == "") {
+                    CKEDITOR.instances.message_body.setData("");
                 }
 
             }).blur(function () {
 
-                if (this.value == "") {
-                    this.value = "";
+                if (CKEDITOR.instances.message_body.getData() == "") {
+                    CKEDITOR.instances.message_body.setData("");
                 }
             });
 
             $('#send_message').on('click', function () {
 
-                if ($('#message_body').val() == "") {
+                if (CKEDITOR.instances.message_body.getData() == "") {
                     return false; // do nothing
                 } else {
                     $.ajax({
@@ -254,10 +255,10 @@
                         'data': {
                             'user_id': operator_id,
                             'thread_id': thread_id,
-                            'message': $('#message_body').val()
+                            'message': CKEDITOR.instances.message_body.getData()
                         },
                         'success': function (data) {
-                            $('#message_body').val("");
+                            CKEDITOR.instances.message_body.setData("");
                             getMessages();
                         }
                     });

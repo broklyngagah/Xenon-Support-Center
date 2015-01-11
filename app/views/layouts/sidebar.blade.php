@@ -244,6 +244,12 @@
             </li>
             @endif
 
+            @if(Utils::isAdmin(Auth::user()->id))
+            <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='activities')?"class='active'":""}}>
+                 <a href="/activities/all"> <i class="icon-clipboard"></i> <span>Activities</span> </a>
+            </li>
+            @endif
+
             @if(Permissions::hasPermission('settings.all'))
             <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='settings')?"class='active'":""}}>
                 <a href="/settings/all"> <i class="icon-cogs"></i> <span>Settings</span> </a>

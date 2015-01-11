@@ -212,6 +212,9 @@
 
             $('#reply_submit').submit(function () {
 
+                for ( instance in CKEDITOR.instances )
+                    CKEDITOR.instances[instance].updateElement();
+
                 var options = {
                     success: showResponse,  // post-submit callback
                     resetForm: false
@@ -304,8 +307,7 @@
 
             $('#send_message').on('click', function () {
 
-                for ( instance in CKEDITOR.instances )
-                    CKEDITOR.instances[instance].updateElement();
+
 
                 if (CKEDITOR.instances.message_body.getData() == "") {
                     return false; // do nothing

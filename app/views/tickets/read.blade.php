@@ -224,6 +224,7 @@
                 // wrap it in a jQuery object and then invoke ajaxSubmit
                 $(this).ajaxSubmit(options);
 
+
                 // !!! Important !!!
                 // always return false to prevent standard browser submit and page navigation
                 return false;
@@ -241,6 +242,7 @@
                     $('#reply_errors').show();
                 }else{
                     CKEDITOR.instances.message_body.setData("");
+                    $('#status option[value="'+json.ticket.status+'"]').prop('selected', true);
                     $('#reply_errors').html("");
                     $('#reply_errors').hide();
                 }

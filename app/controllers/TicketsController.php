@@ -532,7 +532,7 @@ class TicketsController extends BaseController
             }
 
 
-            return json_encode(['result' => 1, 'errors' => trans('msgs.ticket_updated_success')]);
+            return json_encode(['result' => 1, 'errors' => trans('msgs.ticket_updated_success'),'ticket'=>$ticket]);
 
         } else {
             return json_encode(['result' => 0, 'errors' => \KodeInfo\Utilities\Utils::buildMessages($v->messages()->all())]);

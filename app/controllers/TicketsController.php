@@ -251,6 +251,8 @@ class TicketsController extends BaseController
 
             $this->ticketMailer->created($customer->email, $customer->name, $mailer_extra);
 
+            RecentActivities::createActivity("Ticket ID:'".$ticket->id."' created by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
             if(\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id)){
                 Session::flash('success_msg', trans('msgs.ticket_created_success'));
                 return Redirect::to('/tickets/customer/all');

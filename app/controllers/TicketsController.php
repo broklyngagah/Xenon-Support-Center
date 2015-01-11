@@ -541,6 +541,8 @@ class TicketsController extends BaseController
 
     public function delete($thread_id)
     {
+        RecentActivities::createActivity("Ticket deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
         Tickets::where('thread_id', $thread_id)->delete();
         TicketAttachments::where('thread_id', $thread_id)->delete();
         MessageThread::where('id', $thread_id)->delete();

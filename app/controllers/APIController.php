@@ -27,6 +27,7 @@ class APIController extends BaseController {
         $user = User::find(Auth::user()->id);
         $user->is_online = $status;
         $user->save();
+
         return Redirect::back();
     }
 

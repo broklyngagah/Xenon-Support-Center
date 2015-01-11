@@ -13,6 +13,29 @@ class DashboardController extends BaseController
         return View::make('activities.all',['activities'=>$activities]);
     }
 
+    function allUsers(){
+
+        $users = User::all();
+
+        foreach($users as $user){
+            if(Utils::isAdmin($user->id)){
+                $user->type = "Admin";
+            }
+            if(Utils::isDepartmentAdmin($user->id)){
+                $user->type = "Department Admin";
+            }
+            if(Utils::isOperator($user->id)){
+                $user->type = "Operator";
+            }
+            if(Utils::isCustomer($user->id)){
+                $user->type = "Customer";
+            }
+        }
+
+        return View::make('users.all',['users'=>$users]);
+
+    }
+
     function postSetup()
     {
 

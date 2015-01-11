@@ -406,6 +406,8 @@ class CustomersTicketsController extends BaseController
         ThreadMessages::where('thread_id', $thread_id)->delete();
         ThreadGeoInfo::where('thread_id', $thread_id)->delete();
 
+        RecentActivities::createActivity("Ticket deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
         Session::flash('success_msg', trans('msgs.ticket_deleted_success'));
         return Redirect::to('/tickets/all');
     }

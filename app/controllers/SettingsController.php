@@ -96,6 +96,8 @@ class SettingsController extends BaseController
 
         \File::put(app_path() . "/config/packages/bogardo/mailgun/config.php", $mail_content);
 
+        RecentActivities::createActivity("Mailgun settings changed by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
         Session::flash('success_msg', trans('msgs.mailgun_settings_updated'));
 
         return Redirect::to('/settings/all#tab-mailgun');
@@ -126,6 +128,8 @@ class SettingsController extends BaseController
 
         \File::put(app_path() . "/config/mail.php", $mail_content);
 
+        RecentActivities::createActivity("SMTP Settings changed by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
         Session::flash('success_msg', trans('msgs.smtp_settings_updated'));
 
         return Redirect::to('/settings/all#tab-smtp');
@@ -147,6 +151,8 @@ class SettingsController extends BaseController
 
         Settings::where('key', 'mailchimp')->update(['value' => json_encode($values)]);
 
+        RecentActivities::createActivity("Mailchimp settings changed by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
         Session::flash('success_msg', trans('msgs.mailchimp_settings_updated'));
 
         return Redirect::to('/settings/all#tab-mailchimp');
@@ -162,6 +168,8 @@ class SettingsController extends BaseController
         ];
 
         Settings::where('key', 'tickets')->update(['value' => json_encode($values)]);
+
+        RecentActivities::createActivity("Tickets settings changed by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
 
         Session::flash('success_msg', trans('msgs.tickets_settings_updated'));
 

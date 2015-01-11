@@ -215,6 +215,12 @@
             </li>
             @endif
 
+                @if(Utils::isAdmin(Auth::user()->id))
+                    <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='users')?"class='active'":""}}>
+                        <a href="/users/all"> <i class="icon-users"></i> <span>Users</span> </a>
+                    </li>
+                    @endif
+
             <!--
             <li>
                 <a href="" class="expand"><span>Translations</span> <i class="icon-transmission"></i></a>

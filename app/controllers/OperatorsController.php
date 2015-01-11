@@ -129,6 +129,8 @@ class OperatorsController extends BaseController {
                 $operator_department->department_id = Input::get('department');
                 $operator_department->save();
 
+                RecentActivities::createActivity("Operator '".$user->name."' created by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
                 $this->mailer->welcome($user->email,$user->name,User::getWelcomeFields(false,$user->id,Input::get("password"),Input::get('company')));
 
                 if(!Input::has("activated"))
@@ -208,6 +210,8 @@ class OperatorsController extends BaseController {
             }
 
         }
+
+        RecentActivities::createActivity("User '".User::where('id',$user_id)->pluck('name')."' deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
 
         User::find($user_id)->delete();
         OperatorsDepartment::where("user_id",$user_id)->delete();

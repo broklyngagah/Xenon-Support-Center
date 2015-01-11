@@ -148,6 +148,8 @@ class ConversationsController extends BaseController
 
             $online_users->save();
 
+            RecentActivities::createActivity("Online Conversation transferred by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
             Session::flash('success_msg', trans('msgs.conversation_transfer_success'));
             return Redirect::to('/conversations/all');
 
@@ -209,6 +211,8 @@ class ConversationsController extends BaseController
         $closed_conversation->ended_on = \Carbon\Carbon::now();
         $closed_conversation->save();
 
+        RecentActivities::createActivity("Online Conversation ID:'".$closed_conversation->id."' closed by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
+
         OnlineUsers::where('thread_id', $thread_id)->delete();
 
         Session::flash('success_msg', trans('msgs.conversation_closed_success'));
@@ -244,6 +248,8 @@ class ConversationsController extends BaseController
             $online_users->started_on = \Carbon\Carbon::now();
             $online_users->locked_by_operator = 1;
             $online_users->save();
+
+            RecentActivities::createActivity("Online Conversation ID:'".$online_users->id."' accepted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
 
             //If transfered and sitting alone
             ThreadMessages::where('thread_id', $thread_id)->where('sender_id', 0)->update(['sender_id' => Auth::user()->id]);
@@ -301,6 +307,7 @@ class ConversationsController extends BaseController
         MessageThread::where('id', $thread_id)->delete();
         ThreadGeoInfo::where('thread_id', $thread_id)->delete();
         ClosedConversations::where('thread_id', $thread_id)->delete();
+        RecentActivities::createActivity("Conversation deleted by ID:'".Auth::user()->id."' Name:'".Auth::user()->name."'");
         Session::flash('success_msg', trans('msgs.conversation_deleted_success'));
         return Redirect::to('/conversations/closed');
     }

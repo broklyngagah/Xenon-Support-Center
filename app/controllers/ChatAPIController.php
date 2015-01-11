@@ -466,6 +466,8 @@ class ChatAPIController extends BaseController {
         $closed_conversation->ended_on = \Carbon\Carbon::now();
         $closed_conversation->save();
 
+        RecentActivities::createActivity("Chat Conversation closed #".$closed_conversation->id);
+
         OnlineUsers::where('thread_id',Input::get('thread_id'))->delete();
 
     }

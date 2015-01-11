@@ -42,6 +42,12 @@
                 <a href="/"> <i class="icon-screen2"></i> <span>Dashboard </span> </a>
             </li>
 
+                @if(Utils::isAdmin(Auth::user()->id))
+                    <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='activities')?"class='active'":""}}>
+                        <a href="/activities/all"> <i class="icon-clipboard"></i> <span>Activities</span> </a>
+                    </li>
+                @endif
+
             @if(\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id))
                 <li>
                    <a href="/tickets/customer/create"> <i class="icon-ticket"></i> <span>Create New Ticket </span> </a>
@@ -241,12 +247,6 @@
                     </li>
                     @endif
                 </ul>
-            </li>
-            @endif
-
-            @if(Utils::isAdmin(Auth::user()->id))
-            <li {{(isset(Request::segments()[0])&&Request::segments()[0]=='activities')?"class='active'":""}}>
-                 <a href="/activities/all"> <i class="icon-clipboard"></i> <span>Activities</span> </a>
             </li>
             @endif
 

@@ -97,7 +97,7 @@
                 <div class="panel-heading">
                     <h6 class="panel-title"><i class="icon-envelop"></i> Canned Messages</h6>
                 </div>
-                <div class="panel-body" style="height:385px;overflow: auto;">
+                <div class="panel-body" style="height:460px;overflow: auto;">
                     <ul class="message-list">
                         @foreach($canned_messages as $message)
                             <li data-id="{{$message->id}}" class="canned_messages">

@@ -129,7 +129,19 @@ class APIController extends BaseController {
             }
         }
 
-        return json_encode(['aaData'=>$conversations_arr]);
+        $activities_arr = [];
+
+        if(Utils::isAdmin(Auth::user()->id)) {
+            $all_activities = RecentActivites::limit(10)->get();
+
+            foreach ($all_activities as $activity) {
+                $single_activity = [];
+                $single_activity[] = $activity->message;
+                $activities_arr[] = $single_activity;
+            }
+        }
+
+        return json_encode(['onlineChats'=>$conversations_arr,'recentActivities'=>$activities_arr]);
     }
 
     public function ticketsRefresh(){

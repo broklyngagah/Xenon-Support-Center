@@ -55,6 +55,23 @@
 			</div>
 		</li>
 
+		@if(Utils::isAdmin(Auth::user()->id))
+		<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-clipboard"></i><span id="header_recent_activities_count" class="label label-info">0</span></a>
+			<div class="popup dropdown-menu dropdown-menu-right">
+				<div class="popup-header"><span>Recent Activities</span><a href="/activities/all" class="pull-right"><i class="icon-new-tab"></i></a></div>
+				<table id="header_activities" class="table table-hover">
+					<thead>
+					<tr>
+						<th>Activity</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</li>
+		@endif
+
 		<li class="user dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown"><img src="{{Auth::user()->avatar}}" alt=""><span>{{{Auth::user()->name}}}</span><i class="caret"></i></a>
 			<ul class="dropdown-menu dropdown-menu-right icons-right">

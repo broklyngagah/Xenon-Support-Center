@@ -121,7 +121,7 @@
 				var uni_department_id = {{isset($uni_department_id)?$uni_department_id:0}};
 				var uni_company_id = {{isset($uni_company_id)?$uni_company_id:0}};
 
-				var uni_oTable = $('#header_online_users').dataTable({
+				var chat_oTable = $('#header_online_users').dataTable({
 					"bJQueryUI": false,
 					"bAutoWidth": false,
 					"bPaginate": false,
@@ -135,14 +135,64 @@
 					"aaSorting": []
 				});
 
-				uni_oTable.fnReloadAjax('/api/master_refresh?department_id=' + uni_department_id + '&company_id=' + uni_company_id);
+				var recent_oTable = $('#header_activities').dataTable({
+					"bJQueryUI": false,
+					"bAutoWidth": false,
+					"bPaginate": false,
+					"bSort": false,
+					"bFilter" : false,
+					"bLengthChange": false,
+					"bInfo" : false,
+					"aoColumnDefs": [
+						{ "bSortable": false, "aTargets": [] }
+					],
+					"aaSorting": []
+				});
 
-				$("#header_online_users_count").html(uni_oTable.fnSettings().fnRecordsTotal());
+				function getMasterRefresh() {
 
-				setInterval(function () {
-					uni_oTable.fnReloadAjax('/api/master_refresh?department_id=' + uni_department_id + '&company_id=' + uni_company_id);
-					$("#header_online_users_count").html(uni_oTable.fnSettings().fnRecordsTotal());
-				}, uni_interval);
+					$.ajax({
+						'type': 'GET',
+						'url': '/api/master_refresh',
+						'async': false,
+						'data': {
+							'department_id': uni_department_id,
+							'company_id': uni_company_id
+						},
+						'success': function (data) {
+
+							var response = JSON.parse(data);
+
+							console.log(response);
+
+							//Online chat users
+							chat_oTable.fnClearTable();
+
+							$.each(response.onlineChats, function(key, value) {
+								chat_oTable.fnAddData(value);
+							});
+
+							$("#header_online_users_count").html(chat_oTable.fnSettings().fnRecordsTotal());
+
+							@if(Utils::isAdmin(Auth::user()->id))
+								//Recent Activities
+								recent_oTable.fnClearTable();
+
+								$.each(response.recentActivities, function(key, value) {
+									recent_oTable.fnAddData(value);
+								});
+
+								$("#header_recent_activities_count").html(recent_oTable.fnSettings().fnRecordsTotal());
+							@endif
+						},
+						'complete':function(){
+							setTimeout(getMasterRefresh, uni_interval);
+						}
+					});
+
+				}
+
+				getMasterRefresh();
 
 			});
 		</script>

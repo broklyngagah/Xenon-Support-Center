@@ -38,7 +38,7 @@
 		</li>
 		@endif
 
-		<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-envelop"></i><span class="label label-info">6</span></a>
+		<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-envelop"></i><span id="header_online_users_count" class="label label-info">6</span></a>
 			<div class="popup dropdown-menu dropdown-menu-right">
 				<div class="popup-header"><span>Online Chats</span><a href="/conversations/all" class="pull-right"><i class="icon-new-tab"></i></a></div>
 				<table id="header_online_users" class="table table-hover">
@@ -50,6 +50,11 @@
 					</tr>
 					</thead>
 					<tbody>
+					<tr>
+						<td><span class="status status-success item-before"></span> Imran Iqbal</td>
+						<td><span class="text-smaller text-semibold">shellprog@gmail.com</span></td>
+						<td class="text-center"><a href="" class="btn btn-success">Accept</a></td>
+					</tr>
 					<tr>
 						<td><span class="status status-success item-before"></span> Imran Iqbal</td>
 						<td><span class="text-smaller text-semibold">shellprog@gmail.com</span></td>

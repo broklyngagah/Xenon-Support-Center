@@ -144,7 +144,7 @@
             var operator_id = {{$thread->operator_id}}
             var last_message_id = {{$last_message_id}};
 
-            $('.canned_messages').on('click', function () {
+            $('.canned_messages').click(function () {
                 $('#message_body').val($(this).find('p').html());
             });
 

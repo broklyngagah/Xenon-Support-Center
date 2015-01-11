@@ -377,9 +377,12 @@ class ChatAPIController extends BaseController {
                 $operators = OperatorsDepartment::where('department_id',$department->id)->get();
 
                 foreach($operators as $operator){
-                    $user = User::find($operator->user_id);
-                    if($user->is_online==1){
-                        $status = trans('msgs._online_');
+
+                    if(sizeof(User::where('id',$operator->user_id)->get())>0) {
+                        $user = User::find($operator->user_id);
+                        if ($user->is_online == 1) {
+                            $status = trans('msgs._online_');
+                        }
                     }
                 }
 

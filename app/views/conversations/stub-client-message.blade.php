@@ -14,7 +14,7 @@
                     </small>
                     <strong class="pull-right primary-font">{{{$message->user->name}}}</strong>
                 </div>
-                <p>{{{$message->message}}}</p>
+                <p>{{$message->message}}</p>
             </div>
         </li>
     @else
@@ -31,7 +31,7 @@
                         {{\KodeInfo\Utilities\Utils::prettyDate($message->created_at)}}
                     </small>
                 </div>
-                <p>{{{$message->message}}}</p>
+                <p>{{$message->message}}</p>
             </div>
         </li>
 

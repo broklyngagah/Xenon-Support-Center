@@ -155,9 +155,6 @@
 
 	CKEDITOR.replace( 'description' );
 
-	CKEDITOR.instances.description.setData( '<p>This is the editor data.</p>' );
-	console.log(CKEDITOR.instances.description.getData());
-
 	$.get("http://ipinfo.io", function(response) {
 
 		location_info = response;

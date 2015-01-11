@@ -103,7 +103,7 @@
                             <li data-id="{{$message->id}}" class="canned_messages">
                                 <div class="clearfix">
                                     <div class="chat-member">
-                                        <p>{{{$message->message}}}</p>
+                                        <p>{{htmlentities($message->message)}}</p>
                                     </div>
                                 </div>
 

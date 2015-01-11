@@ -240,6 +240,7 @@
                     $('#reply_errors').html(json.errors);
                     $('#reply_errors').show();
                 }else{
+                    CKEDITOR.instances.message_body.setData("");
                     $('#reply_errors').html("");
                     $('#reply_errors').hide();
                 }
@@ -274,7 +275,7 @@
                         $('#info_country').html(response.geo.country);
                         $('#info_ip').html(response.geo.ip_address);
 
-                        
+
                         if(response.ticket.status==1){
                             $('.info_status').html('<label class="label label-warning">New</label>');
                         }

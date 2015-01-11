@@ -137,13 +137,12 @@
 
 				uni_oTable.fnReloadAjax('/api/master_refresh?department_id=' + uni_department_id + '&company_id=' + uni_company_id);
 
+				$("#header_online_users_count").html($("#header_online_users tbody tr").length);
+
 				setInterval(function () {
 					uni_oTable.fnReloadAjax('/api/master_refresh?department_id=' + uni_department_id + '&company_id=' + uni_company_id);
+					$("#header_online_users_count").html($("#header_online_users tbody tr").length);
 				}, uni_interval);
-
-				$('#header_online_users').on( 'length.dt', function ( e, settings, len ) {
-					$("#header_online_users_count").html(len);
-				} );
 
 			});
 		</script>

@@ -305,29 +305,6 @@
 
             getMessages();
 
-            $('#send_message').on('click', function () {
-
-
-
-                if (CKEDITOR.instances.message_body.getData() == "") {
-                    return false; // do nothing
-                } else {
-                    $.ajax({
-                        'type': 'POST',
-                        'url': '/conversations/send_message',
-                        'data': {
-                            'user_id': user_id,
-                            'thread_id': thread_id,
-                            'message': CKEDITOR.instances.message_body.getData()
-                        },
-                        'success': function (data) {
-                            CKEDITOR.instances.message_body.setData("");
-                            getMessages();
-                        }
-                    });
-                }
-            });
-
         });
     </script>
 

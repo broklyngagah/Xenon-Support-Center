@@ -133,7 +133,7 @@ class APIController extends BaseController {
         $activities_arr = [];
 
         if(Utils::isAdmin(Auth::user()->id)) {
-            $all_activities = RecentActivities::limit(10)->get();
+            $all_activities = RecentActivities::orderBy('id','desc')->limit(10)->get();
 
             foreach ($all_activities as $activity) {
                 $single_activity = [];

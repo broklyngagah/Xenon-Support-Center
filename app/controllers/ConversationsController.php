@@ -249,7 +249,7 @@ class ConversationsController extends BaseController
             $online_users->locked_by_operator = 1;
             $online_users->save();
 
-            RecentActivities::createActivity("Online Conversation <a href='/conversations/all'>ID:".$online_users->id."</a> accepted by Name ID:".Auth::user()->id." User Name:".Auth::user()->name);
+            RecentActivities::createActivity("Online Conversation <a href='/conversations/all'>ID:".$online_users->id."</a> accepted by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
 
             //If transfered and sitting alone
             ThreadMessages::where('thread_id', $thread_id)->where('sender_id', 0)->update(['sender_id' => Auth::user()->id]);

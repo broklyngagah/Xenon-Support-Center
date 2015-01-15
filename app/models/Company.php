@@ -62,9 +62,12 @@ class Company extends Eloquent {
                             $operators_ids = OperatorsDepartment::where('department_id', $department_admin->department_id)->lists('user_id');
 
                             foreach ($operators_ids as $operators_id) {
-                                $user = User::find($operators_id);
-                                if ($user->is_online == 1) {
-                                    return 1;
+
+                                if(sizeof(User::where('id',$operators_id)->get())>0) {
+                                    $user = User::find($operators_id);
+                                    if ($user->is_online == 1) {
+                                        return 1;
+                                    }
                                 }
                             }
                         }

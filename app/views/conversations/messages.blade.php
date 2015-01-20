@@ -101,13 +101,24 @@
                         {{$message_str}}
                     </div>
                     <div id="msg"></div>
+                    {{Form::open(['url'=>'/conversations/send_message','method'=>'post','files'=>true,'id'=>'reply_submit'])}}
                     @if(!isset($closed_conversation))
                     <textarea id="message_body" class="form-control" rows="3" cols="1"
                                                                                placeholder="Enter your message..."></textarea>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label></label>
+                                    <input id="attachment" type="file" name="attachment" class="styled form-control">
+                                    <span class="help-block">Accepted formats: rar, zip . Max file size 10Mb</span>
+                                </div>
+                            </div>
+                        </div>
                     @endif
                     <div class="message-controls">
                         <div class="pull-right">
-                            <button {{isset($closed_conversation)?"disabled='disabled'":""}} id="send_message" type="button" class="btn btn-success btn-loading"
+                            <button  {{isset($closed_conversation)?"disabled='disabled'":""}} id="send_message" type="submit" class="btn btn-success btn-loading"
                                                                                              data-loading-text="<i class='icon-spinner7 spin'></i> Processing">
                                 Send
                             </button>
@@ -126,6 +137,7 @@
 
                         </div>
                     </div>
+                    {{Form::close()}}
                 </div>
             </div>
         </div>
@@ -136,6 +148,7 @@
 
 @section('scripts')
     {{HTML::script("/assets/js/plugins/ckeditor/ckeditor.js")}}
+    <script src="http://malsup.github.com/jquery.form.js"></script>
     @if(!isset($closed_conversation))
     <script type="text/javascript">
         $(document).ready(function () {
@@ -205,66 +218,49 @@
 
             getMessages();
 
-            $('#message_body').keypress(function (e) {
+            $('#reply_submit').submit(function () {
 
-                if (e.which == 13) {
+                for ( instance in CKEDITOR.instances )
+                    CKEDITOR.instances[instance].updateElement();
 
-                    if (CKEDITOR.instances.message_body.getData() == "") {
-                        return false; // do nothing
-                    } else {
-                        $.ajax({
-                            'type': 'POST',
-                            'url': '/conversations/send_message',
-                            'data': {
-                                'user_id': operator_id,
-                                'thread_id': thread_id,
-                                'message': CKEDITOR.instances.message_body.getData()
-                            },
-                            'success': function (data) {
-                                CKEDITOR.instances.message_body.setData("");
-                                getMessages();
-                            }
-                        });
-                    }
+                var options = {
+                    success: showResponse,  // post-submit callback
+                    data: {
+                        'user_id': operator_id,
+                        'thread_id': thread_id,
+                        'message': CKEDITOR.instances.message_body.getData()
+                    },
+                    resetForm: true
+                };
 
-                    e.preventDefault();
+                // inside event callbacks 'this' is the DOM element so we first
+                // wrap it in a jQuery object and then invoke ajaxSubmit
+                $(this).ajaxSubmit(options);
 
-                    return false;
-                }
-            }).focus(function () {
 
-                if (CKEDITOR.instances.message_body.getData() == "") {
-                    CKEDITOR.instances.message_body.setData("");
-                }
-
-            }).blur(function () {
-
-                if (CKEDITOR.instances.message_body.getData() == "") {
-                    CKEDITOR.instances.message_body.setData("");
-                }
+                // !!! Important !!!
+                // always return false to prevent standard browser submit and page navigation
+                return false;
             });
 
-            $('#send_message').on('click', function () {
+            function showResponse(responseText, statusText, xhr, $form) {
 
-                if (CKEDITOR.instances.message_body.getData() == "") {
-                    return false; // do nothing
-                } else {
-                    $.ajax({
-                        'type': 'POST',
-                        'url': '/conversations/send_message',
-                        'data': {
-                            'user_id': operator_id,
-                            'thread_id': thread_id,
-                            'message': CKEDITOR.instances.message_body.getData()
-                        },
-                        'success': function (data) {
-                            CKEDITOR.instances.message_body.setData("");
-                            getMessages();
-                        }
-                    });
+                var json = JSON.parse(responseText);
+
+                $('#uniform-attachment .filename').html("No file selected");
+
+                if(json.result==0){
+                    $('#reply_errors').html(json.errors);
+                    $('#reply_errors').show();
+                }else{
+                    CKEDITOR.instances.message_body.setData("");
+                    $('#reply_errors').html("");
+                    $('#reply_errors').hide();
                 }
-            });
 
+                return false;
+
+            }
         });
     </script>
     @endif

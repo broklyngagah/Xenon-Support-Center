@@ -144,6 +144,7 @@ class SettingsController extends BaseController
             return Redirect::to('/dashboard');
         }
 
+
         $values = [
             'use_mailchimp' => Input::has('use_mailchimp'),
             'api_key' => Input::get('api_key')
@@ -156,6 +157,30 @@ class SettingsController extends BaseController
         Session::flash('success_msg', trans('msgs.mailchimp_settings_updated'));
 
         return Redirect::to('/settings/all#tab-mailchimp');
+
+    }
+
+    public function setChat()
+    {
+
+        if(Config::get('site-config.is_demo')){
+            Session::flash('error_msg','Demo : Feature is disabled');
+            return Redirect::to('/dashboard');
+        }
+
+        $values = [
+            'chat_file_types' => Input::get('chat_file_types'),
+            'max_file_size' => Input::get('max_file_size'),
+            'enable_attachment_in_chat' => Input::has('enable_attachment_in_chat')
+        ];
+
+        Settings::where('key', 'chat')->update(['value' => json_encode($values)]);
+
+        RecentActivities::createActivity("Chat settings changed by User ID:".Auth::user()->id." User Name:".Auth::user()->name);
+
+        Session::flash('success_msg', trans('msgs.chat_settings_updated'));
+
+        return Redirect::to('/settings/all#tab-chat');
 
     }
 

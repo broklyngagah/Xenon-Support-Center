@@ -55,12 +55,43 @@ class ConversationsController extends BaseController
 
     public function sendMessage()
     {
-        if (Input::has("thread_id") && Input::has("user_id") && Input::has("message") && Input::get("user_id") > 0 && Input::get("thread_id") > 0) {
+
+        $encoded_values = Settings::where('key', 'chat')->first();
+        $decoded_values = json_decode($encoded_values->value);
+
+        $v_data = [
+            "thread_id" => Input::get('thread_id'),
+            "user_id" => Input::get('user_id'),
+            "message" => Input::get('message'),
+            "attachment" => Input::hasFile('attachment')?\Str::lower(Input::file('attachment')->getClientOriginalExtension()):""
+        ];
+
+        $v_rules = [
+            "thread_id" => 'required',
+            "user_id" => 'required',
+            "message" => 'required',
+            "attachment" => 'in:'.$decoded_values->chat_file_types
+        ];
+
+        $v = Validator::make($v_data,$v_rules);
+
+        if ($v->passes() && Input::get("user_id") > 0 && Input::get("thread_id") > 0) {
             $thread_message = new ThreadMessages();
             $thread_message->thread_id = Input::get('thread_id');
             $thread_message->sender_id = Input::get('user_id');
             $thread_message->message = Input::get('message');
             $thread_message->save();
+
+            if(Input::hasFile('attachment')&&Input::file('attachment')->getSize()<=$decoded_values->max_file_size*1024*1024) {
+                $ticket_attachment = new TicketAttachments();
+                $ticket_attachment->thread_id = Input::get('thread_id');
+                $ticket_attachment->message_id = $thread_message->id;
+                $ticket_attachment->has_attachment = Input::hasFile('attachment');
+                $ticket_attachment->attachment_path = Input::hasFile('attachment') ? Utils::fileUpload(Input::file('attachment'), 'attachments') : '';
+                $ticket_attachment->save();
+            }
+
+
             return json_encode(["result" => 1]);
         } else {
             return json_encode(["result" => 0]);

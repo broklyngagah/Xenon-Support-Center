@@ -88,6 +88,12 @@
 			<!-- /page content -->
 		</div>
 		<!-- /page container -->
+		<script>
+			var userip;
+		</script>
+		@if(!Session::has('client_ip'))
+		<script type="text/javascript" src="http://l2.io/ip.js?var=userip"></script>
+		@endif
 
 		<script>
 			jQuery(document).ready(function($) {
@@ -101,20 +107,16 @@
 				});
 
 				@if(!Session::has('client_ip'))
-				$.get("http://ipinfo.io", function (response) {
-
 					$.ajax({
 						'type': 'GET',
 						'url': '/api/log_ip',
 						'data': {
-							'ip_address': response.ip
+							'ip_address': userip
 						},
 						'success': function (data) {
 
 						}
 					});
-
-				}, "jsonp");
 				@endif
 
 				var uni_interval = 5000;  // 1000 = 1 second, 3000 = 3 seconds

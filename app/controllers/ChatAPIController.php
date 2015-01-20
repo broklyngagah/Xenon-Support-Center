@@ -46,16 +46,21 @@ class ChatAPIController extends BaseController {
 
     public function sendMessage(){
 
+        $encoded_values = Settings::where('key', 'chat')->first();
+        $decoded_values = json_decode($encoded_values->value);
+
         $v_data = [
             "thread_id" => Input::get('thread_id'),
             "user_id" => Input::get('user_id'),
-            "message" => Input::get('message')
+            "message" => Input::get('message'),
+            "attachment" => Input::hasFile('attachment')?\Str::lower(Input::file('attachment')->getClientOriginalExtension()):""
         ];
 
         $v_rules = [
             "thread_id" => 'required',
             "user_id" => 'required',
-            "message" => 'required'
+            "message" => 'required',
+            "attachment" => 'in:'.$decoded_values->chat_file_types
         ];
 
         $v = Validator::make($v_data,$v_rules);
@@ -66,6 +71,16 @@ class ChatAPIController extends BaseController {
             $thread_message->sender_id = Input::get('user_id');
             $thread_message->message = Input::get('message');
             $thread_message->save();
+
+            if(Input::hasFile('attachment')&&Input::file('attachment')->getSize()<=$decoded_values->max_file_size*1024*1024) {
+                $ticket_attachment = new TicketAttachments();
+                $ticket_attachment->thread_id = Input::get('thread_id');
+                $ticket_attachment->message_id = $thread_message->id;
+                $ticket_attachment->has_attachment = Input::hasFile('attachment');
+                $ticket_attachment->attachment_path = Input::hasFile('attachment') ? Utils::fileUpload(Input::file('attachment'), 'attachments') : '';
+                $ticket_attachment->save();
+            }
+
             return $this->send(["result"=>1]);
         }else{
             return $this->send(["result"=>0]);
@@ -481,7 +496,10 @@ class ChatAPIController extends BaseController {
             $data['in_conversation'] = 1;
         }
 
-        $data['wrapper'] = View::make('conversations.stub-chat-wrapper')->render();
+        $encoded_values = Settings::where('key', 'chat')->first();
+        $decoded_values = json_decode($encoded_values->value);
+
+        $data['wrapper'] = View::make('conversations.stub-chat-wrapper',['enable_attachments'=>$decoded_values->enable_attachment_in_chat])->render();
 
         return $data;
     }

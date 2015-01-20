@@ -46,12 +46,19 @@
             </div>
 
             <div id="xenon-chat-footer" class="panel-footer-xenon" style="display: none;">
+                <form id="xenon-chat-form" method="post" enctype="multipart/form-data">
                 <div class="input-group">
                     <textarea placeholder="Type your message here..." style="height:30px;width:90%;" id="xenon-message" class="form-control input-sm"></textarea>
                         <span class="input-group-btn">
-                            <button id="xenon-message-send" class="btn btn-warning btn-sm" id="btn-chat">Send</button>
+                            <button id="xenon-message-send" type="submit" class="btn btn-warning btn-sm" id="btn-chat">Send</button>
                         </span>
                 </div>
+                @if($enable_attachments)
+                <div class="input-group">
+                    <input type="file" name="attachment" class="form-control" />
+                </div>
+                @endif
+                </form>
                 <button id="xenon-end" style="margin-top:2px;" class="btn btn-danger btn-block" id="btn-chat">End Chat</button>
             </div>
 

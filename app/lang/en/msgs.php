@@ -67,6 +67,7 @@ return array(
 	"mailgun_settings_updated" => "Mailgun settings updated",
 	"smtp_settings_updated" => "SMTP settings updated",
 	"mailchimp_settings_updated" => "Mailchimp settings updated",
+	"chat_settings_updated" => "Chat settings updated",
 	"tickets_settings_updated" => "Tickets settings updated",
 	"mail_sent_success" => "Mail sent successfully",
 	"template_paired_success" => "Template paired successfully",

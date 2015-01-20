@@ -32,6 +32,9 @@ class MessageThread extends Eloquent {
 
         foreach($messages as $message){
             $message->user = User::find($message->sender_id);
+            $attachment = TicketAttachments::where('message_id',$message->id)->where('thread_id',$thread_id)->first();
+
+            $message->attachment = $attachment;
         }
 
         $message_str = View::make('conversations.stub-client-message',["messages"=>$messages,"thread"=>$thread])->render();
@@ -60,6 +63,9 @@ class MessageThread extends Eloquent {
 
         foreach($messages as $message){
             $message->user = User::find($message->sender_id);
+            $attachment = TicketAttachments::where('message_id',$message->id)->where('thread_id',$thread_id)->first();
+
+            $message->attachment = $attachment;
         }
 
         $message_str = View::make('conversations.stub-server-message',["messages"=>$messages,"thread"=>$thread])->render();

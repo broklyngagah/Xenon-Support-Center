@@ -36,6 +36,7 @@
                     <li><a href="#tab-smtp" data-toggle="tab"><i class="icon-envelop"></i> SMTP </a></li>
                     <li><a href="#tab-mailchimp" data-toggle="tab"><i class="icon-envelop"></i> Mailchimp</a></li>
                     <li><a href="#tab-tickets" data-toggle="tab"><i class="icon-ticket"></i> Tickets</a></li>
+                    <li><a href="#tab-chat" data-toggle="tab"><i class="icon-envelop"></i> Chat</a></li>
                 </ul>
                 <div class="tab-content with-padding">
 
@@ -256,6 +257,49 @@
                                                name="convert_chat_ticket_no_operators" {{$settings->tickets->convert_chat_ticket_no_operators==1?"checked":""}}
                                                value="1">
                                         <label>Convert chat to ticket if no operator online</label>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions text-right">
+                            <input type="submit" value="Save" class="btn btn-success">
+                        </div>
+
+                        {{Form::close()}}
+
+                    </div>
+                    <div class="tab-pane fade" id="tab-chat">
+
+                        {{Form::open(['url'=>'/settings/chat','method'=>'post'])}}
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Accepted File types for attachments in Chat:</label>
+                                    <input type="text" class="form-control" name="chat_file_types"
+                                           value="{{Input::old('chat_file_types',$settings->chat->chat_file_types)}}"
+                                           placeholder="Enter accepted file types">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Max file size:</label>
+                                    <input type="text" class="form-control" name="max_file_size"
+                                           value="{{Input::old('max_file_size',$settings->chat->max_file_size)}}"
+                                           placeholder="Enter max file size(MB)">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="checkbox-inline checkbox-info">
+                                        <input {{$settings->chat->enable_attachment_in_chat==1?"checked":""}}
+                                                name="enable_attachment_in_chat" type="checkbox" class="styled"
+                                                value="1">
+                                        <label>Enable Attachments in Chat</label>
                                     </label>
                                 </div>
                             </div>

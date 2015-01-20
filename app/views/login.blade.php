@@ -76,24 +76,26 @@
 </div>
 <!-- /footer -->
 <script>
+    var userip;
+</script>
+@if(!Session::has('client_ip'))
+  <script type="text/javascript" src="http://l2.io/ip.js?var=userip"></script>
+@endif
+<script>
 $(document).ready(function($) {
 
-    @if(!Session::has('client_ip'))
-    $.get("http://ipinfo.io", function (response) {
+  @if(!Session::has('client_ip'))
+  $.ajax({
+    'type': 'GET',
+    'url': '/api/log_ip',
+    'data': {
+      'ip_address': userip
+    },
+    'success': function (data) {
 
-      $.ajax({
-        'type': 'GET',
-        'url': '/api/log_ip',
-        'data': {
-          'ip_address': response.ip
-        },
-        'success': function (data) {
-
-        }
-      });
-
-    }, "jsonp");
-    @endif
+    }
+  });
+  @endif
 
 });
 </script>

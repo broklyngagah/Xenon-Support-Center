@@ -46,6 +46,7 @@ Route::group(['filter' => 'csrf'], function() {
 
 Route::get('/dashboard', array('before' => 'backend', 'as' => 'dashboard', 'uses' => "DashboardController@index"));
 Route::get('chat', function(){return View::make('chat');});
+Route::get('chat-dev', function(){return View::make('chat-dev');});
 
 //Translation
 Route::group(['prefix' => 'translations'], function () {
@@ -68,6 +69,7 @@ Route::group(['prefix' => 'settings'], function () {
        Route::post('smtp', 'SettingsController@setSMTP');
        Route::post('mailchimp', 'SettingsController@setMailchimp');
        Route::post('tickets', 'SettingsController@setTickets');
+       Route::post('chat', 'SettingsController@setChat');
    });
 });
 

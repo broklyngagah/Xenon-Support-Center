@@ -173,7 +173,7 @@ Route::group(['prefix' => 'operators'], function () {
     Route::get('online', 'OperatorsController@online');
     Route::get('delete/{operator_id}', 'OperatorsController@delete');
     Route::get('update/{operator_id}', 'OperatorsController@edit');
-    Route::get('activate/{account_id}', 'AccountsController@activate');
+    Route::get('activate/{account_id}', 'OperatorsController@activate');
 
     Route::group(['filter' => 'csrf'], function() {
         Route::post('create', 'OperatorsController@store');

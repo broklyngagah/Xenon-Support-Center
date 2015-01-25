@@ -85,7 +85,7 @@
                     </div>
                 </div>
 
-            @endif
+
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Operator ID - Name</label>
@@ -98,6 +98,8 @@
                     </select>
                 </div>
             </div>
+
+           @endif
 
             <div class="form-actions text-right">
                 <label class="col-sm-2 control-label"></label>

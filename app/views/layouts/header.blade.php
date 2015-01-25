@@ -83,11 +83,11 @@
 				</li>
 				@if(Auth::user()->is_online==0)
 					<li>
-						<a href="/api/change_status"><i class="icon-bubble4"></i> Go Online</a>
+						<a href="/api/change_status/1"><i class="icon-bubble4"></i> Go Online</a>
 					</li>
 				@else
 					<li>
-						<a href="/api/change_status"><i class="icon-bubble4"></i> Go Offline</a>
+						<a href="/api/change_status/0"><i class="icon-bubble4"></i> Go Offline</a>
 					</li>
 				@endif
 				@if(Permissions::hasPermission('settings.all'))

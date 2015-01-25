@@ -11,7 +11,7 @@
         </span>
 
             <div class="chat-body clearfix">
-                <div class="header">
+                <div class="headerx">
                     <small class=" text-muted">
                         <span class="glyphicon glyphicon-time"></span>
                         {{\KodeInfo\Utilities\Utils::prettyDate($message->created_at)}}
@@ -38,7 +38,7 @@
         </span>
 
             <div class="chat-body clearfix">
-                <div class="header">
+                <div class="headerx">
                     <strong class="primary-font">{{{$message->user->name}}}</strong>
                     <small class="pull-right text-muted">
                         <span class="glyphicon glyphicon-time"></span>

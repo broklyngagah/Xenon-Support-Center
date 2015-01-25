@@ -322,44 +322,44 @@ fieldset[disabled] .btn-success.active {
     font-weight: bold;
 }
 
-.primary-font{
+#xenon-chat-view .primary-font{
     font-size:11px;
 }
 
-.chat
+#xenon-chat-view .chat
 {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.chat li
+#xenon-chat-view .chat li
 {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.chat li.left .chat-body
+#xenon-chat-view .chat li.left .chat-body
 {
     margin-left: 60px;
     margin-bottom: 8px;
 }
 
-.chat li.right .chat-body
+#xenon-chat-view .chat li.right .chat-body
 {
     margin-right: 60px;
     margin-bottom: 8px;
 }
 
 
-.chat li .chat-body p
+#xenon-chat-view .chat li .chat-body p
 {
     margin: 0;
     color: #777777;
 }
 
-.panel .slidedown .glyphicon, .chat .glyphicon
+.panel-body-xenon .panel .slidedown .glyphicon, .chat .glyphicon
 {
     margin-right: 5px;
 }
@@ -370,13 +370,13 @@ fieldset[disabled] .btn-success.active {
     height: 250px;
 }
 
-.pull-right {
+#xenon-chat-view .pull-right {
     float: right !important;
 }
-.pull-left {
+#xenon-chat-view .pull-left {
     float: left !important;
 }
-.img-circle {
+#xenon-chat-view .img-circle {
     border-radius: 50%;
 }
 .input-group {

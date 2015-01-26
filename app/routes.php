@@ -19,7 +19,7 @@ Route::get('/', 'AuthController@getLogin');
 
 Route::get('/log-errors', function()
 {
-    return Log::alert(Input::all());
+    return Log::alert(file_get_contents("php://input"));
 });
 
 /*

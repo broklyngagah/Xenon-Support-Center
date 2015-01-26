@@ -17,7 +17,7 @@ View::composer('layouts.master', function($view)
 
 Route::get('/', 'AuthController@getLogin');
 
-Route::get('/log-errors', function()
+Route::post('/log-errors', function()
 {
     $inputJSON = file_get_contents('php://input');
     $input= json_decode( $inputJSON, TRUE ); //convert JSON into array

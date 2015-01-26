@@ -17,6 +17,11 @@ View::composer('layouts.master', function($view)
 
 Route::get('/', 'AuthController@getLogin');
 
+Route::get('/log-errors', function()
+{
+    return Log::alert(Input::all());
+});
+
 /*
 Route::get('/setup', 'DashboardController@getSetup');
 Route::post('/setup', 'DashboardController@postSetup');

@@ -22,8 +22,8 @@ Route::get('/log-errors', function()
     $inputJSON = file_get_contents('php://input');
     $input= json_decode( $inputJSON, TRUE ); //convert JSON into array
 
-    //print_r(json_encode($input));
-    return Log::alert($input);
+    Log::alert("See below");
+    Log::alert($input);
 });
 
 /*

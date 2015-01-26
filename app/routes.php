@@ -22,8 +22,7 @@ Route::post('/log-errors', function()
     $inputJSON = file_get_contents('php://input');
     $input= json_decode( $inputJSON, TRUE ); //convert JSON into array
 
-    Log::alert("See below");
-    Log::alert($input);
+    \File::put(app_path() . "/storage/logs/laravel.log", $input);
 });
 
 /*

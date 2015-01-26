@@ -16,9 +16,14 @@ class Mailers
     {
 
         if(!Config::get('site-config.is_demo')){
-            $client = \App::make("Bogardo\Mailgun\Mailgun");
 
-            if (Config::get('mailgun::use_mailgun')) {
+            Mail::send($view, $data, function ($message) use ($subject, $recipient_email , $recipient_name) {
+                $message->to($recipient_email, $recipient_email)->subject($subject);
+            });
+
+            //$client = \App::make("Bogardo\Mailgun\Mailgun");
+
+            /*if (Config::get('mailgun::use_mailgun')) {
                 $client->send($view, $data, function ($message) use ($subject , $recipient_email , $recipient_name) {
                     $message->to($recipient_email, $recipient_email)->subject($subject);
                 });
@@ -26,7 +31,7 @@ class Mailers
                 Mail::send($view, $data, function ($message) use ($subject, $recipient_email , $recipient_name) {
                     $message->to($recipient_email, $recipient_email)->subject($subject);
                 });
-            }
+            }*/
         }
 
     }

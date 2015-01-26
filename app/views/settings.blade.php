@@ -84,23 +84,6 @@
                         <div class="form-group" id="mailchimp_div">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Mailgun API Key:</label>
-                                    <input type="text" class="form-control" name="api_key"
-                                           value="{{Input::old('api_key',$settings->mailgun->api_key)}}"
-                                           placeholder="Enter API Key">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Public API Key:</label>
-                                    <input type="text" class="form-control" placeholder="Enter Public API Key"
-                                           name="public_api_key"
-                                           value="{{Input::get('public_api_key',$settings->mailgun->public_api_key)}}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
                                     <label class="checkbox-inline checkbox-info">
                                         <input type="checkbox" class="styled"
                                                name="use_mailgun" {{Input::get('use_mailgun',$settings->mailgun->use_mailgun)==1?"checked":""}}
@@ -108,8 +91,16 @@
                                         <label>Use Mailgun</label>
                                     </label>
                                 </div>
+                                <div class="col-md-6">
+                                    <label>Mailgun API Key:</label>
+                                    <input type="text" class="form-control" name="api_key"
+                                           value="{{Input::old('api_key',$settings->mailgun->api_key)}}"
+                                           placeholder="Enter API Key">
+                                </div>
+
                             </div>
                         </div>
+
 
                         <div class="form-actions text-right">
                             <input type="submit" value="Save" class="btn btn-success">

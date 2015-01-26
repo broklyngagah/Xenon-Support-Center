@@ -123,8 +123,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'KodeInfo\UserManagement\UserManagementServiceProvider',
-		'KodeInfo\Templates\TemplatesListServiceProvider',
-		'Bogardo\Mailgun\MailgunServiceProvider',
+		'KodeInfo\Templates\TemplatesListServiceProvider'
 	),
 
 	/*

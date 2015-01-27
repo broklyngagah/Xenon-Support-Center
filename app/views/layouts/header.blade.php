@@ -38,6 +38,7 @@
 		</li>
 		@endif
 
+		@if(Utils::isBackendUser(Auth::user()->id))
 		<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-envelop"></i><span id="header_online_users_count" class="label label-info">0</span></a>
 			<div class="popup dropdown-menu dropdown-menu-right">
 				<div class="popup-header"><span>Online Chats</span><a href="/conversations/all" class="pull-right"><i class="icon-new-tab"></i></a></div>
@@ -54,6 +55,7 @@
 				</table>
 			</div>
 		</li>
+		@endif
 
 		@if(Utils::isAdmin(Auth::user()->id))
 		<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-clipboard"></i><span id="header_recent_activities_count" class="label label-info">0</span></a>

@@ -90,6 +90,10 @@ class DashboardController extends BaseController
     function index()
     {
 
+        if (\KodeInfo\Utilities\Utils::isCustomer(Auth::user()->id)) {
+            return Redirect::to('/tickets/customer/all');
+        }
+
         $past_hr = \Carbon\Carbon::now()->subHour();
         $today = \Carbon\Carbon::now()->subDay();
         $this_week = \Carbon\Carbon::now()->subWeek();

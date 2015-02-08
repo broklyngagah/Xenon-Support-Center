@@ -36,5 +36,9 @@ Icon
 .Spotlight-V100
 .Trashes
 
+# editor dir and file
+.idea
+_ide_helper.php
+
 vendor
 public/uploads

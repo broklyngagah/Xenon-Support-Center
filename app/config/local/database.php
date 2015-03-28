@@ -23,9 +23,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'xenon',
+			'database'  => 'xenon_support_db',
 			'username'  => 'root',
-			'password'  => 'kodeinfo@#1100',
+			'password'  => 'masuk123',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

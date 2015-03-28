@@ -41,4 +41,4 @@ Icon
 _ide_helper.php
 
 vendor
-public/uploads
+/public/uploads/*
